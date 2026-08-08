@@ -71,13 +71,6 @@ export default function CinematicIntroSplash() {
             <Play className="w-5 h-5 fill-[#0a0a0f]" />
             <span>ENTER THE HUNT</span>
           </button>
-
-          <button
-            onClick={handleEnterSite}
-            className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest pt-2"
-          >
-            Skip Intro →
-          </button>
         </div>
       </div>
     </div>

@@ -87,6 +87,39 @@ export default function HuntWizard() {
     setIsSurprise(false);
   };
 
+  // Instant tap auto-advance handlers (zero scrolling needed)
+  const handleSelectMood = (moodId: string) => {
+    setSelectedMood(moodId);
+    if (moodId === 'dont-know') {
+      handleSurpriseMe();
+    } else {
+      setTimeout(() => {
+        setStep(2);
+      }, 200);
+    }
+  };
+
+  const handleSelectDuration = (durId: string) => {
+    setSelectedDuration(durId);
+    setTimeout(() => {
+      setStep(3);
+    }, 200);
+  };
+
+  const handleSelectLanguage = (langId: string) => {
+    setSelectedLanguage(langId);
+    setTimeout(() => {
+      setStep(4);
+    }, 200);
+  };
+
+  const handleSelectEmotion = (emoId: string) => {
+    setSelectedEmotion(emoId);
+    setTimeout(() => {
+      setFinding(true);
+    }, 200);
+  };
+
   // Wizard option button style
   const optionStyle = (selected: boolean): React.CSSProperties => ({
     padding: 'var(--space-6)',
@@ -247,19 +280,18 @@ export default function HuntWizard() {
                 </p>
               </div>
 
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                  gap: 'var(--space-3)',
-                }}
-              >
+              <div className="wizard-options-grid">
                 {MOOD_OPTIONS_WITH_DONT_KNOW.map((m) => (
-                  <button key={m.id} onClick={() => setSelectedMood(m.id)} style={optionStyle(selectedMood === m.id)}>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 500, marginBottom: 4, color: 'inherit' }}>
+                  <button
+                    key={m.id}
+                    onClick={() => handleSelectMood(m.id)}
+                    style={optionStyle(selectedMood === m.id)}
+                    className="wizard-option-btn"
+                  >
+                    <div className="wizard-option-title" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 500, marginBottom: 4, color: 'inherit' }}>
                       {m.label}
                     </div>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
+                    <div className="wizard-option-desc" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
                       {m.description}
                     </div>
                   </button>
@@ -319,10 +351,15 @@ export default function HuntWizard() {
                 </h2>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
+              <div className="wizard-options-grid">
                 {DURATION_OPTIONS.map((d) => (
-                  <button key={d.id} onClick={() => setSelectedDuration(d.id)} style={optionStyle(selectedDuration === d.id)}>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 500, color: 'inherit' }}>
+                  <button
+                    key={d.id}
+                    onClick={() => handleSelectDuration(d.id)}
+                    style={optionStyle(selectedDuration === d.id)}
+                    className="wizard-option-btn"
+                  >
+                    <div className="wizard-option-title" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-base)', fontWeight: 500, color: 'inherit' }}>
                       {d.label}
                     </div>
                   </button>
@@ -378,10 +415,15 @@ export default function HuntWizard() {
                 </h2>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 'var(--space-3)' }}>
+              <div className="wizard-options-grid">
                 {LANGUAGE_OPTIONS.map((lang) => (
-                  <button key={lang.id} onClick={() => setSelectedLanguage(lang.id)} style={optionStyle(selectedLanguage === lang.id)}>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', fontWeight: 500, color: 'inherit' }}>
+                  <button
+                    key={lang.id}
+                    onClick={() => handleSelectLanguage(lang.id)}
+                    style={optionStyle(selectedLanguage === lang.id)}
+                    className="wizard-option-btn"
+                  >
+                    <div className="wizard-option-title" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', fontWeight: 500, color: 'inherit' }}>
                       {lang.label}
                     </div>
                   </button>
@@ -432,10 +474,15 @@ export default function HuntWizard() {
                 </h2>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
+              <div className="wizard-options-grid">
                 {AFTER_CREDITS_EMOTIONS.map((emo) => (
-                  <button key={emo.id} onClick={() => setSelectedEmotion(emo.id)} style={optionStyle(selectedEmotion === emo.id)}>
-                    <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', fontWeight: 500, color: 'inherit' }}>
+                  <button
+                    key={emo.id}
+                    onClick={() => handleSelectEmotion(emo.id)}
+                    style={optionStyle(selectedEmotion === emo.id)}
+                    className="wizard-option-btn"
+                  >
+                    <div className="wizard-option-title" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-sm)', fontWeight: 500, color: 'inherit' }}>
                       {emo.label}
                     </div>
                   </button>
@@ -716,9 +763,35 @@ export default function HuntWizard() {
       </div>
 
       <style>{`
+        .wizard-options-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+
         @media (min-width: 640px) {
+          .wizard-options-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+          }
           .rec-grid {
             grid-template-columns: 220px 1fr !important;
+          }
+        }
+
+        @media (max-width: 639px) {
+          .wizard-option-btn {
+            padding: 12px 12px !important;
+          }
+          .wizard-option-title {
+            font-size: 0.85rem !important;
+          }
+          .wizard-option-desc {
+            font-size: 0.72rem !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
           }
         }
       `}</style>

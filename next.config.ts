@@ -1,14 +1,13 @@
 import type { NextConfig } from "next";
 
+const isGitHubPages = process.env.GITHUB_PAGES === "true";
+
 const nextConfig: NextConfig = {
   output: "export",
   images: {
     unoptimized: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  basePath: process.env.NODE_ENV === "production" ? "/moviehunt.daily" : "",
+  basePath: isGitHubPages ? "/moviehunt.daily" : "",
 };
 
 export default nextConfig;

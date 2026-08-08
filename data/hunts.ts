@@ -72,7 +72,7 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '🌧 Rainy Evening'],
     genres: ['Dark Fantasy', 'Horror', 'Period Drama'],
     musicVibe: 'Dark ambient piano, slow haunting instrumental',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://wallpapercave.com/wp/wp7319285.jpg',
     images: [
       "https://wallpaperaccess.com/full/9653795.jpg",
       "https://wallpaperaccess.com/full/9653827.jpg",
@@ -82,7 +82,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'Vz21G8V7wzg',
     featured: true
   },
-  { id: 'day-2-ugly',
+  {
+    id: 'day-2-ugly',
     day: 2,
     type: 'movie',
     title: 'Ugly',
@@ -112,7 +113,7 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Neo-Noir', 'Psychological Thriller'],
     musicVibe: 'Slow dark synth, lo-fi piano + heavy bass',
-    coverImage: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://i.pinimg.com/1200x/21/07/8a/21078aa12cca3fb6a8e136d08346a413.jpg',
     images: ['https://m.media-amazon.com/images/M/MV5BOWNjZDEwYzgtZjFkMC00YTVhLThhNmEtMDVmZWIyMTc3YTlkXkEyXkFqcGc@._V1_QL75_UX678_.jpg',
       'https://m.media-amazon.com/images/M/MV5BNzM5OWNiYmYtYjEyNS00YzgwLTkyMDItYmEyOGFmNjk5Y2Q5XkEyXkFqcGc@._V1_QL75_UX699_.jpg',
       'https://m.media-amazon.com/images/M/MV5BNDZkZDNkMDYtZGM2NS00NTE2LWI1OTgtZWQyZjUzOWYyZmM1XkEyXkFqcGc@._V1_QL75_UX729_.jpg',
@@ -120,7 +121,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: '4ougQY2-zpk',
     featured: true
   },
-  { id: 'day-3-karwaan',
+  {
+    id: 'day-3-karwaan',
     day: 3,
     type: 'movie',
     title: 'Karwaan',
@@ -150,7 +152,7 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful'],
     genres: ['Slice of Life', 'Road Comedy', 'Drama'],
     musicVibe: 'Prateek Kuhad acoustic guitar, gentle ukulele',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://wallpapercave.com/wp/wp8160169.jpg',
     images: [
       "https://wallpaperaccess.com/full/26536755.jpg",
       "https://wallpaperaccess.com/full/26536781.jpg",
@@ -159,7 +161,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'IUCeN7kelXs',
     featured: true
   },
-  { id: 'day-4-masaan',
+  {
+    id: 'day-4-masaan',
     day: 4,
     type: 'movie',
     title: 'Masaan',
@@ -195,14 +198,18 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '❤️ Meaningful', '😊 Feel Good'],
     genres: ['Poetic Drama', 'Romance', 'Social Realism', 'Hindi Masterpiece'],
     musicVibe: 'Indian Ocean soft piano, acoustic guitar, emotional Sitar & Shehnai, "Tu Kisi Rail Si" folk score',
-    coverImage: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://i.pinimg.com/736x/ef/72/35/ef723501148a0f21e8b59f743aa7cba2.jpg',
     images: [
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'
+      "https://wallpaperaccess.com/full/12593570.jpg",
+      "https://wallpaperaccess.com/full/12593579.jpg",
+      "https://wallpaperaccess.com/full/12593609.jpg",
+      "https://wallpaperaccess.com/full/12593639.jpg"
     ],
     featured: true,
     trailerYoutubeId: 'SKJfBo3xMW0'
   },
-  { id: 'day-5-ship-of-theseus',
+  {
+    id: 'day-5-ship-of-theseus',
     day: 5,
     type: 'movie',
     title: 'Ship of Theseus',
@@ -232,12 +239,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['🤯 Mind-Blowing', '❤️ Meaningful'],
     genres: ['Philosophical Drama', 'Art Cinema'],
     musicVibe: 'Ambient electronic, soft experimental piano',
-    coverImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtzV3VQfABvJr_5Qdoz_wewsPpBx-LjEdx4n5mAeM66A&s=10',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdazqlcfVKPjLPBIkSzL5UhKWi8gUmTK16tfSXQj49LQ&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSba-R4Q36JgRJ-vllwu0xqbaO-6HPv83YzvjuRvM467g&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLEB8vUrDb65_btNCPwhBoc0WYzp0PGh_EIqVpYyFRWg&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7cSYedieUe4Zw7Dtz14OjFHzuKpSJq1h8_6oPAKE2bQ&s=10"],
     trailerYoutubeId: 'S5JW92zk32s',
     featured: true
   },
-  { id: 'day-6-a-death-in-the-gunj',
+  {
+    id: 'day-6-a-death-in-the-gunj',
     day: 6,
     type: 'movie',
     title: 'A Death in the Gunj',
@@ -273,14 +284,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '❤️ Meaningful', '🌧️ Rainy Evening'],
     genres: ['Psychological Period Drama', 'Family Tragedy', 'Indian Independent Masterpiece'],
     musicVibe: 'Sagar Desai soft piano, ambient strings, gentle acoustic guitar, emotional 1970s folk score',
-    coverImage: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1Fn-sMe9hJ62gD1zOQefxT-UXUdTHOvQnmyFvQNuiFA&s=10',
     images: [
-      'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
-    ],
+      'https://resizing.flixster.com/XZChX_k6ofMiRVVogLMpGTO-glM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p14300688_i_h10_ab.jpg',
+      "https://media.newyorker.com/photos/5c7075cc621ded2a5f275bed/master/w_2560%2Cc_limit/Sheena-A-Death-in-the-Gunj.jpg",
+      "https://m.media-amazon.com/images/S/pv-target-images/39001898dd2476aa289ba7be5280b7892d387a4895a9b00c96b17c498f9f29c2.jpg",
+      "https://variety.com/wp-content/uploads/2016/09/a-death-in-the-gunj-tiff.jpg"],
     featured: true,
     trailerYoutubeId: 'XliKkuxa_nA'
   },
-  { id: 'day-7-no-smoking',
+  {
+    id: 'day-7-no-smoking',
     day: 7,
     type: 'movie',
     title: 'No Smoking',
@@ -306,12 +320,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
     genres: ['Surreal Thriller', 'Psychological Neo-Noir'],
     musicVibe: 'Dark experimental synth, distorted ambient music',
-    coverImage: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFFdKZEjz0dduDKijA6wissNXJMrri1yDWTGfJQivAv3ML29NH4dcheVMV&s=10',
+    images: ["https://m.media-amazon.com/images/S/pv-target-images/d8caac28e77cfa6f78273d67e19b17a9a4a47b18c7aee756ee4fb9d108978f25.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Vm6Tqt-7KayAM7a00LLPKiFvyY5XdfTADxkmdKA0QZcgBshNkSs0dj4&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSriqMsHOE3gur6rewEqLfYeJNstlJttIWrRg99AeDJQoKbXHiGn1ajSlw_&s=10",
+      "https://preview.redd.it/thoughts-on-no-smoking-ot-it-really-mind-boggling-as-people-v0-ipdfn2lda4ua1.jpg?auto=webp&s=c4ed80a05b4a074726a144a8b7ce8153fbfd07d1"],
     trailerYoutubeId: '53D_Qs1C6k4',
     featured: true
   },
-  { id: 'day-8-raman-raghav-2-0',
+  {
+    id: 'day-8-raman-raghav-2-0',
     day: 8,
     type: 'movie',
     title: 'Raman Raghav 2.0',
@@ -337,12 +355,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Neo-Noir', 'Crime Thriller'],
     musicVibe: 'Dark techno ambience, distorted bass',
-    coverImage: 'https://images.unsplash.com/photo-1518173946687-a4c8a383392e?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxwMWvqLGEbX64c6PTYKoF3d6iYH36YES8A7GBgA8AZQw53Yi7nEje1v4&s=10',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtUIPePt6MJ56nL9wyOFW_AAtC79RUg8cuHxKoICB3C2PQJFwxew7diZr&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQic8va5W6oOh0WHLJp1RAvpVUiy-6kYJ5aCt2zBuic2WaAsPRKafWWhI&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKH4Rc09rX1sMbvcAEavfHq-708CG3pvbyu2RSHwnp8bAWB30C9B1Do1Q&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtUIPePt6MJ56nL9wyOFW_AAtC79RUg8cuHxKoICB3C2PQJFwxew7diZr&s=10"
+    ],
     trailerYoutubeId: 'xq1cEmhVa68',
     featured: true
   },
-  { id: 'day-9-talvar',
+  {
+    id: 'day-9-talvar',
     day: 9,
     type: 'movie',
     title: 'Talvar',
@@ -368,12 +391,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['True Crime', 'Mystery Thriller'],
     musicVibe: 'Slow suspense piano',
-    coverImage: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ7zftaVD0O_jE2_GKJyYgWoQ7SwU504haD6qw98-djFOefzjcg_zJbPib&s=10',
+    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1mgXbM918a19eo6zgoHGQaFoBznZ2WnoZtu7Hhga8JDzMk_wlaHLT_88&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljZzSbJjxfcg2q13iEsFhDQKs-v61aTO_wgak7nf2M51-RwGSzavZceQ&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTO479XBio0pGkJ5cJd8z_p8Mpg-_zGHO1LEu3hqgj6nyu08yCO82cSx4OM&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHQJWNzi_GTMb3e3kwyOqfLXRRfckvXBQXe_l3u4n7lEIri2td6UzAcyY&s=10"],
+    //images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
     trailerYoutubeId: 'aQNMsw8Ljjc',
     featured: true
   },
-  { id: 'day-10-black-friday',
+  {
+    id: 'day-10-black-friday',
     day: 10,
     type: 'movie',
     title: 'Black Friday',
@@ -399,12 +427,18 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['True Crime', 'Docu-Drama'],
     musicVibe: 'Indian Ocean dark docu soundtrack',
-    coverImage: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BMjBmYzc2ZmMtZGMwZS00NDg4LTg2ZmEtYzdiYmUxYTQzNGQ1XkEyXkFqcGc@._V1_.jpg',
+    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcka_r1zVpiirmwS9vYlmv7LJC_PSlLnj001djpJtESwqpHOOWExMnWB9z&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWaoikqt_RPCl6sp092rX-1tDzbAPUoHjfqJ1JW6LaeTDjRV5Hx4fY1g&s=10",
+      "https://aambar.wordpress.com/wp-content/uploads/2016/07/black-friday-2004-2.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_NzoQaldVEx2bF-QGymeXbLBYyq_elVjKdtOigPDIMuBc0j5q5GHbiFqW&s=10"
+    ],
+    //images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
     trailerYoutubeId: 'lnZ0O2IP4Uo',
     featured: true
   },
-  { id: 'day-11-haider',
+  {
+    id: 'day-11-haider',
     day: 11,
     type: 'movie',
     title: 'Haider',
@@ -430,12 +464,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '🤯 Mind-Blowing'],
     genres: ['Psychological Tragedy', 'Political Drama'],
     musicVibe: 'Vishal Bhardwaj orchestral score',
-    coverImage: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNRPcrJO3bNZzITXUur4ZEWLvIr_K0vitOQvtuiDvpOhNG6zzTFY1DGvmb&s=10',
+    images: ["https://sc0.blr1.cdn.digitaloceanspaces.com/article/29389-hdtqaymtru-1572781922.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl4ArIOFTJoPLMECdjPdYGGIW6cFDWI0k63YIpkX8Gzb2MGOcQkkEH7bM&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv-Or27lvKtMhgmY8HEs-Z1y3jseavI24FGhM33l1FNNywCd64wbwMm4o&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjJVYNUQvPz_wI380kJFi_m2Hgemq_Qc5ne2i_mZfJ3NQdoVw8v7_kHLEI&s=10"],
     trailerYoutubeId: 'kxY32xM3VHY',
     featured: true
   },
-  { id: 'day-12-the-lunchbox',
+  {
+    id: 'day-12-the-lunchbox',
     day: 12,
     type: 'movie',
     title: 'The Lunchbox',
@@ -461,12 +499,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful'],
     genres: ['Romantic Drama', 'Slice of Life'],
     musicVibe: 'Soft piano, warm acoustic guitar',
-    coverImage: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpw1ql0X0xMDqpmqbFYUnWfp2J8wiQ2YajR6TagvALLPCpYRzAfditl8Tz&s=10',
+    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGjEX2kxZU9oohvPPcTkv-79cTN-Z-Z8FWn28mJrITEJv534d3L_IITZE&s=10",
+      "https://www.sonyclassics.com/thelunchbox/home/images/gallery/still-1.jpg",
+      "https://m.media-amazon.com/images/S/pv-target-images/70f3d5186f834962ba3d6ad57321658d2dde46d9adddae823d8e310bdfc144fb._SX1080_FMjpg_.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6QIFKF8EFZkJwcPMVcn2aZKgpVgelG27F_mEXdrE7yhimA0RSNKnSwk6S&s=10"],
     trailerYoutubeId: 'sK3R0rvnlPs',
     featured: true
   },
-  { id: 'day-13-maqbool',
+  {
+    id: 'day-13-maqbool',
     day: 13,
     type: 'movie',
     title: 'Maqbool',
@@ -492,12 +534,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Crime Tragedy', 'Underworld Drama'],
     musicVibe: 'Dark orchestral strings, slow cinematic drums',
-    coverImage: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5_79wnGzgVaOkzxWnCZmUKOuim4edtWs0hoHXShr1vJgRW4PnbtMPaLM&s=10',
+    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQVFHCHUzTORsV8HKyBHUqfJUGJrJX5Z1Eisg-STtwaIjXMqPNXobYyq8&s=10",
+      "https://indiancinema.sites.uiowa.edu/sites/indiancinema.sites.uiowa.edu/files/2020-04/Maqbool%25201.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbHK6o5V7oRVD4Ewz0l-0BpILjKUNtESIK00IlJTBH5QvuqWma7MWtZ58&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaVSLcmAijyWE9gKQU0Vx-tlCc5wbbyPVwGDs5RcvN-SNhc5l78bV8MqlD&s=10"],
     trailerYoutubeId: 'LESsmI1rJcQ',
     featured: true
   },
-  { id: 'day-14-kumbalangi-nights',
+  {
+    id: 'day-14-kumbalangi-nights',
     day: 14,
     type: 'movie',
     title: 'Kumbalangi Nights',
@@ -523,12 +569,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful'],
     genres: ['Slice of Life', 'Family Drama'],
     musicVibe: 'Sushin Shyam warm acoustic guitar',
-    coverImage: 'https://images.unsplash.com/photo-1520038410233-7141be7e6f97?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNZ7SrP4IXCjAEtkntLXoCg9vK4xBCkn54RYi2YXtXNvlN-elJZuEE58Q&s=10',
+    images: ["https://sc0.blr1.cdn.digitaloceanspaces.com/article/130591-cujcbfzkkc-1573226920.jpeg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29YPUWLGZ1wJT7mCUBRI2_gpLb9zPUs0Keb4OrmoQo6kRhOhT8uQV3Y4&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7IrL-soJEpsVrFg6rzCKyIJEAg8e4yJ-NL7RxcQDm5gk_CTfyLUSRFT8&s=10",
+      "https://filmysasi.com/wp-content/uploads/2019/02/Kumbalangi-Nights-Malayalam-Film-Review.webp"],
     trailerYoutubeId: '3P4BFBSafF0',
     featured: true
   },
-  { id: 'day-15-ankhon-dekhi',
+  {
+    id: 'day-15-ankhon-dekhi',
     day: 15,
     type: 'movie',
     title: 'Ankhon Dekhi',
@@ -554,12 +604,16 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['🤯 Mind-Blowing', '❤️ Meaningful'],
     genres: ['Philosophical Comedy-Drama', 'Indie'],
     musicVibe: 'Soft piano, reflective ambient music',
-    coverImage: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop'],
-    trailerYoutubeId: 'H3yKUHI2mE4',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoO4rpdN1_jlH-4f2ns3yqzO4dldUIHRIFKT70O38lciBU31TCrPDDwUI&s=10',
+    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4CIw-W6vPlwjHMReBnyyca_K-jjyMakgnWCstgDDrFHGTHRVitxAH4nY&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKXONs8aBZ0CulrEWO_A-BzeeJE5pQmcshj-Ehb23kscFs-om1r2nCKOg&s=10",
+      "https://m.media-amazon.com/images/M/MV5BYTdiMWYwMDQtNTUyOC00M2IxLTk4ODktYjA0YzRmYTk0NjhiXkEyXkFqcGc@._V1_.jpg",
+      "https://images.indianexpress.com/2014/03/aankhon-dekhi.jpg"
+    ], trailerYoutubeId: 'H3yKUHI2mE4',
     featured: true
   },
-  { id: 'day-16-iratta',
+  {
+    id: 'day-16-iratta',
     day: 16,
     type: 'movie',
     title: 'Iratta',
@@ -585,13 +639,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Psychological Thriller', 'Crime Mystery'],
     musicVibe: 'Dark ambient piano, slow suspense build-up',
-    coverImage: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
-    trailerYoutubeId: 'OIMILWxADV0',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTShM32D54ehHxjrvg9fuqNb9AC0C8cQY5k-sxP7hj6DNepQk2i2BNLfNo&s=10',
+    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSqp_XqPmCHJ2JNJyYY5Frvw66pewoCGTYpdu7M1XbVQ&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR66QW7KYu_j22BS_GR9xUy3IGE-HkCBaHLnWAmW3fS0PnC9SyP1y5Bz6Q&s=10",
+      "https://assets.doolnews.com/2023/02/iratta-4-668x350.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy505uLVeXp1YtdG-tf44j2MheQLdpAv3LZEzdS6IPBe_vQxV_4ZRE4RA&s=10"
+    ], trailerYoutubeId: 'OIMILWxADV0',
     hindiTrailerYoutubeId: 'Sv141DrUJas',
     featured: true
   },
-  { id: 'day-17-mard-ko-dard-nahi-hota',
+  {
+    id: 'day-17-mard-ko-dard-nahi-hota',
     day: 17,
     type: 'movie',
     title: 'Mard Ko Dard Nahi Hota',
@@ -627,14 +685,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '🤯 Mind-Blowing', '⚔️ High-Octane'],
     genres: ['Martial Arts Action Comedy', 'Retro Pop-Culture', 'Hindi Cinema'],
     musicVibe: 'Karan Kulkarni retro synthwave, funk-inspired action beats, energetic rock instrumental',
-    coverImage: 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEf5FPLAqItHBJo_0gUZqXIVKnrssll6UgojS5tqMoSA&s',
     images: [
-      'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop'
-    ],
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMYFkb9TTvrnxQpPPivu81D62xk-fENPeljG3jt9oG1A&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtnlt_nnLldktlwxei9rQk_RbkPkZlvvF0AqzLvy_dA&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6lXF8WVfQiAS0SdtVpdJYW3Wj4AMNxTWBt78e9Hdo5w&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDpLHATvoyGZKYJ2dE4QYBFJUQn4dSnuXT515aUjVPtA&s=10"],
     featured: true,
     trailerYoutubeId: 'jb0-Mw_V_bA'
   },
-  { id: 'day-18-jallikattu',
+  {
+    id: 'day-18-jallikattu',
     day: 18,
     type: 'movie',
     title: 'Jallikattu',
@@ -660,13 +721,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Primal Thriller', 'Action Drama'],
     musicVibe: 'Prashant Pillai tribal percussion',
-    coverImage: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ73ydE-SUcruUZa1WTaph1KPOEm7MUh5B4ArBB8J4DYw&s=10',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIdMuR02Jh1SLfsK9nLuAFqjK8E4zMrNHKGlwfLHlTDg&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjnXXPo3_MWRJZazl593Qjp7OvhIkD1pq4AJjaL8q7vg&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvPachfZlNpc67viGNACvzyWPWAxA-pm1MCgo6loSIWw&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfH7iKAI99wdYWBB9zpaxqJhtC3UpWbTAagHa5tgsnw&s=10"],
     trailerYoutubeId: 'ItcQNybOOHM',
     hindiTrailerYoutubeId: 'ykTPOyJVJdQ',
     featured: true
   },
-  { id: 'day-19-super-deluxe',
+  {
+    id: 'day-19-super-deluxe',
     day: 19,
     type: 'movie',
     title: 'Super Deluxe',
@@ -702,15 +767,19 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['🤯 Mind-Blowing', '😱 Thriller', '❤️ Meaningful'],
     genres: ['Hyperlink Neo-Noir', 'Dark Comedy Drama', 'Philosophical Masterpiece'],
     musicVibe: 'Yuvan Shankar Raja dreamlike synth, ambient electronic, emotional retro piano, experimental cinematic soundtrack',
-    coverImage: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMHNisQLWcvmhPWH9kH5098qLdJdjIzbxWw_HOKbfBnee70YGbR_aOx4&s=10',
     images: [
-      'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop'
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9whOyxKXTqbV4Si_mAgYk8NqfFFxTkGa3pmYYUyV3xg&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT394Lp3DdiUXNGoW4xlbTOJeRVJAOry7gUSrqlWGRfNA&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZFjorG1bTmnMIJvqkGYi1iuW7VkrVyBpkNIz4R84ytQ&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGH_FCl-2NSlZQAhNBTiiaCdOR7tQ7afYCkiiyR3gx2Q&s=10"
     ],
     featured: true,
     trailerYoutubeId: '3-Xq_Zz3nPA',
     hindiTrailerYoutubeId: 'zVyR4fLxkWk'
   },
-  { id: 'day-20-mukundan-unni-associates',
+  {
+    id: 'day-20-mukundan-unni-associates',
     day: 20,
     type: 'movie',
     title: 'Mukundan Unni Associates',
@@ -736,13 +805,18 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
     genres: ['Dark Comedy Satire', 'Legal Crime Thriller'],
     musicVibe: 'Upbeat dark jazz piano, suspenseful electronic',
-    coverImage: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BYjlkZWQ1ZWQtY2QyZi00ZDg3LThiOWYtNDgxZGNjY2U3ZGIzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfDoc3MaC1-86fKVVzDNsEFlx1rQv4z02M8bmNcPhAYg&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNOIHcMQygU8LKqbMRd_yjfgqs2S43haayxf1govwBug&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXQAOcpr4wY5NrmVHN_D6d9CIYlsiGb22IlOuChsm2Gw&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaX1CoWb1FlL8VHc1Vgi6sQtvBdMAfEeY_nbxyEYCj3A&s=10"
+    ],
     trailerYoutubeId: '4tzzEsI_qUA',
     hindiTrailerYoutubeId: 'PwAoLTe_yaQ',
     featured: true
   },
-  { id: 'day-21-thithi',
+  {
+    id: 'day-21-thithi',
     day: 21,
     type: 'movie',
     title: 'Thithi',
@@ -778,14 +852,18 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful', '🤯 Mind-Blowing'],
     genres: ['Dark Satirical Comedy', 'Social Realism', 'Kannada Indie Masterpiece'],
     musicVibe: 'Soft Kannada folk instrumental, gentle acoustic guitar, bamboo flute, ambient nature sounds',
-    coverImage: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW_7fim8g8iwYpqNrDc9XeD8H4Mqw3HSjvkjlMsIotPA&s=10',
     images: [
-      'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqDOVJRi0kureCuahBhlGQtAUehFr8kZB-aowJkPyd1A&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8M_QuDEw7493dEFHtMS46zCH-ENHZL9HE9xTZq3ReeQ&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAordiipwPso1RFm5-H-ltzmqNUQbmzHwnwRZFL_Hfmw&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo4bqOwHp_Ph65SBLuesDdpKanJe-YoFjzex76Ss5v-A&s=10"
     ],
     featured: true,
     trailerYoutubeId: 'Q_NltD4Stv4'
   },
-  { id: 'day-22-ee-ma-yau',
+  {
+    id: 'day-22-ee-ma-yau',
     day: 22,
     type: 'movie',
     title: 'Ee.Ma.Yau.',
@@ -811,12 +889,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '🤯 Mind-Blowing'],
     genres: ['Dark Satirical Tragedy', 'Slice of Life'],
     musicVibe: 'Slow piano with ocean ambience, emotional violin',
-    coverImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BNDQ0NTI1NjMtZTUyZC00YzljLWE4N2QtNzFhNjY0MTY2NWU0XkEyXkFqcGc@._V1_.jpg',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4ypviVlJNE3qkufStvxUTNe9dzeyuqaE4G-L_G3YOorfOpD1rmM4Eh50&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvjKO4cQTsFo-X2ZZWqLHHOJfgQaVkohKmRO8am-l4ow&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfWMokIX791_X9KnYVRawR8A1drfskNXrgJx8QmoIaYQ&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL6Rn9KIV7rHEiD3R3QcGVc70C0EPRxk1My0zEFIOhaq9ctyw5kgGnnSYN&s=10"
+    ],
     trailerYoutubeId: 'b8WZa0GvNYs',
     featured: true
   },
-  { id: 'day-23-manjummel-boys',
+  {
+    id: 'day-23-manjummel-boys',
     day: 23,
     type: 'movie',
     title: 'Manjummel Boys',
@@ -842,13 +925,18 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '😱 Thriller'],
     genres: ['Survival Thriller', 'Friendship Drama'],
     musicVibe: 'Sushin Shyam emotional piano, deep cinematic build-up',
-    coverImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://a.ltrbxd.com/resized/film-poster/9/6/4/8/0/8/964808-manjummel-boys-0-600-0-900-crop.jpg?v=b58b986b31',
+    images: ['https://img10.hotstar.com/image/upload/f_auto,q_auto/sources/r1/cms/prod/4736/1714809064736-i',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOLbScUiy4p5rLPbmcv9YZ65ampk5xW2ScAdXOuy9HnA&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPLkd2FTqvXEzu7k02bm5PH1TpIheYuICl1IusRuxdIw&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0I1II-7Yspogb-EGCjBiAeVk2tjw5kjVdDiSKKlOdmg&s=10"
+    ],
     trailerYoutubeId: 'id848Ww1YLo',
     hindiTrailerYoutubeId: 'UM7PPfz8LQU',
     featured: true
   },
-  { id: 'day-24-udaan',
+  {
+    id: 'day-24-udaan',
     day: 24,
     type: 'movie',
     title: 'Udaan',
@@ -874,12 +962,17 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '❤️ Meaningful'],
     genres: ['Coming of Age', 'Indie Drama'],
     musicVibe: 'Amit Trivedi emotional piano, slow indie rock instrumental',
-    coverImage: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7yJqpGo9gw5kHa2DbK_niWneu0hQgo7cbOpKIOTw1w6Sa4wlD9iXSxEo&s=10',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ97ERwM5eIWTPGslX1OctOzm_gbYueUUca7bSpQ3MYiA&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjylvTytmGcBytvnZTGDmijLdtgFcH8SXJ7mxIfseveA&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKLR64Yne4Npme3wXj1Ob4l8ArW5BHdJCwyNZzuU6bDw&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSKYxFNxHCGelJ5KNY7PVWgxcgtK57_2Mrv3Ti0OYveQ&s=10"
+    ],
     trailerYoutubeId: 'wEJxe2bE-cE',
     featured: true
   },
-  { id: 'day-25-october',
+  {
+    id: 'day-25-october',
     day: 25,
     type: 'movie',
     title: 'October',
@@ -910,7 +1003,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: '7vracgLyJwI',
     featured: true
   },
-  { id: 'day-26-96',
+  {
+    id: 'day-26-96',
     day: 26,
     type: 'movie',
     title: '96',
@@ -942,7 +1036,8 @@ export const HUNTS_DATA: HuntItem[] = [
     hindiTrailerYoutubeId: 'AW6E5vXSfXo',
     featured: true
   },
-  { id: 'day-27-the-great-indian-kitchen',
+  {
+    id: 'day-27-the-great-indian-kitchen',
     day: 27,
     type: 'movie',
     title: 'The Great Indian Kitchen',
@@ -973,7 +1068,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'k_E6ctiFn6I',
     featured: true
   },
-  { id: 'day-28-drishyam',
+  {
+    id: 'day-28-drishyam',
     day: 28,
     type: 'movie',
     title: 'Drishyam',
@@ -1004,7 +1100,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'eMASubc1y_k',
     featured: true
   },
-  { id: 'day-29-kadaisi-vivasayi',
+  {
+    id: 'day-29-kadaisi-vivasayi',
     day: 29,
     type: 'movie',
     title: 'Kadaisi Vivasayi',
@@ -1045,7 +1142,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: 'cGorkMwcjd4'
   },
-  { id: 'day-30-court',
+  {
+    id: 'day-30-court',
     day: 30,
     type: 'movie',
     title: 'Court',
@@ -1088,7 +1186,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: 'UWvOAHjQysw'
   },
-  { id: 'day-31-nayakan',
+  {
+    id: 'day-31-nayakan',
     day: 31,
     type: 'movie',
     title: 'Nayakan',
@@ -1131,7 +1230,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: '1S6YkmYvgi8'
   },
-  { id: 'day-32-ugramm',
+  {
+    id: 'day-32-ugramm',
     day: 32,
     type: 'movie',
     title: 'Ugramm',
@@ -1174,7 +1274,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: 'f7XQSsZLjmo'
   },
-  { id: 'day-33-kaithi',
+  {
+    id: 'day-33-kaithi',
     day: 33,
     type: 'movie',
     title: 'Kaithi',
@@ -1218,7 +1319,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'g79CvhHaj5I',
     hindiTrailerYoutubeId: 'AQSwPdQo614'
   },
-  { id: 'day-34-ayyappanum-koshiyum',
+  {
+    id: 'day-34-ayyappanum-koshiyum',
     day: 34,
     type: 'movie',
     title: 'Ayyappanum Koshiyum',
@@ -1261,7 +1363,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: '8Wx3dAQ8pr4'
   },
-  { id: 'day-35-charlie',
+  {
+    id: 'day-35-charlie',
     day: 35,
     type: 'movie',
     title: 'Charlie',
@@ -1304,7 +1407,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: 'oYxtLNJJ54Y'
   },
-  { id: 'day-36-joji',
+  {
+    id: 'day-36-joji',
     day: 36,
     type: 'movie',
     title: 'Joji',
@@ -1347,7 +1451,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: '9yULZ8y1J-s'
   },
-  { id: 'day-37-kammatti-paadam',
+  {
+    id: 'day-37-kammatti-paadam',
     day: 37,
     type: 'movie',
     title: 'Kammatti Paadam',
@@ -1390,7 +1495,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: 'B-m13AJMxW4'
   },
-  { id: 'day-38-eeb-allay-ooo',
+  {
+    id: 'day-38-eeb-allay-ooo',
     day: 38,
     type: 'movie',
     title: 'Eeb Allay Ooo!',
@@ -1433,7 +1539,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: 'e7HDLJMtwww'
   },
-  { id: 'day-39-visaranai',
+  {
+    id: 'day-39-visaranai',
     day: 39,
     type: 'movie',
     title: 'Visaranai',
@@ -1476,7 +1583,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: '4mnzK2KIz9U'
   },
-  { id: 'day-40-gangs-of-wasseypur-part-1',
+  {
+    id: 'day-40-gangs-of-wasseypur-part-1',
     day: 40,
     type: 'movie',
     title: 'Gangs of Wasseypur – Part 1',
@@ -1519,7 +1627,8 @@ export const HUNTS_DATA: HuntItem[] = [
     featured: true,
     trailerYoutubeId: '9ZpPQdrHfl8'
   },
-  { id: 'day-41-kshanam',
+  {
+    id: 'day-41-kshanam',
     day: 41,
     type: 'movie',
     title: 'Kshanam',
@@ -1562,7 +1671,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'OroFSmQQm1U',
     featured: true
   },
-  { id: 'day-42-ratsasan',
+  {
+    id: 'day-42-ratsasan',
     day: 42,
     type: 'movie',
     title: 'Ratsasan',
@@ -1605,7 +1715,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'GsrN7rNch9Y',
     featured: true
   },
-  { id: 'day-43-maanagaram',
+  {
+    id: 'day-43-maanagaram',
     day: 43,
     type: 'movie',
     title: 'Maanagaram',
@@ -1648,7 +1759,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'R7MR12XOMGQ',
     featured: true
   },
-  { id: 'day-44-aaranya-kaandam',
+  {
+    id: 'day-44-aaranya-kaandam',
     day: 44,
     type: 'movie',
     title: 'Aaranya Kaandam',
@@ -1691,7 +1803,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'haI-Rq8PX3g',
     featured: true
   },
-  { id: 'day-45-lucia',
+  {
+    id: 'day-45-lucia',
     day: 45,
     type: 'movie',
     title: 'Lucia',
@@ -1734,7 +1847,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'pgIL2H-OdcA',
     featured: true
   },
-  { id: 'day-46-anjaam-pathiraa',
+  {
+    id: 'day-46-anjaam-pathiraa',
     day: 46,
     type: 'movie',
     title: 'Anjaam Pathiraa',
@@ -1777,7 +1891,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'dn5KZD1E67Y',
     featured: true
   },
-  { id: 'day-47-mukkabaaz',
+  {
+    id: 'day-47-mukkabaaz',
     day: 47,
     type: 'movie',
     title: 'Mukkabaaz',
@@ -1820,7 +1935,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'fl3gun0J8XM',
     featured: true
   },
-  { id: 'day-48-sarpatta-parambarai',
+  {
+    id: 'day-48-sarpatta-parambarai',
     day: 48,
     type: 'movie',
     title: 'Sarpatta Parambarai',
@@ -1863,7 +1979,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'XTTAHt4VlUA',
     featured: true
   },
-  { id: 'day-49-agent-sai-srinivasa-athreya',
+  {
+    id: 'day-49-agent-sai-srinivasa-athreya',
     day: 49,
     type: 'movie',
     title: 'Agent Sai Srinivasa Athreya',
@@ -1907,7 +2024,8 @@ export const HUNTS_DATA: HuntItem[] = [
     hindiTrailerYoutubeId: '7UWFn0MR0Og',
     featured: true
   },
-  { id: 'day-50-ulidavaru-kandanthe',
+  {
+    id: 'day-50-ulidavaru-kandanthe',
     day: 50,
     type: 'movie',
     title: 'Ulidavaru Kandanthe',
@@ -1950,7 +2068,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'POJ_6EtGeMw',
     featured: true
   },
-  { id: 'day-51-jigarthanda',
+  {
+    id: 'day-51-jigarthanda',
     day: 51,
     type: 'movie',
     title: 'Jigarthanda',
@@ -1993,7 +2112,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: '_T8n-EHr4ZE',
     featured: true
   },
-  { id: 'day-52-kaaka-muttai',
+  {
+    id: 'day-52-kaaka-muttai',
     day: 52,
     type: 'movie',
     title: 'Kaaka Muttai',
@@ -2036,7 +2156,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'bm6RCZgptkU',
     featured: true
   },
-  { id: 'day-53-the-disciple',
+  {
+    id: 'day-53-the-disciple',
     day: 53,
     type: 'movie',
     title: 'The Disciple',
@@ -2079,7 +2200,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'uIqAOGM_zZ0',
     featured: true
   },
-  { id: 'day-54-harishchandrachi-factory',
+  {
+    id: 'day-54-harishchandrachi-factory',
     day: 54,
     type: 'movie',
     title: 'Harishchandrachi Factory',
@@ -2122,7 +2244,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'LPvvMbXLfpA',
     featured: true
   },
-  { id: 'day-55-sairat',
+  {
+    id: 'day-55-sairat',
     day: 55,
     type: 'movie',
     title: 'Sairat',
@@ -2165,7 +2288,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'iShPI_JF524',
     featured: true
   },
-  { id: 'day-56-c-o-kancharapalem',
+  {
+    id: 'day-56-c-o-kancharapalem',
     day: 56,
     type: 'movie',
     title: 'C/o Kancharapalem',
@@ -2208,7 +2332,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: '-YeQZwlNeaY',
     featured: true
   },
-  { id: 'day-57-killa',
+  {
+    id: 'day-57-killa',
     day: 57,
     type: 'movie',
     title: 'Killa',
@@ -2251,7 +2376,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 't3B_WzebSHM',
     featured: true
   },
-  { id: 'day-58-village-rockstars',
+  {
+    id: 'day-58-village-rockstars',
     day: 58,
     type: 'movie',
     title: 'Village Rockstars',
@@ -2294,7 +2420,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'tTov2nVgXaU',
     featured: true
   },
-  { id: 'day-59-fandry',
+  {
+    id: 'day-59-fandry',
     day: 59,
     type: 'movie',
     title: 'Fandry',
@@ -2337,7 +2464,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'BjHsL-_KG30',
     featured: true
   },
-  { id: 'day-60-photograph',
+  {
+    id: 'day-60-photograph',
     day: 60,
     type: 'movie',
     title: 'Photograph',
@@ -2380,7 +2508,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'hUL2z8Ps_Ik',
     featured: true
   },
-  { id: 'day-61-titli',
+  {
+    id: 'day-61-titli',
     day: 61,
     type: 'movie',
     title: 'Titli',
@@ -2423,7 +2552,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'OOqiQiMkXDA',
     featured: true
   },
-  { id: 'day-62-kothanodi',
+  {
+    id: 'day-62-kothanodi',
     day: 62,
     type: 'movie',
     title: 'Kothanodi',
@@ -2466,7 +2596,8 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'k-jlVdIBBak',
     featured: true
   },
-  { id: 'day-69-tabbar',
+  {
+    id: 'day-69-tabbar',
     day: 69,
     type: 'series',
     title: 'Tabbar',
@@ -2506,7 +2637,8 @@ export const HUNTS_DATA: HuntItem[] = [
     images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
     featured: true
   },
-  { id: 'day-70-kohrra',
+  {
+    id: 'day-70-kohrra',
     day: 70,
     type: 'series',
     title: 'Kohrra',
@@ -2546,7 +2678,8 @@ export const HUNTS_DATA: HuntItem[] = [
     images: ['https://images.unsplash.com/photo-1518173946687-a4c8a383392e?q=80&w=1000&auto=format&fit=crop'],
     featured: true
   },
-  { id: 'day-71-gullak',
+  {
+    id: 'day-71-gullak',
     day: 71,
     type: 'series',
     title: 'Gullak',
@@ -2586,7 +2719,8 @@ export const HUNTS_DATA: HuntItem[] = [
     images: ['https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1000&auto=format&fit=crop'],
     featured: true
   },
-  { id: 'day-72-yeh-meri-family',
+  {
+    id: 'day-72-yeh-meri-family',
     day: 72,
     type: 'series',
     title: 'Yeh Meri Family',
@@ -2626,7 +2760,8 @@ export const HUNTS_DATA: HuntItem[] = [
     images: ['https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1000&auto=format&fit=crop'],
     featured: true
   },
-  { id: 'day-73-paatal-lok',
+  {
+    id: 'day-73-paatal-lok',
     day: 73,
     type: 'series',
     title: 'Paatal Lok',
@@ -2666,7 +2801,8 @@ export const HUNTS_DATA: HuntItem[] = [
     images: ['https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop'],
     featured: true
   },
-  { id: 'day-74-delhi-crime',
+  {
+    id: 'day-74-delhi-crime',
     day: 74,
     type: 'series',
     title: 'Delhi Crime',
@@ -2706,7 +2842,8 @@ export const HUNTS_DATA: HuntItem[] = [
     images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop'],
     featured: true
   },
-  { id: 'day-75-aspirants',
+  {
+    id: 'day-75-aspirants',
     day: 75,
     type: 'series',
     title: 'Aspirants',

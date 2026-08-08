@@ -10,9 +10,19 @@ import CinematicImage from './CinematicImage';
 export default function HuntArchiveTimeline() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [displayLimit, setDisplayLimit] = useState<number>(10);
+  const [filterType, setFilterType] = useState<'all' | 'movie' | 'series'>('all');
 
-  const displayedHunts = HUNTS_DATA.slice(0, displayLimit);
-  const hasMore = displayLimit < HUNTS_DATA.length;
+  const filteredHunts = HUNTS_DATA.filter((h) => {
+    if (filterType === 'movie') return h.type === 'movie';
+    if (filterType === 'series') return h.type === 'series';
+    return true;
+  });
+
+  const displayedHunts = filteredHunts.slice(0, displayLimit);
+  const hasMore = displayLimit < filteredHunts.length;
+
+  const movieCount = HUNTS_DATA.filter((h) => h.type === 'movie').length;
+  const seriesCount = HUNTS_DATA.filter((h) => h.type === 'series').length;
 
   return (
     <section
@@ -26,7 +36,7 @@ export default function HuntArchiveTimeline() {
     >
       <div className="section-inner">
         {/* Header */}
-        <ScrollReveal style={{ maxWidth: 640, marginBottom: 'var(--space-16)' }}>
+        <ScrollReveal style={{ maxWidth: 640, marginBottom: 'var(--space-12)' }}>
           <span
             style={{
               fontFamily: 'var(--font-sans)',
@@ -68,14 +78,102 @@ export default function HuntArchiveTimeline() {
           </p>
         </ScrollReveal>
 
-        {/* Movie Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-            gap: 'var(--space-6)',
-          }}
-        >
+        {/* Movies / Series Segmented Filter Buttons */}
+        <ScrollReveal style={{ marginBottom: 'var(--space-10)' }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+              padding: 4,
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: '24px',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                setFilterType('all');
+                setDisplayLimit(10);
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 14px',
+                borderRadius: '20px',
+                border: 'none',
+                backgroundColor: filterType === 'all' ? 'var(--accent)' : 'transparent',
+                color: filterType === 'all' ? '#000000' : 'var(--text-secondary)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.78rem',
+                fontWeight: filterType === 'all' ? 600 : 400,
+                cursor: 'pointer',
+                transition: 'all 200ms ease',
+              }}
+            >
+              All ({HUNTS_DATA.length})
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setFilterType('movie');
+                setDisplayLimit(10);
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 14px',
+                borderRadius: '20px',
+                border: 'none',
+                backgroundColor: filterType === 'movie' ? 'var(--accent)' : 'transparent',
+                color: filterType === 'movie' ? '#000000' : 'var(--text-secondary)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.78rem',
+                fontWeight: filterType === 'movie' ? 600 : 400,
+                cursor: 'pointer',
+                transition: 'all 200ms ease',
+              }}
+            >
+              <Film size={12} strokeWidth={2} />
+              Movies ({movieCount})
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setFilterType('series');
+                setDisplayLimit(10);
+              }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                padding: '6px 14px',
+                borderRadius: '20px',
+                border: 'none',
+                backgroundColor: filterType === 'series' ? 'var(--accent)' : 'transparent',
+                color: filterType === 'series' ? '#000000' : 'var(--text-secondary)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.78rem',
+                fontWeight: filterType === 'series' ? 600 : 400,
+                cursor: 'pointer',
+                transition: 'all 200ms ease',
+              }}
+            >
+              <Tv size={12} strokeWidth={2} />
+              Series ({seriesCount})
+            </button>
+          </div>
+        </ScrollReveal>
+
+        {/* Movie Grid — 2 columns on mobile */}
+        <div className="archive-movie-grid">
           {displayedHunts.map((hunt, idx) => {
             const isHovered = hoveredId === hunt.id;
             const delayClass = `cms-sr-delay-${Math.min((idx % 6) + 1, 6)}`;
@@ -199,6 +297,7 @@ export default function HuntArchiveTimeline() {
                 {/* Below-image metadata */}
                 <div>
                   <h3
+                    className="archive-card-title"
                     style={{
                       fontFamily: 'var(--font-serif)',
                       fontSize: 'var(--text-base)',
@@ -266,7 +365,7 @@ export default function HuntArchiveTimeline() {
               className="btn btn-secondary"
               style={{ gap: 8 }}
             >
-              Show More ({displayedHunts.length} of {HUNTS_DATA.length})
+              Show More ({displayedHunts.length} of {filteredHunts.length})
             </button>
           )}
 
@@ -280,6 +379,34 @@ export default function HuntArchiveTimeline() {
           </Link>
         </div>
       </div>
+
+      <style>{`
+        .archive-movie-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+          .archive-movie-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .archive-movie-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+          }
+        }
+
+        @media (max-width: 639px) {
+          .archive-card-title {
+            font-size: 0.95rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

@@ -240,7 +240,7 @@ export default function CinematicTrailerModal({
           <iframe
             ref={iframeRef}
             onLoad={handleIframeLoad}
-            src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&autoplay=1&rel=0&modestbranding=1&controls=1`}
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?enablejsapi=1&autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=1`}
             title={`${title} trailer`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen

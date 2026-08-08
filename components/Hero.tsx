@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -44,8 +44,8 @@ export default function Hero() {
       <section
         ref={sectionRef}
         aria-label="Movie Hunt — Stories worth your time"
+        className="hero-section"
         style={{
-          minHeight: '100vh',
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
@@ -121,9 +121,10 @@ export default function Hero() {
           </div>
 
           <h1
+            className="hero-title"
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(2.75rem, 9vw, 5.25rem)',
+              fontSize: 'clamp(2.5rem, 8.5vw, 5.25rem)',
               lineHeight: 1.05,
               letterSpacing: '-0.025em',
               color: 'var(--text-primary)',
@@ -141,13 +142,14 @@ export default function Hero() {
           </h1>
 
           <p
+            className="hero-subtitle"
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: 'var(--text-lg)',
               color: 'var(--text-secondary)',
               lineHeight: 'var(--leading-relaxed)',
               maxWidth: 440,
-              margin: '0 auto var(--space-12)',
+              margin: '0 auto var(--space-10)',
               fontWeight: 300,
               opacity: textVisible ? 1 : 0,
               transform: textVisible ? 'none' : 'translateY(10px)',
@@ -187,6 +189,7 @@ export default function Hero() {
 
         <div
           aria-hidden="true"
+          className="hero-scroll-indicator"
           style={{
             position: 'absolute',
             bottom: 36,
@@ -226,6 +229,28 @@ export default function Hero() {
       </section>
 
       <SurpriseMeModal isOpen={surpriseOpen} onClose={() => setSurpriseOpen(false)} />
+
+      <style>{`
+        .hero-section {
+          min-height: 100vh;
+        }
+        @media (max-width: 767px) {
+          .hero-section {
+            min-height: auto !important;
+            padding-top: 105px !important;
+            padding-bottom: 48px !important;
+          }
+          .hero-title {
+            margin-bottom: 12px !important;
+          }
+          .hero-subtitle {
+            font-size: 0.95rem !important;
+            margin-bottom: 20px !important;
+          }
+          .hero-scroll-indicator {
+            display: none !important;
+          }
+      `}</style>
     </>
   );
 }

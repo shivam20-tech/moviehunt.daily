@@ -267,14 +267,8 @@ export default function CollectionsPage() {
                   </span>
                 </div>
 
-                {/* Movie Grid */}
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-                    gap: 'var(--space-6)',
-                  }}
-                >
+                {/* Movie Grid — 2 columns on mobile */}
+                <div className="collection-movie-grid">
                   {hunts.map((hunt) => (
                     <Link
                       key={hunt.id}
@@ -460,6 +454,26 @@ export default function CollectionsPage() {
       <Footer />
 
       <style>{`
+        .collection-movie-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+          .collection-movie-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .collection-movie-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+          }
+        }
+
         .collection-card:hover .collection-card-img {
           transform: scale(1.05);
         }

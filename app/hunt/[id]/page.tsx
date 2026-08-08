@@ -58,7 +58,7 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
     notFound();
   }
 
-  const similarPicks = getSimilarPicks(hunt, 3);
+  const similarPicks = getSimilarPicks(hunt, 4);
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-[#f4f4f0] selection:bg-[#e5a93c] selection:text-[#0a0a0f]">
@@ -182,6 +182,7 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
           title={hunt.title}
           year={hunt.year}
           language={hunt.language}
+          coverImage={hunt.coverImage}
         />
         {/* Story & Recommendation Details */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -303,34 +304,42 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
           </div>
         )}
 
-        {/* Similar Picks */}
-        <div className="pt-8 border-t border-white/10 space-y-6">
-          <h3 className="text-2xl font-bold text-white font-serif">
+        {/* Similar Picks — 2 Columns on mobile */}
+        <div className="pt-8 border-t border-white/10 space-y-4 sm:space-y-6">
+          <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">
             If You Liked This, Also Explore
           </h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {similarPicks.map((item) => (
               <Link
                 key={item.id}
                 href={`/hunt/${item.id}`}
-                className="group p-4 rounded-2xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/50 transition-all space-y-3"
+                className="group p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/50 transition-all space-y-2.5 flex flex-col justify-between"
               >
-                <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
+                <div className="relative aspect-[2/3] rounded-lg sm:rounded-xl overflow-hidden">
                   <img
                     src={item.coverImage}
                     alt={item.title}
+                    loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/80 text-[#e5a93c] text-[10px] font-bold">
-                    {item.type === 'movie' ? '🎬 Film' : '📺 Series'}
+                  <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md text-[#e5a93c] text-[10px] font-bold border border-[#e5a93c]/30">
+                    {item.type === 'movie' ? 'Film' : 'Series'}
                   </div>
+                  {item.imdbRating && (
+                    <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/80 text-yellow-400 text-[10px] font-bold border border-yellow-500/30 flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-yellow-400 stroke-none" />
+                      <span>{item.imdbRating}</span>
+                    </div>
+                  )}
                 </div>
+
                 <div>
-                  <h4 className="text-base font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors">
+                  <h4 className="text-xs sm:text-base font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
                     {item.title} ({item.year})
                   </h4>
-                  <p className="text-xs text-zinc-400 line-clamp-2 mt-1">{item.hook}</p>
+                  <p className="text-[11px] sm:text-xs text-zinc-400 italic line-clamp-2 mt-0.5">&ldquo;{item.hook}&rdquo;</p>
                 </div>
               </Link>
             ))}
