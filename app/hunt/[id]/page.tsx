@@ -6,6 +6,7 @@ import { Star, ExternalLink, ArrowLeft, CheckCircle2, Film, Play, Sparkles, Imag
 import { notFound } from 'next/navigation';
 import MovieImageSlider from '@/components/MovieImageSlider';
 import MovieTrailerPlayer from '@/components/MovieTrailerPlayer';
+import SmartBackButton from '@/components/SmartBackButton';
 
 export async function generateStaticParams() {
   return HUNTS_DATA.map((hunt) => ({
@@ -74,12 +75,7 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-[#e5a93c] mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Home
-          </Link>
+          <SmartBackButton />
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             {/* Poster Card */}
@@ -268,10 +264,21 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
                   <span className="text-[#e5a93c] font-semibold">{hunt.availableOn.name}</span>
                 </div>
 
-                <div className="pt-2 flex justify-between">
-                  <span className="text-zinc-500">Music Vibe</span>
-                  <span className="text-zinc-300 text-right italic">{hunt.musicVibe}</span>
+                <div className="pt-2 flex justify-between items-center">
+                  <span className="text-zinc-500">Audio Track</span>
+                  <span className="text-zinc-200 font-medium text-right text-xs">
+                    {hunt.hindiTrailerYoutubeId ? '🇮🇳 Hindi Dubbed Available' : `🎬 ${hunt.language} (Original)`}
+                  </span>
                 </div>
+
+                {hunt.bestFor && hunt.bestFor.length > 0 && (
+                  <div className="pt-2 flex justify-between items-center">
+                    <span className="text-zinc-500">Ideal Watch Setup</span>
+                    <span className="text-[#e5a93c] font-semibold text-right text-xs">
+                      ✨ {hunt.bestFor[0]}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

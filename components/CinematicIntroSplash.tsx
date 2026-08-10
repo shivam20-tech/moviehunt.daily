@@ -36,12 +36,16 @@ export default function CinematicIntroSplash() {
 
       {/* Cinematic Content Wrapper */}
       <div className="relative z-10 max-w-2xl text-center space-y-8 animate-fadeIn">
-        {/* Animated Film Reel Icon */}
-        <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#e5a93c]/60 animate-spin" style={{ animationDuration: '6s' }} />
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#e5a93c] to-[#c0392b] p-[1px] shadow-2xl flex items-center justify-center">
-            <div className="w-full h-full bg-[#0a0a0f] rounded-[15px] flex items-center justify-center">
-              <Film className="w-8 h-8 text-[#e5a93c] animate-bounce" />
+        {/* Animated Film Reel Icon with Official Logo */}
+        <div className="relative w-28 h-28 mx-auto flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full border-2 border-dashed border-[#e5a93c]/60 animate-spin" style={{ animationDuration: '8s' }} />
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#e5a93c] to-[#c0392b] p-[2px] shadow-2xl flex items-center justify-center overflow-hidden">
+            <div className="w-full h-full bg-[#0a0a0f] rounded-full overflow-hidden flex items-center justify-center">
+              <img
+                src="/logo.jpg"
+                alt="MovieHunt Official Logo"
+                className="w-full h-full object-cover animate-pulse"
+              />
             </div>
           </div>
         </div>

@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: 'MovieHunt — Stop Searching. Start Watching Stories Worth Your Time.',
   description:
     'MovieHunt is a human-curated movie & series recommendation platform. Finding movies actually worth watching, one day at a time.',
+  icons: {
+    icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
   keywords: [
     'MovieHunt',
     'Movie Recommendations',

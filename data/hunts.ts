@@ -998,8 +998,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '❤️ Meaningful'],
     genres: ['Poetic Drama', 'Slice of Life'],
     musicVibe: 'Soft ambient piano, gentle emotional strings',
-    coverImage: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BN2U1MmE4MjAtNGY5Zi00YTgyLTkwNGUtZTM4Y2Q1MzUyOWZkXkEyXkFqcGc@._V1_.jpg',
+    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0PTO6NX4NFVDOwUX_6Y5l683yeLDccISYYhnDgdKkg&s=10',
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlcN4rFN0o55ebRRNw-BYdb09GBTKrPW4-efJrLe0jkg&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnypUUV51c6Um6VUqxUfUjofJV0qdL_iKUI6yO5KFxTA&s=10",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ11zDVdbaJMRVrLMhokz2YT6TfneldqZy-vUCXZ9kjtw&s=10"
+    ],
     trailerYoutubeId: '7vracgLyJwI',
     featured: true
   },
@@ -1030,8 +1034,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '❤️ Meaningful'],
     genres: ['Romantic Drama', 'Nostalgic Masterpiece'],
     musicVibe: 'Govind Vasantha emotional piano, nostalgic violin',
-    coverImage: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNshBW6Rj1aQH8hEe6ZduWSDNsPCD1rkSPg-cgBCot8w&s=10',
+    images: ['https://image.tmdb.org/t/p/original/qzu94AvnZ1az30sTUuibx2bXpfs.jpg',
+      "https://image.tmdb.org/t/p/original/t35gd4Lmw9suAAvTxnh1pMP41Yy.jpg",
+      "https://image.tmdb.org/t/p/original/3cAaj6Z56zYaagyoAi55CGx6oHg.jpg",
+      "https://image.tmdb.org/t/p/original/exJu48FYngKifMWKelNPr6hPFjU.jpg"
+    ],
     trailerYoutubeId: 'r0synl-lI4I',
     hindiTrailerYoutubeId: 'AW6E5vXSfXo',
     featured: true
@@ -1063,8 +1071,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['❤️ Meaningful', '🤯 Mind-Blowing'],
     genres: ['Social Drama', 'Realist Cinema'],
     musicVibe: 'Slow ambient piano, minimal emotional strings',
-    coverImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://image.tmdb.org/t/p/original/4jgiaVOGD8sTjWlwBdx8q5JMJM3.jpg',
+    images: ['https://image.tmdb.org/t/p/original/qwu61UwZVnYW9z2pRy7tjt8SicH.jpg',
+      "https://image.tmdb.org/t/p/original/nxcL633U9Av4M3HzcZgRmIYlo9v.jpg",
+      "https://image.tmdb.org/t/p/original/pIXCm4p1iEyH8KEzTp8xQ0H4L0K.jpg",
+      "https://image.tmdb.org/t/p/original/scV9pqsBTAteZIkdToY6GGgpp7L.jpg"
+    ],
     trailerYoutubeId: 'k_E6ctiFn6I',
     featured: true
   },
@@ -1095,8 +1107,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Crime Mystery', 'Family Thriller'],
     musicVibe: 'Slow suspense piano, deep cinematic bass',
-    coverImage: 'https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/drishyam-malayalam-et00019031-10-09-2020-05-19-24.jpg',
+    images: ['https://image.tmdb.org/t/p/original/vCaMZYVf9ylB7I2fx8c0kbuSC2A.jpg',
+      "https://image.tmdb.org/t/p/original/57OD8YRmkLl2xp8bXG1yEpguigX.jpg",
+      "https://image.tmdb.org/t/p/original/gJ1adxVBD6nsIDXGxftd68KppPa.jpg",
+      "https://image.tmdb.org/t/p/original/7sTExjC0M124D0yJuNvh1pNxyKJ.jpg"
+    ],
     trailerYoutubeId: 'eMASubc1y_k',
     featured: true
   },
@@ -1137,8 +1153,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful'],
     genres: ['Rural Drama', 'Slice of Life', 'Tamil Masterpiece'],
     musicVibe: 'Soft flute, ambient nature sounds, emotional piano, slow cinematic strings',
-    coverImage: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://i.pinimg.com/736x/e0/55/31/e055318a198fce1eb67439feddece7a2.jpg',
+    images: ['https://image.tmdb.org/t/p/original/nTFleA0vJNfphRaurvDoItnzTkr.jpg',
+      "https://image.tmdb.org/t/p/original/fpmRRiMcatplfCgbjzmWjGAWLrH.jpg",
+      "https://image.tmdb.org/t/p/original/uuQW9Yl2NCrwRH0tX2EeDIOGQIg.jpg",
+      "https://image.tmdb.org/t/p/original/aiXZ1GLeigSwsmEpQptEGz98I2d.jpg"
+    ],
     featured: true,
     trailerYoutubeId: 'cGorkMwcjd4'
   },
@@ -1179,9 +1199,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['❤️ Meaningful', '🤯 Mind-Blowing', '😢 Emotional'],
     genres: ['Hyper-Realistic Courtroom Drama', 'Social Realism', 'Marathi Masterpiece'],
     musicVibe: 'Minimal piano, ambient courtroom atmosphere, soft cello, slow cinematic strings',
-    coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BOTAyNjc4MjA2Ml5BMl5BanBnXkFtZTgwMzY3MzIwNjE@._V1_.jpg',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/lK9R56dfj182Uz4THzEZ5vrUEn.jpg',
+      "https://www.rogerebert.com/wp-content/uploads/2024/03/Court.jpg",
+      "https://sc0.blr1.digitaloceanspaces.com/large/800982-article-rivmvantha-1450933384.jpeg",
+      "https://image.tmdb.org/t/p/original/ic6rAro6ASlmUgk0wOtWxgAHxFq.jpg"
     ],
     featured: true,
     trailerYoutubeId: 'UWvOAHjQysw'
@@ -1223,9 +1246,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['👑 Epic', '🤯 Mind-Blowing', '❤️ Meaningful'],
     genres: ['Crime Saga', 'Period Gangster Drama', 'Tamil Masterpiece'],
     musicVibe: 'Ilaiyaraaja epic orchestral strings, slow cinematic drums, vintage crime soundtrack',
-    coverImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p13020937_p_v10_aa.jpg',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/gLPFagMKJaraVUvuWqRtTObSejm.jpg',
+      "https://image.tmdb.org/t/p/original/aXrUUYoRkaKKQEiN9KexrtPqjUy.jpg",
+      "https://image.tmdb.org/t/p/original/z6Zcoj8jE5i3TW2B2nk4pIVYMGx.jpg",
+      "https://image.tmdb.org/t/p/original/1SAFJkosiI78SlNiYpDDSJSocsj.jpg"
     ],
     featured: true,
     trailerYoutubeId: '1S6YkmYvgi8'
@@ -1267,9 +1293,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '⚔️ High-Octane'],
     genres: ['Dark Action Thriller', 'Neo-Noir', 'Kannada Cinema'],
     musicVibe: 'Heavy cinematic bass, dark orchestral drums, industrial action score',
-    coverImage: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BMTc2MDkwNzk3OF5BMl5BanBnXkFtZTgwMTQ3NTcyMTE@._V1_FMjpg_UX1000_.jpg',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/2RHKfO5oDU9PXOj2amTeAuu1vdE.jpg',
+      "https://cinemachaat.com/wp-content/uploads/2014/05/agastya-and-nitya.jpg",
+      "https://images.news18.com/kannada/uploads/2024/02/Ugramm-1-2024-02-376bff503cc4f05270aebb4e3e304db1-3x2.jpg",
+      "https://m.media-amazon.com/images/M/MV5BY2Y1NTg3MDMtOTQ5My00N2YwLTg3ODgtNmUxNjYwYzIzOGFjXkEyXkFqcGdeQXRodW1ibmFpbC1pbml0aWFsaXplcg@@._V1_.jpg"
     ],
     featured: true,
     trailerYoutubeId: 'f7XQSsZLjmo'
@@ -1311,9 +1340,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '⚔️ High-Octane'],
     genres: ['Action Thriller', 'Neo-Noir', 'LCU Universe'],
     musicVibe: 'Sam C.S. dark cinematic bass, intense trailer percussion, high-tension action score',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://m.media-amazon.com/images/S/pv-target-images/b139be81ca00b0259849a5771a12f9f6f104587f06a32153e816336a374ee884.jpg',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/k5iCKAV2VVyXGQbuYRLPmSXiBwm.jpg',
+      "https://image.tmdb.org/t/p/original/clRFhXEpNRNOmbSrbKIcuZ9GsyM.jpg",
+      "https://image.tmdb.org/t/p/original/3g6aPYy8Io6yoS91sB14XMd4vEj.jpg",
+      "https://image.tmdb.org/t/p/original/5bmoUIisfXEgTPlO9OTnBVA2XWG.jpg"
     ],
     featured: true,
     trailerYoutubeId: 'g79CvhHaj5I',
@@ -2633,8 +2665,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '🌧️ Dark & Atmospheric'],
     genres: ['Crime Thriller', 'Family Drama', 'Noir Suspense'],
     musicVibe: 'Slow suspense strings, dark ambient synth, deep cinematic bass',
-    coverImage: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://image.tmdb.org/t/p/original/otlPrZEtwTlNfyZWisUgZgAiLUR.jpg',
+    images: ['https://planetbollywood.com/wp/wp-content/uploads/2021/10/Tabbar1.jpg',
+      "https://sc0.blr1.cdn.digitaloceanspaces.com/article/165070-rcqpmpqucp-1634059054.jpeg",
+      "https://sc0.blr1.cdn.digitaloceanspaces.com/inline/qoziqujxoe-1634059118.jpg",
+      "https://sc0.blr1.cdn.digitaloceanspaces.com/inline/kkrhmybnut-1634058901.png"
+    ],
+    trailerYoutubeId: "wcQCQc9beXw?si",
     featured: true
   },
   {
@@ -2674,8 +2711,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🌧️ Dark & Atmospheric', '❤️ Meaningful'],
     genres: ['Police Procedural', 'Crime Mystery', 'Nordic-Style Noir'],
     musicVibe: 'Dark ambient piano, slow suspense strings, moody electronic score',
-    coverImage: 'https://images.unsplash.com/photo-1518173946687-a4c8a383392e?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518173946687-a4c8a383392e?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://i.pinimg.com/736x/d4/6c/fb/d46cfbcbe6dd7fc57a2f25e52121c77e.jpg',
+    images: ['https://image.tmdb.org/t/p/original/7QxPshSsUFh91Q7OoTjtBFGXrAn.jpg',
+      "https://image.tmdb.org/t/p/original/zWgPHnCleKiKRRRCfuS7fZYf1DD.jpg",
+      "https://image.tmdb.org/t/p/original/iporKoqhaNNOBAISEULSLL7Kd2T.jpg",
+      "https://image.tmdb.org/t/p/original/9hHM8E4fh4OcvVWkkiWXJ3VKsnn.jpg"
+    ],
+    trailerYoutubeId: "sAx4aq6396E?si",
     featured: true
   },
   {
@@ -2715,8 +2757,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful'],
     genres: ['Family Comedy-Drama', 'Slice of Life', 'Comfort TV'],
     musicVibe: 'Soft acoustic guitar, gentle piano, warm lo-fi instrumental',
-    coverImage: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://m.media-amazon.com/images/M/MV5BZDI2NDVhNmQtZmI0Ny00N2FiLWFkYjEtZTQ3MzE3MjM4NWVmXkEyXkFqcGc@._V1_.jpg',
+    images: ['https://image.tmdb.org/t/p/original/oq8QSku6Ahd3pO6Evpk3xVBvFcA.jpg',
+      "https://image.tmdb.org/t/p/original/hKcLeoDVRxu6kvQscrk5M9shdtL.jpg",
+      "https://image.tmdb.org/t/p/original/eZBMBfhZxsD23EiC6sS47cWwCKF.jpg",
+      "https://image.tmdb.org/t/p/original/bH7iebF6l7iN6AOvmVj8YuM4QDF.jpg"
+    ],
+    trailerYoutubeId: "cs4rnylG7Fc?si",
     featured: true
   },
   {
@@ -2756,8 +2803,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful'],
     genres: ['Nostalgic Family Drama', 'Coming of Age', '90s Period Comedy'],
     musicVibe: 'Nostalgic piano, soft acoustic guitar, 90s-style instrumental',
-    coverImage: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://image.tmdb.org/t/p/original/2nXFBkT7smUCTjbVmFhnZ8j6YAZ.jpg',
+    images: ['https://image.tmdb.org/t/p/original/iKIfIOPdD0pZsR2KbvTpv4kgsnT.jpg',
+      "https://m.media-amazon.com/images/M/MV5BMDljMGQ4NDctNjRmMC00YmY1LTk1MzMtMTdhM2U4NjQwZTljXkEyXkFqcGc@._V1_.jpg",
+      "https://m.media-amazon.com/images/M/MV5BMjA1MzdmYzMtMzYxOC00MjQ2LTgxMzYtNzU0NTdjMTFkNjI5XkEyXkFqcGc@._V1_QL75_UX515_.jpg",
+      "https://images.mubicdn.net/images/film/363677/cache-835203-1745500712/image-w1280.jpg?size=800x"
+    ],
+    trailerYoutubeId: "-8RHxGQy7H8?si",
     featured: true
   },
   {
@@ -2797,8 +2849,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '🌧️ Dark & Atmospheric'],
     genres: ['Neo-Noir Crime Thriller', 'Investigative Drama', 'Indian Series Masterpiece'],
     musicVibe: 'Dark ambient synth, slow orchestral strings, suspenseful cinematic bass',
-    coverImage: 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://image.tmdb.org/t/p/original/qL8f1E0W42CFHG8NtpyJFMPeKnw.jpg',
+    images: ['https://image.tmdb.org/t/p/original/lgbMRcbGAbLr6LxF4wi514TpFpj.jpg',
+      "https://image.tmdb.org/t/p/original/oJ5o8ZX5Le8HXNiFHLRJfckucVZ.jpg",
+      "https://image.tmdb.org/t/p/original/1PHyqpKetwd35Mgv3G6dF4AMal4.jpg",
+      "https://image.tmdb.org/t/p/original/gAjmPKpKSdXA9FCKALIIKoCzLLV.jpg"
+    ],
+    trailerYoutubeId: 'cNwWMW4mxO8?si',
     featured: true
   },
   {
@@ -2838,8 +2895,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '❤️ Meaningful'],
     genres: ['True Crime Procedural', 'Police Drama', 'Emmy Winner'],
     musicVibe: 'Slow orchestral strings, dark ambient synth, emotional piano',
-    coverImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://image.tmdb.org/t/p/original/xkpkTj6KGsjSaet0VQaq0aTn31D.jpg',
+    images: ['https://image.tmdb.org/t/p/original/aDngBnD6tThTNVh19wMPz6WoRvb.jpg',
+      "https://image.tmdb.org/t/p/original/lBJsWZw6Q5ejXCwGDTpVKQSt1O8.jpg",
+      "https://image.tmdb.org/t/p/original/awN04lP2JGxxpWPnnLxA6q7VMaY.jpg",
+      "https://image.tmdb.org/t/p/original/voGhzCXUWZ5CVQdhgBhFnDoicGP.jpg"
+    ],
+    trailerYoutubeId: 'jNuKwlKJx2E?si',
     featured: true
   },
   {
@@ -2879,8 +2941,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😢 Emotional', '❤️ Meaningful', '😊 Feel Good'],
     genres: ['Coming of Age', 'Friendship Drama', 'Student Life'],
     musicVibe: 'Emotional piano, soft acoustic guitar, nostalgic instrumental, slow motivational build',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'],
+    coverImage: 'https://image.tmdb.org/t/p/original/lG8wK40jH4EX6dbVFI1fzw2E96N.jpg',
+    images: ['https://image.tmdb.org/t/p/original/1g3856hsrYrSp6gWQMUpwqDw8Nb.jpg',
+      "https://image.tmdb.org/t/p/original/wfadKLXcmVMX50GnogPmg6wYOC5.jpg",
+      "https://vakaao.com//news_/image/914_500_thumbnail_1620988937.Screenshot%20(157).png",
+      "https://www.bollywoodhungama.com/wp-content/uploads/2023/11/Naveen-Feature.jpg"
+    ],
+    trailerYoutubeId: 'ViOutJ0kuJY?si',
     featured: true
   }
 ];

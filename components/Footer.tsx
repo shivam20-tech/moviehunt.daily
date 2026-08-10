@@ -47,23 +47,30 @@ export default function Footer() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 8,
+                gap: 10,
                 textDecoration: 'none',
               }}
             >
               <div
                 style={{
-                  width: 30,
-                  height: 30,
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--accent-border)',
+                  width: 32,
+                  height: 32,
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  border: '1.5px solid var(--accent-border)',
+                  boxShadow: '0 0 10px rgba(229, 169, 60, 0.2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
+                  backgroundColor: '#0a0a0f',
                 }}
               >
-                <Film size={14} color="var(--accent)" strokeWidth={1.5} />
+                <img
+                  src="/logo.jpg"
+                  alt="MovieHunt Official Logo"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               </div>
               <span
                 style={{
@@ -203,7 +210,11 @@ export default function Footer() {
               margin: 0,
             }}
           >
-            © {new Date().getFullYear()} MovieHunt. All rights reserved.
+            © {new Date().getFullYear()}{' '}
+            <span style={{ fontFamily: 'var(--font-serif)', fontWeight: 700, color: 'var(--text-primary)' }}>
+              MOVIE<span style={{ color: 'var(--accent)' }}>HUNT</span>
+            </span>
+            . All rights reserved.
           </p>
 
           <button

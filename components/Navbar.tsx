@@ -71,20 +71,27 @@ export default function Navbar() {
           }}
         >
           {/* ── Logo ── */}
-          <Link href="/" aria-label="MovieHunt — Go home" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', flexShrink: 0 }}>
+          <Link href="/" aria-label="MovieHunt — Go home" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', flexShrink: 0 }}>
             <div
               style={{
-                width: 34,
-                height: 34,
-                borderRadius: 8,
-                border: '1px solid rgba(201, 145, 58, 0.35)',
+                width: 38,
+                height: 38,
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '1.5px solid rgba(229, 169, 60, 0.6)',
+                boxShadow: '0 0 12px rgba(229, 169, 60, 0.25)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
+                backgroundColor: '#0a0a0f',
               }}
             >
-              <Film size={16} color="#c9913a" strokeWidth={1.5} />
+              <img
+                src="/logo.jpg"
+                alt="MovieHunt Official Logo"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
               <span
