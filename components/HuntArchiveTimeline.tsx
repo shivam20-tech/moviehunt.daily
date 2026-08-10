@@ -28,13 +28,45 @@ export default function HuntArchiveTimeline() {
     <section
       id="archive"
       aria-labelledby="archive-heading"
+      className="relative scroll-mt-24 overflow-hidden"
       style={{
         backgroundColor: 'var(--bg)',
-        borderTop: '1px solid var(--border)',
         padding: 'var(--space-24) 0',
       }}
     >
-      <div className="section-inner">
+      {/* ── 35mm Film Countdown Leader Sticky Background ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <div style={{ position: 'sticky', top: 0, width: '100%', height: '100vh', overflow: 'hidden' }}>
+          <img
+            src="/archive-bg.jpg"
+            alt="Film Countdown Leader"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center top',
+              opacity: 0.65,
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, #0a0a0f 0%, rgba(10, 10, 15, 0.2) 30%, rgba(10, 10, 15, 0.45) 75%, #0a0a0f 100%)',
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="section-inner" style={{ position: 'relative', zIndex: 10 }}>
         {/* Header */}
         <ScrollReveal style={{ maxWidth: 640, marginBottom: 'var(--space-12)' }}>
           <span

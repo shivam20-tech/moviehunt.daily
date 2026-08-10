@@ -29,6 +29,20 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    setMobileOpen(false);
+    if (href.includes('#') && typeof window !== 'undefined') {
+      const hash = href.split('#')[1];
+      if (window.location.pathname === '/') {
+        e.preventDefault();
+        const elem = document.getElementById(hash);
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+  };
+
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
     if (href.startsWith('/#')) return false;
@@ -131,6 +145,7 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
+                  onClick={(e) => handleNavClick(e, href)}
                   style={{
                     fontFamily: "'Inter', system-ui, sans-serif",
                     fontSize: 14,
@@ -154,6 +169,7 @@ export default function Navbar() {
           <div className="navbar-desktop-cta" style={{ display: 'flex', alignItems: 'center' }}>
             <Link
               href="/#hunt-flow"
+              onClick={(e) => handleNavClick(e, '/#hunt-flow')}
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
                 fontSize: 13,
@@ -226,7 +242,7 @@ export default function Navbar() {
             <Link
               key={href}
               href={href}
-              onClick={() => setMobileOpen(false)}
+              onClick={(e) => handleNavClick(e, href)}
               style={{
                 fontFamily: "'DM Serif Display', Georgia, serif",
                 fontSize: 'clamp(2rem, 8vw, 3rem)',
@@ -253,7 +269,7 @@ export default function Navbar() {
         >
           <Link
             href="/#hunt-flow"
-            onClick={() => setMobileOpen(false)}
+            onClick={(e) => handleNavClick(e, '/#hunt-flow')}
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
               display: 'block',

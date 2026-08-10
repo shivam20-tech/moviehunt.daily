@@ -63,36 +63,42 @@ export default function ManifestoSection() {
     <section
       ref={sectionRef}
       aria-label="Our philosophy"
-      className="manifesto-section"
+      className="manifesto-section relative overflow-hidden"
       style={{
         padding: 'clamp(72px, 10vw, 128px) 0',
         position: 'relative',
-        overflow: 'hidden',
       }}
     >
-      {/* Subtle top and bottom borders for section separation */}
+      {/* ── 35mm Projector Light Beam Background ── */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          backgroundColor: 'var(--bg-paper-edge)',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
         }}
-      />
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 1,
-          backgroundColor: 'var(--bg-paper-edge)',
-        }}
-      />
+      >
+        <img
+          src="/manifesto-bg.jpg"
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: '25% center',
+            opacity: 0.38,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, #0a0a0f 0%, rgba(10, 10, 15, 0.5) 50%, #0a0a0f 100%)',
+          }}
+        />
+      </div>
+
 
       <div
         style={{
@@ -145,11 +151,11 @@ export default function ManifestoSection() {
               textAlign: 'center',
             }}
           >
-            <span style={{ fontStyle: 'italic' }}>
+            <span style={{ fontStyle: 'italic', color: '#f0efe8' }}>
               {part1Typed}
             </span>
             {part2Typed && (
-              <span style={{ fontStyle: 'normal', color: 'var(--text-paper-mid)' }}>
+              <span style={{ fontStyle: 'normal', fontWeight: 600, color: '#e5a93c' }}>
                 {part2Typed}
               </span>
             )}

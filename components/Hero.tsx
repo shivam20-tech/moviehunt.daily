@@ -64,15 +64,15 @@ export default function Hero() {
           }}
         >
           <img
-            src="/images/movies/hero_bg_image.png"
-            alt=""
+            src="/hero-bg.jpg"
+            alt="MovieHunt Official Cinema Theater"
             onLoad={() => setImageLoaded(true)}
             style={{
               width: '100%',
               height: '110%',
               objectFit: 'cover',
-              objectPosition: 'center 30%',
-              opacity: imageLoaded ? (0.32 - parallaxProgress * 0.18) : 0,
+              objectPosition: 'center 45%',
+              opacity: imageLoaded ? Math.max(0.1, 0.58 - parallaxProgress * 0.25) : 0,
               transition: 'opacity 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
           />

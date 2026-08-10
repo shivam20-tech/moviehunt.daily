@@ -151,24 +151,42 @@ export default function HuntWizard() {
     <section
       id="hunt-flow"
       aria-label="Find your perfect movie"
+      className="relative scroll-mt-24 overflow-hidden"
       style={{
         backgroundColor: 'var(--bg)',
         padding: 'var(--space-24) 0',
         position: 'relative',
-        overflow: 'hidden',
       }}
     >
-      {/* Very subtle ambient */}
+      {/* ── Golden Ambient Bokeh Background ── */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,145,58,0.04) 0%, transparent 70%)',
-          pointerEvents: 'none',
           zIndex: 0,
+          pointerEvents: 'none',
         }}
-      />
+      >
+        <img
+          src="/wizard-bg.jpg"
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            opacity: 0.45,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, #0a0a0f 0%, rgba(10, 10, 15, 0.4) 50%, #0a0a0f 100%)',
+          }}
+        />
+      </div>
 
       <div
         className="section-inner"

@@ -639,12 +639,13 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing'],
     genres: ['Psychological Thriller', 'Crime Mystery'],
     musicVibe: 'Dark ambient piano, slow suspense build-up',
-    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTShM32D54ehHxjrvg9fuqNb9AC0C8cQY5k-sxP7hj6DNepQk2i2BNLfNo&s=10',
-    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSqp_XqPmCHJ2JNJyYY5Frvw66pewoCGTYpdu7M1XbVQ&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR66QW7KYu_j22BS_GR9xUy3IGE-HkCBaHLnWAmW3fS0PnC9SyP1y5Bz6Q&s=10",
-      "https://assets.doolnews.com/2023/02/iratta-4-668x350.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy505uLVeXp1YtdG-tf44j2MheQLdpAv3LZEzdS6IPBe_vQxV_4ZRE4RA&s=10"
-    ], trailerYoutubeId: 'OIMILWxADV0',
+    coverImage: 'https://resizing.flixster.com/OY822rB1oIUFB3NghvUMEDWwDFM=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p23955305_v_v9_aa.jpg',
+    images: ["https://image.tmdb.org/t/p/original/6pyhhHn5yCNBfhBzOTWuB9Iplih.jpg",
+      "https://image.tmdb.org/t/p/original/pAnaar2rD4Z3lAWQ9CBGSH8LUN0.jpg",
+      "https://image.tmdb.org/t/p/original/gopRllYWNHSxV0doMyRsku7w9k8.jpg",
+      "https://image.tmdb.org/t/p/original/5bG0BETR5mYlnMXYSFnDbWOWW1B.jpg"
+    ],
+    trailerYoutubeId: 'OIMILWxADV0',
     hindiTrailerYoutubeId: 'Sv141DrUJas',
     featured: true
   },

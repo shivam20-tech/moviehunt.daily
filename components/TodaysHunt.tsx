@@ -95,12 +95,43 @@ export default function TodaysHunt() {
     <section
       id="todays-hunt"
       aria-labelledby="featured-heading"
+      className="relative scroll-mt-24 overflow-hidden"
       style={{
         backgroundColor: 'var(--bg)',
         padding: 'var(--space-24) 0',
       }}
     >
-      <div className="section-inner">
+      {/* ── Atmospheric Spotlight Stage Background ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <img
+          src="/todays-pick-bg.jpg"
+          alt="Spotlight Stage"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            opacity: 0.35,
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, #0a0a0f 0%, rgba(10, 10, 15, 0.4) 40%, rgba(10, 10, 15, 0.7) 75%, #0a0a0f 100%)',
+          }}
+        />
+      </div>
+
+      <div className="section-inner" style={{ position: 'relative', zIndex: 10 }}>
 
         {/* ── Section opener: date + quiet label ── */}
         <ScrollReveal>

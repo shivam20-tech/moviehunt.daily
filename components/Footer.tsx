@@ -5,20 +5,30 @@ import Link from 'next/link';
 import { Film, ArrowUp } from 'lucide-react';
 
 const NAV_LINKS = [
-  { href: '#todays-hunt', label: "Today's Featured Hunt" },
-  { href: '#discover', label: 'Discover by Mood' },
-  { href: '#collections', label: 'Curated Collections' },
-  { href: '#archive', label: 'The Archive' },
+  { href: '/#todays-hunt', targetId: 'todays-hunt', label: "Today's Featured Hunt" },
+  { href: '/#hunt-flow', targetId: 'hunt-flow', label: 'Discover by Mood' },
+  { href: '/collections', label: 'Curated Collections' },
+  { href: '/journey', label: 'The Archive' },
 ];
 
 export default function Footer() {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, targetId?: string) => {
+    if (targetId && typeof window !== 'undefined') {
+      if (window.location.pathname === '/') {
+        e.preventDefault();
+        const elem = document.getElementById(targetId);
+        if (elem) {
+          elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+  };
   return (
     <footer
       id="story"
       role="contentinfo"
       style={{
         backgroundColor: 'var(--bg)',
-        borderTop: '1px solid var(--border)',
         padding: 'var(--space-16) 0 var(--space-8)',
       }}
     >
@@ -127,10 +137,11 @@ export default function Footer() {
             </h4>
             <nav aria-label="Footer">
               <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                {NAV_LINKS.map(({ href, label }) => (
+                {NAV_LINKS.map(({ href, targetId, label }) => (
                   <li key={href}>
                     <Link
                       href={href}
+                      onClick={(e) => handleNavClick(e, href, targetId)}
                       style={{
                         fontFamily: 'var(--font-sans)',
                         fontSize: 'var(--text-sm)',
