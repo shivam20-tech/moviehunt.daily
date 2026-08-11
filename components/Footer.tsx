@@ -219,6 +219,9 @@ export default function Footer() {
               fontSize: 'var(--text-xs)',
               color: 'var(--text-tertiary)',
               margin: 0,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
             }}
           >
             © {new Date().getFullYear()}{' '}
@@ -226,6 +229,21 @@ export default function Footer() {
               MOVIE<span style={{ color: 'var(--accent)' }}>HUNT</span>
             </span>
             . All rights reserved.
+            {/* Admin access — intentionally low visibility */}
+            <a
+              href="/admin/login"
+              style={{
+                fontSize: '0.6rem',
+                color: 'rgba(255,255,255,0.18)',
+                textDecoration: 'none',
+                letterSpacing: '0.05em',
+                marginLeft: 4,
+              }}
+              tabIndex={-1}
+              aria-hidden="true"
+            >
+              System
+            </a>
           </p>
 
           <button

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import './globals.css';
 import CinematicIntroSplash from '@/components/CinematicIntroSplash';
 import PageTransition from '@/components/PageTransition';
@@ -32,6 +33,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Microsoft Clarity Project ID — set NEXT_PUBLIC_CLARITY_ID in Vercel env vars
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +63,16 @@ export default function RootLayout({
           fontFamily: 'var(--font-sans)',
         }}
       >
+        {/* Microsoft Clarity — behavioral analytics (heatmaps, sessions, scroll depth) */}
+        {CLARITY_ID && (
+          <Script id="clarity-script" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${CLARITY_ID}");`}
+          </Script>
+        )}
         <CinematicIntroSplash />
         <Navbar />
         <PageTransition>{children}</PageTransition>

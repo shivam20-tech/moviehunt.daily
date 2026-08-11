@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import MovieImageSlider from '@/components/MovieImageSlider';
 import MovieTrailerPlayer from '@/components/MovieTrailerPlayer';
 import SmartBackButton from '@/components/SmartBackButton';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 
 export async function generateStaticParams() {
   return HUNTS_DATA.map((hunt) => ({
@@ -63,6 +64,8 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-[#f4f4f0] selection:bg-[#e5a93c] selection:text-[#0a0a0f]">
+      {/* Analytics: fire hunt_view event on page load */}
+      <AnalyticsTracker huntId={hunt.id} />
       {/* Hero Header Banner */}
       <div className="relative pt-24 pb-12 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 z-0">
