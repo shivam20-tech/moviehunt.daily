@@ -1,6 +1,8 @@
 import { ExternalLink, BarChart3, Film, Tv, MousePointerClick, PlayCircle, AlertCircle } from 'lucide-react';
 import { HUNTS_DATA } from '@/data/hunts';
 
+export const dynamic = 'force-dynamic';
+
 // Resolve hunt title from ID for display
 function getHuntTitle(key: string): string {
   // key format: mh:hunt_view:day-X-title
