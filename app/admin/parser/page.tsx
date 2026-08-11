@@ -164,7 +164,7 @@ export default function AdminParserPage() {
       </div>
 
       {/* Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Input */}
         <div
           style={{
