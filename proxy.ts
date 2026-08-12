@@ -16,7 +16,7 @@ export async function proxy(req: NextRequest) {
     if (token) {
       const session = await verifySession(token);
       if (session) {
-        return NextResponse.redirect(new URL('/admin', req.url));
+        return NextResponse.redirect(new URL('/admin/overview', req.url));
       }
     }
     return NextResponse.next();

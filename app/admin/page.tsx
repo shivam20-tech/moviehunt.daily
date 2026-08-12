@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation';
+import AdminOverviewPage from './overview/page';
 
-// /admin redirects to the Overview dashboard
+// /admin directly renders the Overview dashboard
 export default function AdminRootPage() {
-  redirect('/admin/overview');
+  return <AdminOverviewPage />;
 }
