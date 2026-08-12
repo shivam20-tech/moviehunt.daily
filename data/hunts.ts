@@ -357,9 +357,9 @@ export const HUNTS_DATA: HuntItem[] = [
     musicVibe: 'Dark techno ambience, distorted bass',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxwMWvqLGEbX64c6PTYKoF3d6iYH36YES8A7GBgA8AZQw53Yi7nEje1v4&s=10',
     images: ['https://image.tmdb.org/t/p/original/wlbWvdbn3B3EvWIaQ8hiKPnv2qH.jpg',
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQic8va5W6oOh0WHLJp1RAvpVUiy-6kYJ5aCt2zBuic2WaAsPRKafWWhI&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKH4Rc09rX1sMbvcAEavfHq-708CG3pvbyu2RSHwnp8bAWB30C9B1Do1Q&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXtUIPePt6MJ56nL9wyOFW_AAtC79RUg8cuHxKoICB3C2PQJFwxew7diZr&s=10"
+      "https://image.tmdb.org/t/p/original/ofvcJSya8aLn60KYD0zewtP0gQx.jpg",
+      "https://image.tmdb.org/t/p/original/jVRUqWzREV2rE8hPALzZ5R7gKMs.jpg",
+      "https://image.tmdb.org/t/p/original/gq4ETOLBtHI0vwejec93yduWtpZ.jpg"
     ],
     trailerYoutubeId: 'xq1cEmhVa68',
     featured: true
@@ -428,7 +428,7 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['True Crime', 'Docu-Drama'],
     musicVibe: 'Indian Ocean dark docu soundtrack',
     coverImage: 'https://m.media-amazon.com/images/M/MV5BMjBmYzc2ZmMtZGMwZS00NDg4LTg2ZmEtYzdiYmUxYTQzNGQ1XkEyXkFqcGc@._V1_.jpg',
-    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcka_r1zVpiirmwS9vYlmv7LJC_PSlLnj001djpJtESwqpHOOWExMnWB9z&s=10",
+    images: ["https://image.tmdb.org/t/p/original/kBi1q1jXgOPjbtBIw56nAl15zjw.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIWaoikqt_RPCl6sp092rX-1tDzbAPUoHjfqJ1JW6LaeTDjRV5Hx4fY1g&s=10",
       "https://aambar.wordpress.com/wp-content/uploads/2016/07/black-friday-2004-2.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_NzoQaldVEx2bF-QGymeXbLBYyq_elVjKdtOigPDIMuBc0j5q5GHbiFqW&s=10"
@@ -465,10 +465,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Psychological Tragedy', 'Political Drama'],
     musicVibe: 'Vishal Bhardwaj orchestral score',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNRPcrJO3bNZzITXUur4ZEWLvIr_K0vitOQvtuiDvpOhNG6zzTFY1DGvmb&s=10',
-    images: ["https://sc0.blr1.cdn.digitaloceanspaces.com/article/29389-hdtqaymtru-1572781922.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl4ArIOFTJoPLMECdjPdYGGIW6cFDWI0k63YIpkX8Gzb2MGOcQkkEH7bM&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv-Or27lvKtMhgmY8HEs-Z1y3jseavI24FGhM33l1FNNywCd64wbwMm4o&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjJVYNUQvPz_wI380kJFi_m2Hgemq_Qc5ne2i_mZfJ3NQdoVw8v7_kHLEI&s=10"],
+    images: ["https://image.tmdb.org/t/p/original/tiyqwRBKVyLgKwVNicKjKvjaLXf.jpg",
+      "https://image.tmdb.org/t/p/original/61c3BnixSvbHejc5vG2yDjNAekC.jpg",
+      "https://image.tmdb.org/t/p/original/5cKvDZrsAwlBlTLQVGkEfD5hxNG.jpg",
+      "https://image.tmdb.org/t/p/original/bbd3XvJfY5MppOoYKl447HKjKXp.jpg"],
     trailerYoutubeId: 'kxY32xM3VHY',
     featured: true
   },
@@ -500,10 +500,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Romantic Drama', 'Slice of Life'],
     musicVibe: 'Soft piano, warm acoustic guitar',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpw1ql0X0xMDqpmqbFYUnWfp2J8wiQ2YajR6TagvALLPCpYRzAfditl8Tz&s=10',
-    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGjEX2kxZU9oohvPPcTkv-79cTN-Z-Z8FWn28mJrITEJv534d3L_IITZE&s=10",
-      "https://www.sonyclassics.com/thelunchbox/home/images/gallery/still-1.jpg",
-      "https://m.media-amazon.com/images/S/pv-target-images/70f3d5186f834962ba3d6ad57321658d2dde46d9adddae823d8e310bdfc144fb._SX1080_FMjpg_.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6QIFKF8EFZkJwcPMVcn2aZKgpVgelG27F_mEXdrE7yhimA0RSNKnSwk6S&s=10"],
+    images: ["https://image.tmdb.org/t/p/original/fYAXAbqaHihoBUYPzMDRhZ3wtUY.jpg",
+      "https://image.tmdb.org/t/p/original/4CAsBJsYl7ecHmrYn0pJEgmTn46.jpg",
+      "https://image.tmdb.org/t/p/original/j38iga9NaoxtJjgkiDrL2ZBP9wG.jpg",
+      "https://image.tmdb.org/t/p/original/8J34fjRNdYyLXzAmt9LYvj91MRp.jpg"],
     trailerYoutubeId: 'sK3R0rvnlPs',
     featured: true
   },
@@ -535,10 +535,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Crime Tragedy', 'Underworld Drama'],
     musicVibe: 'Dark orchestral strings, slow cinematic drums',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5_79wnGzgVaOkzxWnCZmUKOuim4edtWs0hoHXShr1vJgRW4PnbtMPaLM&s=10',
-    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQVFHCHUzTORsV8HKyBHUqfJUGJrJX5Z1Eisg-STtwaIjXMqPNXobYyq8&s=10",
-      "https://indiancinema.sites.uiowa.edu/sites/indiancinema.sites.uiowa.edu/files/2020-04/Maqbool%25201.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbHK6o5V7oRVD4Ewz0l-0BpILjKUNtESIK00IlJTBH5QvuqWma7MWtZ58&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaVSLcmAijyWE9gKQU0Vx-tlCc5wbbyPVwGDs5RcvN-SNhc5l78bV8MqlD&s=10"],
+    images: ["https://image.tmdb.org/t/p/original/rCQV72xJ90ZmG8tiXeJiOJEBzm7.jpg",
+      "https://image.tmdb.org/t/p/original/o4a2W7aIF4Gq7nrgI7z7Pgexy81.jpg",
+      "https://image.tmdb.org/t/p/original/56HgNJLYrvdwGUPCnFTzbGvf9Ur.jpg",
+      "https://image.tmdb.org/t/p/original/nuFAqJpSaD0zyxlP3f8yAwVu3ku.jpg"],
     trailerYoutubeId: 'LESsmI1rJcQ',
     featured: true
   },
@@ -570,10 +570,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Slice of Life', 'Family Drama'],
     musicVibe: 'Sushin Shyam warm acoustic guitar',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNZ7SrP4IXCjAEtkntLXoCg9vK4xBCkn54RYi2YXtXNvlN-elJZuEE58Q&s=10',
-    images: ["https://sc0.blr1.cdn.digitaloceanspaces.com/article/130591-cujcbfzkkc-1573226920.jpeg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29YPUWLGZ1wJT7mCUBRI2_gpLb9zPUs0Keb4OrmoQo6kRhOhT8uQV3Y4&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7IrL-soJEpsVrFg6rzCKyIJEAg8e4yJ-NL7RxcQDm5gk_CTfyLUSRFT8&s=10",
-      "https://filmysasi.com/wp-content/uploads/2019/02/Kumbalangi-Nights-Malayalam-Film-Review.webp"],
+    images: ["https://image.tmdb.org/t/p/original/8i8ml0LRdFT6LSaTMUG3gLzJfEq.jpg",
+      "https://image.tmdb.org/t/p/original/uZteaHRAoERbCrTSUZ1cBf7Dpvi.jpg",
+      "https://image.tmdb.org/t/p/original/sbvMZYlGrPSkZ08TIrV6pqwO0ST.jpg",
+      "https://image.tmdb.org/t/p/original/gMXxxzQaGBMNFyZ1O5rXRp9G9Sl.jpg"],
     trailerYoutubeId: '3P4BFBSafF0',
     featured: true
   },
@@ -605,8 +605,8 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Philosophical Comedy-Drama', 'Indie'],
     musicVibe: 'Soft piano, reflective ambient music',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoO4rpdN1_jlH-4f2ns3yqzO4dldUIHRIFKT70O38lciBU31TCrPDDwUI&s=10',
-    images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4CIw-W6vPlwjHMReBnyyca_K-jjyMakgnWCstgDDrFHGTHRVitxAH4nY&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKXONs8aBZ0CulrEWO_A-BzeeJE5pQmcshj-Ehb23kscFs-om1r2nCKOg&s=10",
+    images: ["https://image.tmdb.org/t/p/original/3HIOpxqnrJ9TwyhMCacI2GZlhUP.jpg",
+      "https://image.tmdb.org/t/p/original/to3vpKJFeAvejXD6su1k8QtmV6s.jpg",
       "https://m.media-amazon.com/images/M/MV5BYTdiMWYwMDQtNTUyOC00M2IxLTk4ODktYjA0YzRmYTk0NjhiXkEyXkFqcGc@._V1_.jpg",
       "https://images.indianexpress.com/2014/03/aankhon-dekhi.jpg"
     ], trailerYoutubeId: 'H3yKUHI2mE4',
@@ -723,10 +723,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Primal Thriller', 'Action Drama'],
     musicVibe: 'Prashant Pillai tribal percussion',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ73ydE-SUcruUZa1WTaph1KPOEm7MUh5B4ArBB8J4DYw&s=10',
-    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIdMuR02Jh1SLfsK9nLuAFqjK8E4zMrNHKGlwfLHlTDg&s=10',
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjnXXPo3_MWRJZazl593Qjp7OvhIkD1pq4AJjaL8q7vg&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvPachfZlNpc67viGNACvzyWPWAxA-pm1MCgo6loSIWw&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCfH7iKAI99wdYWBB9zpaxqJhtC3UpWbTAagHa5tgsnw&s=10"],
+    images: ['https://image.tmdb.org/t/p/original/fFnS6I9CQ3NKQNkfl2nRvaoU6oE.jpg',
+      "https://image.tmdb.org/t/p/original/bF9VY2y83fL2iQRcdguTuvkWOEe.jpg",
+      "https://image.tmdb.org/t/p/original/5EdhrmXYJWFx6jCuyG6fDSaETFJ.jpg",
+      "https://image.tmdb.org/t/p/original/997SLOcDzYW8ltnBQiZUYpwAncl.jpg"],
     trailerYoutubeId: 'ItcQNybOOHM',
     hindiTrailerYoutubeId: 'ykTPOyJVJdQ',
     featured: true
@@ -770,10 +770,10 @@ export const HUNTS_DATA: HuntItem[] = [
     musicVibe: 'Yuvan Shankar Raja dreamlike synth, ambient electronic, emotional retro piano, experimental cinematic soundtrack',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpMHNisQLWcvmhPWH9kH5098qLdJdjIzbxWw_HOKbfBnee70YGbR_aOx4&s=10',
     images: [
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9whOyxKXTqbV4Si_mAgYk8NqfFFxTkGa3pmYYUyV3xg&s=10',
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT394Lp3DdiUXNGoW4xlbTOJeRVJAOry7gUSrqlWGRfNA&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZFjorG1bTmnMIJvqkGYi1iuW7VkrVyBpkNIz4R84ytQ&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGH_FCl-2NSlZQAhNBTiiaCdOR7tQ7afYCkiiyR3gx2Q&s=10"
+      'https://image.tmdb.org/t/p/original/trBGubNu0WWBGQMLxMBOJe4DylV.jpg',
+      "https://image.tmdb.org/t/p/original/2DGcVzqP5jSZfjE7AWlD9ZoC26f.jpg",
+      "https://image.tmdb.org/t/p/original/dhpTRRcftQfUAF8EK039csJusDt.jpg",
+      "https://image.tmdb.org/t/p/original/5VRaKm67XMzkMvMNdR4QHtHhhCS.jpg"
     ],
     featured: true,
     trailerYoutubeId: '3-Xq_Zz3nPA',
@@ -807,10 +807,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Dark Comedy Satire', 'Legal Crime Thriller'],
     musicVibe: 'Upbeat dark jazz piano, suspenseful electronic',
     coverImage: 'https://m.media-amazon.com/images/M/MV5BYjlkZWQ1ZWQtY2QyZi00ZDg3LThiOWYtNDgxZGNjY2U3ZGIzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
-    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfDoc3MaC1-86fKVVzDNsEFlx1rQv4z02M8bmNcPhAYg&s=10',
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNOIHcMQygU8LKqbMRd_yjfgqs2S43haayxf1govwBug&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXQAOcpr4wY5NrmVHN_D6d9CIYlsiGb22IlOuChsm2Gw&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaX1CoWb1FlL8VHc1Vgi6sQtvBdMAfEeY_nbxyEYCj3A&s=10"
+    images: ['https://image.tmdb.org/t/p/original/uAvtEybweIYBWo59JQetsaznE20.jpg',
+      "https://image.tmdb.org/t/p/original/aFtdWoZ2wgX4fi8z7OFHNxwes2P.jpg",
+      "https://image.tmdb.org/t/p/original/upHadzihVyjNcre52ErzTP9K0J0.jpg",
+      "https://image.tmdb.org/t/p/original/gBIAIKAVeKd3cC1F3l7yiLT9OX8.jpg"
     ],
     trailerYoutubeId: '4tzzEsI_qUA',
     hindiTrailerYoutubeId: 'PwAoLTe_yaQ',
@@ -927,10 +927,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Survival Thriller', 'Friendship Drama'],
     musicVibe: 'Sushin Shyam emotional piano, deep cinematic build-up',
     coverImage: 'https://a.ltrbxd.com/resized/film-poster/9/6/4/8/0/8/964808-manjummel-boys-0-600-0-900-crop.jpg?v=b58b986b31',
-    images: ['https://img10.hotstar.com/image/upload/f_auto,q_auto/sources/r1/cms/prod/4736/1714809064736-i',
+    images: ['https://image.tmdb.org/t/p/original/zGsHpuMN412VyzJZZnQeq4lMdjF.jpg',
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOLbScUiy4p5rLPbmcv9YZ65ampk5xW2ScAdXOuy9HnA&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPLkd2FTqvXEzu7k02bm5PH1TpIheYuICl1IusRuxdIw&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0I1II-7Yspogb-EGCjBiAeVk2tjw5kjVdDiSKKlOdmg&s=10"
+      "https://image.tmdb.org/t/p/original/zGsHpuMN412VyzJZZnQeq4lMdjF.jpg",
+      "https://image.tmdb.org/t/p/original/saR2FcxjnRybC0mYFN0Vv6nAdtY.jpg"
     ],
     trailerYoutubeId: 'id848Ww1YLo',
     hindiTrailerYoutubeId: 'UM7PPfz8LQU',
@@ -964,8 +964,8 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Coming of Age', 'Indie Drama'],
     musicVibe: 'Amit Trivedi emotional piano, slow indie rock instrumental',
     coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7yJqpGo9gw5kHa2DbK_niWneu0hQgo7cbOpKIOTw1w6Sa4wlD9iXSxEo&s=10',
-    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ97ERwM5eIWTPGslX1OctOzm_gbYueUUca7bSpQ3MYiA&s=10',
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjylvTytmGcBytvnZTGDmijLdtgFcH8SXJ7mxIfseveA&s=10",
+    images: ['https://image.tmdb.org/t/p/original/ddkcwMd6H7kGfgqntkt2Af52mgl.jpg',
+      "https://image.tmdb.org/t/p/original/ddkcwMd6H7kGfgqntkt2Af52mgl.jpg",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKLR64Yne4Npme3wXj1Ob4l8ArW5BHdJCwyNZzuU6bDw&s=10",
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSKYxFNxHCGelJ5KNY7PVWgxcgtK57_2Mrv3Ti0OYveQ&s=10"
     ],
@@ -1000,10 +1000,10 @@ export const HUNTS_DATA: HuntItem[] = [
     genres: ['Poetic Drama', 'Slice of Life'],
     musicVibe: 'Soft ambient piano, gentle emotional strings',
     coverImage: 'https://m.media-amazon.com/images/M/MV5BN2U1MmE4MjAtNGY5Zi00YTgyLTkwNGUtZTM4Y2Q1MzUyOWZkXkEyXkFqcGc@._V1_.jpg',
-    images: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN0PTO6NX4NFVDOwUX_6Y5l683yeLDccISYYhnDgdKkg&s=10',
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlcN4rFN0o55ebRRNw-BYdb09GBTKrPW4-efJrLe0jkg&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnypUUV51c6Um6VUqxUfUjofJV0qdL_iKUI6yO5KFxTA&s=10",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ11zDVdbaJMRVrLMhokz2YT6TfneldqZy-vUCXZ9kjtw&s=10"
+    images: ['https://image.tmdb.org/t/p/original/1GvLTt8DiyLjpixaPYVdXN3vz0f.jpg',
+      "https://image.tmdb.org/t/p/original/6Z3e850z4TNBUo4OviVRfwjK5O3.jpg",
+      "https://image.tmdb.org/t/p/original/e1KqNg9XKvRHaL31lzkTn8YuuGK.jpg",
+      "https://image.tmdb.org/t/p/original/xVhRyFTs9hfwcmbwky6kW2WrG1H.jpg"
     ],
     trailerYoutubeId: '7vracgLyJwI',
     featured: true
@@ -1389,9 +1389,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '❤️ Meaningful'],
     genres: ['Character Rivalry Drama', 'Psychological Thriller', 'Malayalam Masterpiece'],
     musicVibe: 'Jakes Bejoy slow tribal percussion, dark cinematic drums, tense folk-orchestral build-up',
-    coverImage: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS73s4327sZL5KkTtmk4tUmWO1tIWv-ZGGAfdWJ35WGVHxSm08Ip-uOyNU&s=10',
     images: [
-      'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/ziMqzbbutTiwW3Rg8HsD1bx5nhe.jpg',
+      "https://image.tmdb.org/t/p/original/kytlMg3VeyXhY3ujNUsXCYgm3Ch.jpg",
+      "https://image.tmdb.org/t/p/original/6mAyWuGxVoDB5xvKmkl2I2zxgW6.jpg",
+      "https://image.tmdb.org/t/p/original/6g74ihDEQwsBSQlWj2V51eJL5XB.jpg"
     ],
     featured: true,
     trailerYoutubeId: '8Wx3dAQ8pr4'
@@ -1433,9 +1436,12 @@ export const HUNTS_DATA: HuntItem[] = [
     moodTags: ['😊 Feel Good', '❤️ Meaningful', '🎒 Adventure'],
     genres: ['Slice of Life', 'Adventure Romance', 'Magical Realism', 'Malayalam Cinema'],
     musicVibe: 'Gopi Sundar indie folk instrumental, warm acoustic guitar, travel soundtrack, nostalgic piano',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZNpyHkyPgZXWlhDEWsVY0GSnPhFxBkIMTgpQ6HozbAqUezGm0d4Z-y1I&s=10',
     images: [
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/bmpiBbEcbB6JS0JdXA944KqzBhR.jpg',
+      "https://image.tmdb.org/t/p/original/cEy2yvdo4s3616DFsSxvs8bL8bh.jpg",
+      "https://image.tmdb.org/t/p/original/gWckMyJ9mDeah2QJlioanFPy941.jpg",
+      "https://m.media-amazon.com/images/M/MV5BNzMzYjBjNGEtZmQxOS00ZGU4LTg3MDMtZjE4ODcxM2EzNTg2XkEyXkFqcGc@._V1_QL75_UX610.5_.jpg"
     ],
     featured: true,
     trailerYoutubeId: 'oYxtLNJJ54Y'
@@ -1479,7 +1485,10 @@ export const HUNTS_DATA: HuntItem[] = [
     musicVibe: 'Justin Varghese dark ambient piano, deep cinematic drone, slow haunting orchestral strings',
     coverImage: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+      'https://image.tmdb.org/t/p/original/lVp8amNsbz0rNOTcjeA3Z4Q8Vhd.jpg',
+      'https://image.tmdb.org/t/p/original/y8ZNI0yEdn9ltj2yXiQYRashycw.jpg',
+      'https://image.tmdb.org/t/p/original/ycm52OgtIgzUU5J4c6WhfthnKxo.jpg',
+      'https://image.tmdb.org/t/p/original/wssIFShGz9quaR9OJnGf8bzmcXW.jpg'
     ],
     featured: true,
     trailerYoutubeId: '9yULZ8y1J-s'
