@@ -232,6 +232,8 @@ export default function Footer() {
             {/* Admin access — intentionally low visibility */}
             <a
               href="/admin/login"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 fontSize: '0.6rem',
                 color: 'rgba(255,255,255,0.18)',
