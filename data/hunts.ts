@@ -2462,19 +2462,19 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'tTov2nVgXaU',
     featured: true
   },
-  {
+   {
     id: 'day-59-fandry',
     day: 59,
     type: 'movie',
     title: 'Fandry',
     year: 2013,
-    duration: '103 min',
-    language: 'Marathi',
     tagline: 'SOME DREAMS ARE FORCED TO FIGHT HARDER',
     hook: 'One stone. One ending. A lifetime of impact.',
     imdbRating: 8.3,
-    cast: ['Somnath Awghade', 'Rajeshwari Kharat', 'Kishor Kadam', 'Nagraj Manjule', 'Chhaya Kadam'],
+    cast: ["Somnath Awghade","Rajeshwari Kharat","Kishor Kadam","Nagraj Manjule","Chhaya Kadam"],
     director: 'Nagraj Manjule',
+    duration: '103 min',
+    language: 'Marathi',
     availableOn: {
       name: 'ZEE5',
       url: 'https://www.zee5.com'
@@ -2482,43 +2482,36 @@ export const HUNTS_DATA: HuntItem[] = [
     storySummary: 'Jambuvant (Jabya), a 13-year-old Dalit boy in a rural Maharashtra village, falls in love with his upper-caste classmate Shalu. Desperate to change his fate and get money to buy clothes for Shalu\'s attention, he obsessively hunts a black sparrow believed to have magical love powers, while his impoverished family is forced by villagers to hunt wild pigs (fandry).',
     whyWatch: 'Winner of the Indira Gandhi Award for Best Debut Film of a Director at the National Film Awards and Grand Jury Prize at Mumbai Film Festival (MAMI). Nagraj Manjule\'s directorial debut culminates in one of the most unforgettable, iconic, rock-throwing final shots in cinema history.',
     shouldYouWatch: 'YES. Essential, mind-shattering viewing for fans of Sairat, Court, Killa, or Pather Panchali.',
-    bestFor: ['🏆 National Award Debut Masterpiece', '🗿 Iconic Ending in Indian Cinema History', '🌾 Uncompromising Social Realism', '🍿 Predecessor to Sairat'],
+    bestFor: ["🏆 National Award Debut Masterpiece","🗿 Iconic Ending in Indian Cinema History","🌾 Uncompromising Social Realism","🍿 Predecessor to Sairat"],
     afterCreditsEmotion: 'Speechless',
-    emotionalLines: [
-      'Dreams deserve equality.',
-      'Silence can be loud.',
-      'You\'ll never forget the ending.',
-      'A painful masterpiece.',
-      'Cinema that changes perspectives.'
-    ],
-    bestScenes: [
-      'Jabya chasing the black sparrow through golden sunlit fields',
-      'Pig hunting humiliation in front of the entire village school',
-      'The chilling, legendary final rock-throwing frame at the camera'
-    ],
-    moodTags: ['😢 Emotional', '❤️ Meaningful', '🤯 Mind-Blowing'],
-    genres: ['Social Realism Drama', 'Coming-of-Age Tragedy', 'Marathi Masterpiece'],
+    emotionalLines: ["Dreams deserve equality.","Silence can be loud.","You'll never forget the ending.","A painful masterpiece.","Cinema that changes perspectives."],
+    bestScenes: ["Jabya chasing the black sparrow through golden sunlit fields","Pig hunting humiliation in front of the entire village school","The chilling, legendary final rock-throwing frame at the camera"],
+    moodTags: ["😢 Emotional","❤️ Meaningful","🤯 Mind-Blowing"],
+    genres: ["Social Realism Drama","Coming-of-Age Tragedy","Marathi Masterpiece"],
     musicVibe: 'Alokananda Dasgupta soft violin, emotional piano, ambient folk instrumental, slow cinematic strings',
-    coverImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO__7YDh8in1GUd4Ar0mtGGN31Ex2-HEOb8r01sZaeLRfw-xufk9yTKGk&s=10',
     images: [
-      'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
-    ],
+    "https://image.tmdb.org/t/p/original/fLpDFeToCC3E2QL0WwhEkuvxtLO.jpg",
+    "https://image.tmdb.org/t/p/original/pbLjwGuM4zgeXxTrPke3dB1NJwH.jpg",
+    "https://image.tmdb.org/t/p/original/jSRAzEpmpKyYhQvcoWGiSS4qaOP.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv46Zy2HdO-0vkHuAifTnHUQ4YrqIvMhkfhHgkrtlaC_XYxIVgqwpmutU&s=10"
+],
     trailerYoutubeId: 'BjHsL-_KG30',
     featured: true
   },
-  {
+   {
     id: 'day-60-photograph',
     day: 60,
     type: 'movie',
     title: 'Photograph',
     year: 2019,
-    duration: '110 min',
-    language: 'Hindi',
     tagline: 'SOME STORIES BEGIN WITH A SINGLE PHOTO',
     hook: 'The quiet love story nobody talks about.',
     imdbRating: 6.8,
-    cast: ['Nawazuddin Siddiqui', 'Sanya Malhotra', 'Farrukh Jaffar', 'Vijay Raaz'],
+    cast: ["Nawazuddin Siddiqui","Sanya Malhotra","Farrukh Jaffar","Vijay Raaz"],
     director: 'Ritesh Batra',
+    duration: '110 min',
+    language: 'Hindi',
     availableOn: {
       name: 'Prime Video',
       url: 'https://www.primevideo.com'
@@ -2526,43 +2519,36 @@ export const HUNTS_DATA: HuntItem[] = [
     storySummary: 'Rafi, a struggling street photographer at Gateway of India in Mumbai, is pressured by his grandmother to marry. He shows her a photo of Miloni, a shy, introverted middle-class Gujarati student he photographed. When his grandmother insists on meeting her, Miloni unexpectedly agrees to play the role of his fiancee.',
     whyWatch: 'Directed by Ritesh Batra (The Lunchbox), Photograph premiered at Sundance & Berlin Film Festivals. A delicate, melancholic Mumbai romance featuring Nawazuddin Siddiqui and Sanya Malhotra\'s subtle performances and Peter Raeburn\'s nostalgic score.',
     shouldYouWatch: 'YES. Perfect for lovers of The Lunchbox, Masaan, October, or C/o Kancharapalem.',
-    bestFor: ['🌆 Delicate Mumbai Romance', '📸 Street Photography Nostalgia', '📽️ Ritesh Batra Direction (The Lunchbox)', '🍿 Quiet & Subtle Human Connection'],
+    bestFor: ["🌆 Delicate Mumbai Romance","📸 Street Photography Nostalgia","📽️ Ritesh Batra Direction (The Lunchbox)","🍿 Quiet & Subtle Human Connection"],
     afterCreditsEmotion: 'Inspired',
-    emotionalLines: [
-      'Some connections need no words.',
-      'Love can arrive quietly.',
-      'Mumbai never looked this beautiful.',
-      'Simple. Gentle. Unforgettable.',
-      'A hidden masterpiece.'
-    ],
-    bestScenes: [
-      'Gateway of India photo-taking opening sequence',
-      'Kulfi shop date conversation about nostalgia and old soda flavors',
-      'Taxi ride through rainy Mumbai night streets'
-    ],
-    moodTags: ['😊 Feel Good', '❤️ Meaningful', '🌧️ Rainy Evening'],
-    genres: ['Gentle Romance', 'Slice-of-Life Drama', 'Hindi Indie Cinema'],
+    emotionalLines: ["Some connections need no words.","Love can arrive quietly.","Mumbai never looked this beautiful.","Simple. Gentle. Unforgettable.","A hidden masterpiece."],
+    bestScenes: ["Gateway of India photo-taking opening sequence","Kulfi shop date conversation about nostalgia and old soda flavors","Taxi ride through rainy Mumbai night streets"],
+    moodTags: ["😊 Feel Good","❤️ Meaningful","🌧️ Rainy Evening"],
+    genres: ["Gentle Romance","Slice-of-Life Drama","Hindi Indie Cinema"],
     musicVibe: 'Peter Raeburn soft piano, lo-fi acoustic guitar, ambient Mumbai city sounds, gentle strings',
-    coverImage: 'https://images.unsplash.com/photo-1478147427282-58a87a120781?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://image.tmdb.org/t/p/original/4t8Vgj9UL1TCGmyZHbQxPtSCXrp.jpg',
     images: [
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'
-    ],
+    "https://image.tmdb.org/t/p/original/88ct9t1UMXhaQvaIkODj8CpDQ53.jpg",
+    "https://image.tmdb.org/t/p/original/kLPp1Ie8xJ3NqpszMYwxlg3RUCb.jpg",
+    "https://image.tmdb.org/t/p/original/ffd1pisi8Kp98d4iFVk5jmRVdgr.jpg",
+    "https://image.tmdb.org/t/p/original/u6hxRRVBV4CwKjGqySZx5HFtyVH.jpg"
+],
     trailerYoutubeId: 'hUL2z8Ps_Ik',
     featured: true
   },
-  {
+   {
     id: 'day-61-titli',
     day: 61,
     type: 'movie',
     title: 'Titli',
     year: 2014,
-    duration: '116 min',
-    language: 'Hindi',
     tagline: 'HOME SHOULDN\'T FEEL LIKE A PRISON',
     hook: 'His biggest enemy was his own family.',
     imdbRating: 7.5,
-    cast: ['Shashank Arora', 'Ranvir Shorey', 'Shivani Raghuvanshi', 'Amit Sial', 'Lalit Behl'],
+    cast: ["Shashank Arora","Ranvir Shorey","Shivani Raghuvanshi","Amit Sial","Lalit Behl"],
     director: 'Kanu Behl',
+    duration: '116 min',
+    language: 'Hindi',
     availableOn: {
       name: 'Prime Video',
       url: 'https://www.primevideo.com'
@@ -2570,43 +2556,36 @@ export const HUNTS_DATA: HuntItem[] = [
     storySummary: 'Titli, the youngest member of a violent car-jacking brotherhood operating on the gritty outskirts of Delhi, desperately wants to escape his abusive family and buy a parking spot ticket booth. Forced into an arranged marriage by his brothers, he forms an unexpected pact with his new wife Neelu, who is harboring secrets of her own, to secure their mutual freedom.',
     whyWatch: 'Premiered in the prestigious Un Certain Regard section at the Cannes Film Festival and produced by Yash Raj Films & Dibakar Banerjee. Kanu Behl\'s unflinching directorial debut features electrifying performances by Shashank Arora, Ranvir Shorey, and Shivani Raghuvanshi, with Karan Gour\'s dark ambient score.',
     shouldYouWatch: 'YES. Must-watch for fans of Ugly, Gangs of Wasseypur, Visaranai, NH10, or dark, realistic family crime dramas.',
-    bestFor: ['🏆 Cannes Un Certain Regard Nominee', '🩸 Gritty Delhi Crime Realism', '🎭 Ranvir Shorey & Shashank Arora Tour-de-Force', '🍿 Toxic Family Escape Drama'],
+    bestFor: ["🏆 Cannes Un Certain Regard Nominee","🩸 Gritty Delhi Crime Realism","🎭 Ranvir Shorey & Shashank Arora Tour-de-Force","🍿 Toxic Family Escape Drama"],
     afterCreditsEmotion: 'Speechless',
-    emotionalLines: [
-      'Freedom has a price.',
-      'Every family has secrets.',
-      'Dark. Honest. Powerful.',
-      'Escape isn\'t easy.',
-      'An underrated masterpiece.'
-    ],
-    bestScenes: [
-      'Tense family dinner sequence exposing brotherly tyranny',
-      'Titli & Neelu signing secret pact agreement in the car',
-      'High-stakes car-jacking confrontation on Delhi outskirts'
-    ],
-    moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '🌧️ Dark & Atmospheric'],
-    genres: ['Dark Crime Drama', 'Family Tragedy', 'Hindi Indie Masterpiece'],
+    emotionalLines: ["Freedom has a price.","Every family has secrets.","Dark. Honest. Powerful.","Escape isn't easy.","An underrated masterpiece."],
+    bestScenes: ["Tense family dinner sequence exposing brotherly tyranny","Titli & Neelu signing secret pact agreement in the car","High-stakes car-jacking confrontation on Delhi outskirts"],
+    moodTags: ["😱 Thriller","🤯 Mind-Blowing","🌧️ Dark & Atmospheric"],
+    genres: ["Dark Crime Drama","Family Tragedy","Hindi Indie Masterpiece"],
     musicVibe: 'Karan Gour dark ambient piano, slow cinematic strings, moody electronic ambience, minimal suspense instrumental',
-    coverImage: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://image.tmdb.org/t/p/original/mGknAQus2ayOXjVkVA6GJZCnPfH.jpg',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
-    ],
+    "https://image.tmdb.org/t/p/original/d06KfI9oicBeL1fYK3hxrt6X9H7.jpg",
+    "https://m.media-amazon.com/images/M/MV5BOTVmNWE1MTItMDE4OS00MDQ2LWI5Y2EtMDc2YWE4YjAzNGQwXkEyXkFqcGc@._V1_.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkZ0XH0YLJhY4irbbC9RfnLByHIre-PTyIv1PBhBA5VwQbMPh96RXe69jS&s=10",
+    "https://www.yashrajfilms.com/images/default-source/Movies/-Titli/Titli-Gallery/shashank-arora-and-shivani-raghuvanshi-in-titli.jpg?sfvrsn=2d5ecfcc_0"
+],
     trailerYoutubeId: 'OOqiQiMkXDA',
     featured: true
   },
-  {
+    {
     id: 'day-62-kothanodi',
     day: 62,
     type: 'movie',
     title: 'Kothanodi',
     year: 2015,
-    duration: '115 min',
-    language: 'Assamese',
     tagline: 'EVERY FOLK TALE HIDES A NIGHTMARE',
     hook: 'The darkest Indian folklore movie you\'ve never seen.',
-    imdbRating: 7.0,
-    cast: ['Seema Biswas', 'Adil Hussain', 'Zerifa Wahid', 'Urmila Mahanta', 'Kopil Bora'],
+    imdbRating: 7,
+    cast: ["Seema Biswas","Adil Hussain","Zerifa Wahid","Urmila Mahanta","Kopil Bora"],
     director: 'Bhaskar Hazarika',
+    duration: '115 min',
+    language: 'Assamese',
     availableOn: {
       name: 'MUBI',
       url: 'https://mubi.com'
@@ -2614,27 +2593,20 @@ export const HUNTS_DATA: HuntItem[] = [
     storySummary: 'Based on classic Assamese Burhi Aair Xadhu (Grandmother\'s Tales), four dark folklore fables intertwine: a mother obsessed with sacrificing her newborns to a river entity, a stepmother plotting her stepdaughter\'s cruel fate, a woman giving birth to an out-of-control elephant apple (Ou Tenga) that rolls after her, and a father protecting his daughter from an uncle\'s sinister wedding ritual.',
     whyWatch: 'Winner of the National Film Award for Best Feature Film in Assamese. Premiered at the Busan International Film Festival and BFI London Film Festival. Bhaskar Hazarika (Aamis) crafts a dark, eerie folk-horror atmospheric masterpiece preceding Tumbbad.',
     shouldYouWatch: 'YES. Must-watch for lovers of Tumbbad, Kantara, Aamis, The Witch, or atmospheric folk horror.',
-    bestFor: ['🏆 National Award Winner', '🌿 Assamese Dark Folk Horror', '😱 Tumbbad Prequel Vibe', '🍿 Bhaskar Hazarika Cult Classic'],
+    bestFor: ["🏆 National Award Winner","🌿 Assamese Dark Folk Horror","😱 Tumbbad Prequel Vibe","🍿 Bhaskar Hazarika Cult Classic"],
     afterCreditsEmotion: 'Speechless',
-    emotionalLines: [
-      'Every legend hides a truth.',
-      'Fear wears a human face.',
-      'Beautifully unsettling.',
-      'Folklore has never felt this real.',
-      'A forgotten masterpiece.'
-    ],
-    bestScenes: [
-      'The Ou Tenga (elephant apple) hauntingly rolling after Senehi through bamboo groves',
-      'Tejimola\'s stepmother burying her beneath the mortar in secret',
-      'Lantern-lit night forest ritual confrontation'
-    ],
-    moodTags: ['😱 Thriller', '🤯 Mind-Blowing', '🌧️ Dark & Atmospheric'],
-    genres: ['Dark Folk Horror', 'Psychological Fantasy', 'Assamese Masterpiece'],
+    emotionalLines: ["Every legend hides a truth.","Fear wears a human face.","Beautifully unsettling.","Folklore has never felt this real.","A forgotten masterpiece."],
+    bestScenes: ["The Ou Tenga (elephant apple) hauntingly rolling after Senehi through bamboo groves","Tejimola's stepmother burying her beneath the mortar in secret","Lantern-lit night forest ritual confrontation"],
+    moodTags: ["😱 Thriller","🤯 Mind-Blowing","🌧️ Dark & Atmospheric"],
+    genres: ["Dark Folk Horror","Psychological Fantasy","Assamese Masterpiece"],
     musicVibe: 'Amrit Pritam & Anurag Saikia haunting bamboo flute, dark ambient drone, minimal piano, atmospheric folk strings',
-    coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop',
+    coverImage: 'https://upload.wikimedia.org/wikipedia/en/a/a1/Official_Poster_of_Kothanodi_%28The_River_of_Fables%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original',
     images: [
-      'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
-    ],
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXc1UaaFbL26TDdUgT_V_UoAqtoQ7zfLIQiG6FAfNMs52diDc5b3PLQhnh&s=10",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbGvJN3qAeR9BnL_5tR5s0U_Ar5lz7UMZojrNkTwEe_9vzbwgw05uKE74&s=10",
+    "https://ik.imagekit.io/2kkwu3vzk/diversity-assam/Kothanodi-Feature-Image_J0W8S3dqL.webp",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHFX1a4vzcwoouA-F2BW0N_7GSBTzWU7UvAJtZJRgJsTRk3ewXvev2lzc&s=10"
+],
     trailerYoutubeId: 'k-jlVdIBBak',
     featured: true
   },
