@@ -335,7 +335,7 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-6">
             {similarPicks.map((item) => (
               <Link
                 key={item.id}
@@ -351,31 +351,31 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
                     className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
                   />
                   {/* Day badge */}
-                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
+                  <div className="absolute top-2 left-2 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[9px] sm:text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
                     Day {item.day}
                   </div>
                   {/* Type badge */}
-                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md text-zinc-300 text-[9px] font-bold border border-white/15 uppercase tracking-wider">
+                  <div className="absolute top-2 right-2 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md text-zinc-300 text-[8px] sm:text-[9px] font-bold border border-white/15 uppercase tracking-wider">
                     {item.type === 'movie' ? 'Film' : 'Series'}
                   </div>
                   {/* IMDb */}
                   {item.imdbRating && (
-                    <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/80 text-yellow-400 text-[10px] font-bold border border-yellow-500/30">
-                      <Star className="w-3 h-3 fill-yellow-400 stroke-none" />
+                    <div className="absolute bottom-2 right-2 flex items-center gap-0.5 sm:gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-black/80 text-yellow-400 text-[9px] sm:text-[10px] font-bold border border-yellow-500/30">
+                      <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-yellow-400 stroke-none" />
                       <span>{item.imdbRating}</span>
                     </div>
                   )}
                 </div>
 
                 {/* Meta */}
-                <div className="p-3 flex flex-col gap-1.5 flex-1">
-                  <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">
+                <div className="p-2.5 sm:p-3 flex flex-col gap-1 sm:gap-1.5 flex-1">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">
                     {item.language} · {item.year}
                   </span>
-                  <h4 className="text-sm font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
+                  <h4 className="text-xs sm:text-sm font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
                     {item.title}
                   </h4>
-                  <p className="text-[11px] text-zinc-400 italic line-clamp-2 leading-relaxed">
+                  <p className="text-[10px] sm:text-[11px] text-zinc-400 italic line-clamp-2 leading-relaxed">
                     &ldquo;{item.hook}&rdquo;
                   </p>
                 </div>
@@ -411,7 +411,7 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
             </div>
 
             {/* Collection hunt cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
               {collectionHunts.map((item) => (
                 <Link
                   key={item.id}
@@ -425,24 +425,24 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
                     />
-                    <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
+                    <div className="absolute top-2 left-2 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[9px] sm:text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
                       Day {item.day}
                     </div>
                     {item.imdbRating && (
-                      <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/80 text-yellow-400 text-[10px] font-bold border border-yellow-500/30">
-                        <Star className="w-3 h-3 fill-yellow-400 stroke-none" />
+                      <div className="absolute bottom-2 right-2 flex items-center gap-0.5 sm:gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-black/80 text-yellow-400 text-[9px] sm:text-[10px] font-bold border border-yellow-500/30">
+                        <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-yellow-400 stroke-none" />
                         <span>{item.imdbRating}</span>
                       </div>
                     )}
                   </div>
-                  <div className="p-3 flex flex-col gap-1.5 flex-1">
-                    <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">
+                  <div className="p-2.5 sm:p-3 flex flex-col gap-1 sm:gap-1.5 flex-1">
+                    <span className="text-[9px] sm:text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">
                       {item.language} · {item.year}
                     </span>
-                    <h4 className="text-sm font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
+                    <h4 className="text-xs sm:text-sm font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
                       {item.title}
                     </h4>
-                    <p className="text-[11px] text-zinc-400 italic line-clamp-2 leading-relaxed">
+                    <p className="text-[10px] sm:text-[11px] text-zinc-400 italic line-clamp-2 leading-relaxed">
                       &ldquo;{item.hook}&rdquo;
                     </p>
                   </div>
