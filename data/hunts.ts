@@ -3100,48 +3100,48 @@ export const COLLECTIONS = [
     title: '🌧 Rainy Night Stories',
     description: 'Cozy, atmospheric slow-burns best experienced when the rain is falling outside.',
     count: 24,
-    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://img.magnific.com/free-photo/natural-disaster-landscape_23-2151902895.jpg'
   },
   {
     id: 'hidden-indian-gems',
     title: '🇮🇳 Hidden Indian Gems',
     description: 'Under-appreciated indie & regional masterpieces that deserved far more spotlight.',
     count: 29,
-    image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://bombaytrooper.com/cdn/shop/articles/1458725059_nature_scenic_landscape_meghalaya_laitmawsiang_india_july_2011.jpg'
   },
   {
     id: 'mind-bending-thrillers',
     title: '🤯 Edge-of-Seat Thrillers',
     description: 'Intense, unpredictable psychological thrillers & crime mysteries that keep you guessing.',
     count: 46,
-    image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://images.pexels.com/photos/15845362/pexels-photo-15845362/free-photo-of-silhouettes-of-two-men-sitting-on-a-bench-of-a-viewpoint.jpeg'
   },
   {
     id: 'epic-sagas-rivalries',
     title: '🏆 Masterclass Sagas & Rivalries',
     description: 'High-stakes character clashes, generational feuds, and unforgettable cinematic sagas.',
     count: 26,
-    image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://i.pinimg.com/originals/d9/e5/39/d9e5397d7d084c4009889dfcdf0b5758.jpg'
   },
   {
     id: 'inspiring-life-journeys',
     title: '✨ Inspiring Coming-of-Age Journeys',
     description: 'Uplifting, hopeful, and deeply moving stories about freedom, dreams, and self-discovery.',
     count: 26,
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://img.magnific.com/free-photo/mountains-landscape_1204-208.jpg'
   },
   {
     id: 'philosophical-meditative',
     title: '🧘 Meditative & Philosophical Masterpieces',
     description: 'Deep, thought-provoking cinema that quietly shifts how you see the world.',
     count: 13,
-    image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://img.magnific.com/premium-photo/person-meditating-cliff-sunrise-amidst-misty-landscape_1223942-1688.jpg'
   },
   {
     id: 'series-better-than-movies',
     title: '📺 Web Series Worth Binging',
     description: 'High-rated, gripping multi-episode crime and family sagas you can finish in a weekend.',
     count: 7,
-    image: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://www.shutterstock.com/image-photo/vod-multimedia-tv-streaming-concept-260nw-2624544153.jpg'
   }
 ];
