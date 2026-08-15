@@ -3020,6 +3020,43 @@ export const HUNTS_DATA: HuntItem[] = [
     coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
     images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop']
   },
+  {
+    id: 'day-81-12th-fail',
+    day: 81,
+    type: 'movie',
+    title: '12th Fail',
+    year: 2023,
+    tagline: 'FAILURE IS NOT THE END.',
+    hook: 'He failed 12th. Then he became an IPS officer.',
+    imdbRating: 9,
+    cast: ["Vikrant Massey", "Medha Shankr", "Anant V Joshi", "Anshumaan Pushkar", "Priyanshu Chatterjee"],
+    director: 'Vidhu Vinod Chopra',
+    duration: '147 min',
+    language: 'Hindi',
+    availableOn: {
+      name: 'Disney+ Hotstar',
+      url: 'https://www.hotstar.com?utm_source=chatgpt.com'
+    },
+    storySummary: 'Based on the real-life journey of IPS officer Manoj Kumar Sharma, 12th Fail follows a young man from a financially struggling family who travels to Delhi with one goal: to clear the UPSC Civil Services Examination. A powerful story showing that failure is an event, not an identity.',
+    whyWatch: '**12th Fail** works because it doesn\'t make success look easy. It shows the uncertainty, poverty, failures, sacrifices, friendships, and persistence behind an extraordinary achievement. Vikrant Massey\'s performance gives Manoj a vulnerability that makes the journey feel incredibly personal, while Vidhu Vinod Chopra keeps the storytelling grounded rather than turning it into a typical motivational film. If you liked **Aspirants**, **Kota Factory**, **Newton**, or **Masaan**, this belongs high on your watchlist.',
+    shouldYouWatch: 'YES. If you love deep cinematic storytelling.',
+    bestFor: ["🍿 Evening watch", "🎧 Headphones recommended", "✨ Highly Inspiring", "🧠 Deep story"],
+    afterCreditsEmotion: 'Inspired',
+    emotionalLines: ["Failure isn't the end.", "Your beginning doesn't define your ending.", "Keep going.", "Dreams need discipline.", "This movie will make you believe again."],
+    bestScenes: ["Mukherjee Nagar streets", "Manoj studying late at night", "Library preparation scenes", "Exam struggle and determination montage"],
+    moodTags: ["✨ Inspiring", "❤️ Meaningful", "😊 Feel Good"],
+    genres: ["Biography", "Drama", "Inspirational"],
+    musicVibe: 'Emotional piano, slow motivational instrumental, soft acoustic guitar, hopeful orchestral build',
+    coverImage: 'https://image.tmdb.org/t/p/original/cDWW5l4NTWtQi9McwevrY3knsTd.jpg',
+    images: [
+      "https://image.tmdb.org/t/p/original/4njfDPI3VeNPyHwWYYdPruU9MDk.jpg",
+      "https://image.tmdb.org/t/p/original/a7u1CU5wb05PSd1IWuP57rSx8zt.jpg",
+      "https://image.tmdb.org/t/p/original/3CWQrYYn0EMlnoDEHHmBP9pwBKu.jpg",
+      "https://image.tmdb.org/t/p/original/8bbROu6jbvlS1u9Njen6kYX7gR6.jpg"
+    ],
+    trailerYoutubeId: 'KjbtuqENvVE',
+    featured: true
+  }
 
 
 ];

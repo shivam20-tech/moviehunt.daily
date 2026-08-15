@@ -108,13 +108,16 @@ function PublishHuntContent() {
       const isSeries = /Series/i.test(rawText.substring(0, 400));
       const type: 'movie' | 'series' = isSeries ? 'series' : 'movie';
 
-      // 3. Title & Year: e.g. **Kothanodi (2015)** or **Newton (2017)** or ## Newton (2017)
-      const titleMatch = rawText.match(/\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/) || rawText.match(/##\s*([^(]+)\s*\((20\d\d|19\d\d)\)/);
+      // 3. Title & Year: e.g. **12th Fail (2023)** or ## Movie: **12th Fail (2023)**
+      const titleMatch = rawText.match(/\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/) ||
+                         rawText.match(/(?:Movie|Series)?[:\s]*\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/i) ||
+                         rawText.match(/##\s*([^(]+)\s*\((20\d\d|19\d\d)\)/);
       const title = titleMatch ? titleMatch[1].replace(/[*#]/g, '').trim() : 'Untitled Movie';
       const year = titleMatch ? parseInt(titleMatch[2]) : 2024;
 
       // 4. IMDb Rating
-      const imdbMatch = rawText.match(/IMDb\s*Rating:\*\*?\s*\*?(\d+\.?\d*)\/10/i) || rawText.match(/(\d+\.\d+|\d+)\/10/);
+      const imdbMatch = rawText.match(/IMDb\s*Rating:\*\*?\s*\*?(\d+\.?\d*)\/10/i) ||
+                        rawText.match(/(\d+\.\d+|\d+)\/10/);
       const imdbRating = imdbMatch ? parseFloat(imdbMatch[1]) : 7.5;
 
       // 5. Cast
@@ -128,41 +131,107 @@ function PublishHuntContent() {
       const director = directorMatch ? directorMatch[1].replace(/[*[\]]/g, '').trim() : 'Director Name';
 
       // 7. Available On
-      const platformMatch = rawText.match(/\*\*Available On:\*\*\s*\[([^\]]+)\]\(([^)]+)\)/i) || rawText.match(/\*\*Available On:\*\*\s*([^\n\r]+)/i);
-      const platformName = platformMatch ? (platformMatch[1].includes('](') ? platformMatch[1].split('](')[0] : platformMatch[1].replace(/[*[\]]/g, '').trim()) : 'Streaming Platform';
-      const platformUrl = platformMatch && platformMatch[2] ? platformMatch[2] : 'https://example.com';
+      const platformMatch = rawText.match(/\*\*Available On:\*\*\s*\[([^\]]+)\]\(([^)]+)\)/i) ||
+                            rawText.match(/\*\*Available On:\*\*\s*([^\n\r]+)/i);
+      let platformName = 'Streaming Platform';
+      let platformUrl = 'https://example.com';
+      if (platformMatch) {
+        if (platformMatch[2]) {
+          platformName = platformMatch[1].replace(/[*[\]]/g, '').trim();
+          platformUrl = platformMatch[2].trim();
+        } else {
+          platformName = platformMatch[1].replace(/[*[\]]/g, '').trim();
+        }
+      }
 
-      // 8. Hook Text
-      const hookMatch = rawText.match(/\*\*Hook Text[^*]*\*\*[\s\r\n]*\*\*"?([^"\n\r]+)"?\*\*/i) || rawText.match(/Hook[^\n]*\n+"?([^\n\r"]+)"?/i);
-      const hook = hookMatch ? hookMatch[1].replace(/[*"]/g, '').trim() : `${title} is a story actually worth your time.`;
+      // 8. Hook Text (e.g. "## 2. Hook Text \n\n **"He failed 12th. Then he became an IPS officer."**")
+      let hook = '';
+      const hookSection = rawText.match(/(?:##|#|\*\*)\s*(?:\d+\.\s*)?Hook(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i);
+      if (hookSection && hookSection[1]) {
+        hook = hookSection[1].replace(/[*"“”\r\n#]/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+      if (!hook) {
+        hook = `${title} is a story actually worth your time.`;
+      }
 
-      // 9. Tagline / Thumbnail text
-      const taglineMatch = rawText.match(/\*\*Thumbnail Text\*\*[\s\r\n]*\*\*"?([^"\n\r]+)"?\*\*/i) || rawText.match(/Thumbnail[^\n]*\n+"?([^\n\r"]+)"?/i);
-      const tagline = taglineMatch ? taglineMatch[1].replace(/[*"]/g, '').trim() : 'MUST WATCH CINEMA.';
+      // 9. Tagline / Thumbnail Text (e.g. "## 8. Thumbnail Text \n\n **"FAILURE IS NOT THE END."**")
+      let tagline = '';
+      const tagSection = rawText.match(/(?:##|#|\*\*)\s*(?:\d+\.\s*)?Thumbnail(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i);
+      if (tagSection && tagSection[1]) {
+        tagline = tagSection[1].replace(/[*"“”\r\n#]/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+      if (!tagline) {
+        const bottomMatch = rawText.match(/Bottom Big Text[^\n]*\n+[\s\S]*?\*{1,3}"?([^"\n\r*]+)"?\*{1,3}/i);
+        if (bottomMatch) tagline = bottomMatch[1].trim();
+      }
+      if (!tagline) {
+        tagline = 'MUST WATCH CINEMA.';
+      }
 
       // 10. Story Summary
-      const storyMatch = rawText.match(/##\s*Story Summary[^\n]*\n([\s\S]*?)(?=##|---|Why You Should Watch|$)/i);
-      const storySummary = storyMatch
-        ? storyMatch[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim()
-        : 'An engaging, human cinematic story.';
+      let storySummary = '';
+      const storySection = rawText.match(/(?:#|##|\*\*)\s*Story Summary[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*Why|$))/i);
+      if (storySection && storySection[1]) {
+        storySummary = storySection[1]
+          .replace(/[*#]/g, '')
+          .replace(/\r\n|\r|\n/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      } else {
+        storySummary = 'An engaging, human cinematic story.';
+      }
 
       // 11. Why You Should Watch It
-      const whyMatch = rawText.match(/##\s*(?:\d+\.\s*)?Why You Should Watch[^\n]*\n([\s\S]*?)(?=##|---|Short Emotional Lines|$)/i);
-      const whyWatch = whyMatch
-        ? whyMatch[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim()
-        : 'A grounded masterpiece with unforgettable performances.';
+      let whyWatch = '';
+      const whySection = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Why You Should Watch[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*CTA|\n+##\s*Short|$))/i);
+      if (whySection && whySection[1]) {
+        whyWatch = whySection[1]
+          .replace(/\r\n|\r|\n/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      } else {
+        whyWatch = 'A grounded masterpiece with unforgettable performances.';
+      }
 
       // 12. Emotional Lines
-      const emotionalLinesMatch = rawText.match(/##\s*(?:\d+\.\s*)?Short Emotional Lines[\s\S]*?(?=##|---|Why|$)/i);
       let emotionalLines: string[] = [];
-      if (emotionalLinesMatch) {
-        const lines = emotionalLinesMatch[0].match(/\*\s*“?([^”\n\r]+)”?/g);
-        if (lines) {
-          emotionalLines = lines.map((l) => l.replace(/^\*\s*“?|”?$/g, '').trim()).slice(0, 5);
+      const linesMatch = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Short Emotional Lines[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i);
+      if (linesMatch && linesMatch[1]) {
+        const items = linesMatch[1].match(/[*•-]\s*“?([^”\n\r*]+)”?/g);
+        if (items) {
+          emotionalLines = items.map((l) => l.replace(/^[*•-]\s*“?|”?$/g, '').trim()).filter(Boolean);
         }
       }
       if (emotionalLines.length === 0) {
-        emotionalLines = ['“An unforgettable experience.”', '“Grounded performances.”', '“A hidden gem.”'];
+        emotionalLines = ["Failure isn't the end.", "Your beginning doesn't define your ending.", "Keep going."];
+      }
+
+      // 13. Best Scenes
+      let bestScenes: string[] = [];
+      const scenesMatch = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Best Scenes[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i);
+      if (scenesMatch && scenesMatch[1]) {
+        const items = scenesMatch[1].match(/[*•-]\s*([^\n\r*]+)/g);
+        if (items) {
+          bestScenes = items.map((l) => l.replace(/^[*•-]\s*/, '').trim()).filter(Boolean).slice(0, 5);
+        }
+      }
+      if (bestScenes.length === 0) {
+        bestScenes = ['Key climax scene', 'Atmospheric intro'];
+      }
+
+      // 14. Music Vibe
+      let musicVibe = '';
+      const musicMatch = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Music Vibe[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i);
+      if (musicMatch && musicMatch[1]) {
+        const items = musicMatch[1].match(/[*•-]\s*([^\n\r*]+)/g);
+        if (items) {
+          musicVibe = items.map((l) => l.replace(/^[*•-]\s*/, '').trim()).filter(Boolean).join(', ');
+        } else {
+          musicVibe = musicMatch[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
+        }
+      }
+      if (!musicVibe) {
+        musicVibe = 'Cinematic ambient score, slow building emotion';
       }
 
       // Generate ID
@@ -191,10 +260,11 @@ function PublishHuntContent() {
         whyWatch,
         shouldYouWatch: 'YES. If you love deep cinematic storytelling.',
         emotionalLines,
+        bestScenes,
         bestFor: ['🍿 Evening watch', '🎧 Headphones recommended', '🧠 Deep story'],
         moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
         genres: ['Drama', 'Thriller'],
-        musicVibe: 'Cinematic ambient score, slow building emotion',
+        musicVibe,
         coverImage: hunt.coverImage || 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
         images: hunt.images && hunt.images.length > 0 ? hunt.images : [
           'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
