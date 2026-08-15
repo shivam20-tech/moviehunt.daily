@@ -105,8 +105,18 @@ function PublishHuntContent() {
       const day = dayMatch ? parseInt(dayMatch[1]) : (HUNTS_DATA.length > 0 ? Math.max(...HUNTS_DATA.map(h => h.day)) + 1 : 1);
 
       // 2. Type (Series vs Movie)
-      const isSeries = /Series/i.test(rawText.substring(0, 400));
-      const type: 'movie' | 'series' = isSeries ? 'series' : 'movie';
+      // Check explicit movie or series label before the title or in details
+      let type: 'movie' | 'series' = 'movie';
+      if (/##\s*(?:Web\s*)?Series[:\s]/i.test(rawText) || /\b(?:Web\s*)?Series\s*:\s*\*\*/i.test(rawText) || /\bType\s*:\s*(?:Web\s*)?Series/i.test(rawText) || /\b\d+\s*Episodes\b/i.test(rawText) || /\bSeason\s*\d+\b/i.test(rawText)) {
+        type = 'series';
+      } else if (/##\s*Movie[:\s]/i.test(rawText) || /\bMovie\s*:\s*\*\*/i.test(rawText) || /\bType\s*:\s*Movie/i.test(rawText)) {
+        type = 'movie';
+      }
+
+      // Extract duration / episodes if mentioned (e.g. "147 min", "8 Episodes")
+      const durationMatch = rawText.match(/(?:Duration|Runtime|Episodes?)[:\s]*\*?(\d+\s*(?:min|mins|Episodes|episodes|Hours?|h|hrs))/i) ||
+                            rawText.match(/\b(\d+\s*(?:min|mins|Episodes|episodes))\b/i);
+      const duration = durationMatch ? durationMatch[1].trim() : (type === 'series' ? '8 Episodes' : '110 min');
 
       // 3. Title & Year: e.g. **12th Fail (2023)** or ## Movie: **12th Fail (2023)**
       const titleMatch = rawText.match(/\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/) ||
@@ -250,7 +260,7 @@ function PublishHuntContent() {
         imdbRating,
         cast,
         director,
-        duration: type === 'series' ? '8 Episodes' : '110 min',
+        duration,
         language: 'Hindi',
         availableOn: {
           name: platformName,
