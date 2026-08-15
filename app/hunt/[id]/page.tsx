@@ -2,12 +2,14 @@ import React from 'react';
 import { HUNTS_DATA } from '@/data/hunts';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { Star, ExternalLink, ArrowLeft, CheckCircle2, Film, Play, Sparkles, Images } from 'lucide-react';
+import { Star, ExternalLink, CheckCircle2, Film, Play, Sparkles, Images, ArrowRight } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import MovieImageSlider from '@/components/MovieImageSlider';
 import MovieTrailerPlayer from '@/components/MovieTrailerPlayer';
 import SmartBackButton from '@/components/SmartBackButton';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
+import HuntViewTracker from '@/components/HuntViewTracker';
+import { getCollectionForHunt, getCollectionHunts } from '@/lib/collectionMapping';
 
 export async function generateStaticParams() {
   return HUNTS_DATA.map((hunt) => ({
@@ -60,12 +62,20 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
     notFound();
   }
 
-  const similarPicks = getSimilarPicks(hunt, 4);
+  const similarPicks = getSimilarPicks(hunt, 3); // Phase 2: show 3 related hunts
+
+  // Phase 6: Deterministic collection match (null if no confident match)
+  const matchedCollection = getCollectionForHunt(hunt);
+  const collectionHunts = matchedCollection
+    ? getCollectionHunts(matchedCollection, hunt.id, HUNTS_DATA, 3)
+    : [];
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] text-[#f4f4f0] selection:bg-[#e5a93c] selection:text-[#0a0a0f]">
       {/* Analytics: fire hunt_view event on page load */}
       <AnalyticsTracker huntId={hunt.id} />
+      {/* Phase 4: silently persist this hunt to localStorage recently-explored — no analytics */}
+      <HuntViewTracker huntId={hunt.id} />
       {/* Hero Header Banner */}
       <div className="relative pt-24 pb-12 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 z-0">
@@ -314,47 +324,133 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
           </div>
         )}
 
-        {/* Similar Picks — 2 Columns on mobile */}
+        {/* Phase 2 — Connected Discovery: "If this story stayed with you..." */}
         <div className="pt-8 border-t border-white/10 space-y-4 sm:space-y-6">
-          <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">
-            If You Liked This, Also Explore
-          </h3>
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">
+              If this story stayed with you...
+            </h3>
+            <p className="text-xs text-zinc-500 mt-1 italic">
+              You might also love these curated picks.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             {similarPicks.map((item) => (
               <Link
                 key={item.id}
                 href={`/hunt/${item.id}`}
-                className="group p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/50 transition-all space-y-2.5 flex flex-col justify-between"
+                className="group relative rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/60 transition-all overflow-hidden flex flex-col"
               >
-                <div className="relative aspect-[2/3] rounded-lg sm:rounded-xl overflow-hidden">
+                {/* Poster */}
+                <div className="relative aspect-[2/3] overflow-hidden">
                   <img
                     src={item.coverImage}
                     alt={item.title}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
                   />
-                  <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md text-[#e5a93c] text-[10px] font-bold border border-[#e5a93c]/30">
+                  {/* Day badge */}
+                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
+                    Day {item.day}
+                  </div>
+                  {/* Type badge */}
+                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full bg-[#0a0a0f]/80 backdrop-blur-md text-zinc-300 text-[9px] font-bold border border-white/15 uppercase tracking-wider">
                     {item.type === 'movie' ? 'Film' : 'Series'}
                   </div>
+                  {/* IMDb */}
                   {item.imdbRating && (
-                    <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-black/80 text-yellow-400 text-[10px] font-bold border border-yellow-500/30 flex items-center gap-1">
+                    <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/80 text-yellow-400 text-[10px] font-bold border border-yellow-500/30">
                       <Star className="w-3 h-3 fill-yellow-400 stroke-none" />
                       <span>{item.imdbRating}</span>
                     </div>
                   )}
                 </div>
 
-                <div>
-                  <h4 className="text-xs sm:text-base font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
-                    {item.title} ({item.year})
+                {/* Meta */}
+                <div className="p-3 flex flex-col gap-1.5 flex-1">
+                  <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">
+                    {item.language} · {item.year}
+                  </span>
+                  <h4 className="text-sm font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
+                    {item.title}
                   </h4>
-                  <p className="text-[11px] sm:text-xs text-zinc-400 italic line-clamp-2 mt-0.5">&ldquo;{item.hook}&rdquo;</p>
+                  <p className="text-[11px] text-zinc-400 italic line-clamp-2 leading-relaxed">
+                    &ldquo;{item.hook}&rdquo;
+                  </p>
                 </div>
               </Link>
             ))}
           </div>
         </div>
+
+        {/* Phase 6 — From the Collection (only when confidently matched) */}
+        {matchedCollection && collectionHunts.length > 0 && (
+          <div className="pt-8 border-t border-white/10 space-y-5">
+            {/* Section header */}
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs text-zinc-500 uppercase tracking-widest font-semibold mb-1">
+                  From the Collection
+                </p>
+                <h3 className="text-xl sm:text-2xl font-bold text-white font-serif">
+                  {matchedCollection.title}
+                </h3>
+                <p className="text-xs text-zinc-400 italic mt-1 max-w-md">
+                  {matchedCollection.description}
+                </p>
+              </div>
+              <Link
+                href="/collections"
+                className="flex-shrink-0 flex items-center gap-1.5 text-[#e5a93c] text-xs font-semibold hover:underline mt-1"
+                aria-label={`Explore ${matchedCollection.title} collection`}
+              >
+                Explore Collection
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {/* Collection hunt cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {collectionHunts.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/hunt/${item.id}`}
+                  className="group relative rounded-xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/50 transition-all overflow-hidden flex flex-col"
+                >
+                  <div className="relative aspect-[2/3] overflow-hidden">
+                    <img
+                      src={item.coverImage}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                    />
+                    <div className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
+                      Day {item.day}
+                    </div>
+                    {item.imdbRating && (
+                      <div className="absolute bottom-2.5 right-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/80 text-yellow-400 text-[10px] font-bold border border-yellow-500/30">
+                        <Star className="w-3 h-3 fill-yellow-400 stroke-none" />
+                        <span>{item.imdbRating}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-3 flex flex-col gap-1.5 flex-1">
+                    <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">
+                      {item.language} · {item.year}
+                    </span>
+                    <h4 className="text-sm font-bold text-white font-serif group-hover:text-[#e5a93c] transition-colors line-clamp-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-[11px] text-zinc-400 italic line-clamp-2 leading-relaxed">
+                      &ldquo;{item.hook}&rdquo;
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <Footer />

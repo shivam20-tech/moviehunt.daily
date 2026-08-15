@@ -6,6 +6,7 @@ import FeaturedCollections from '@/components/FeaturedCollections';
 import HuntWizard from '@/components/HuntWizard';
 import HuntArchiveTimeline from '@/components/HuntArchiveTimeline';
 import Footer from '@/components/Footer';
+import RecentlyExplored from '@/components/RecentlyExplored';
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
 
       {/* Chapter 2 — Today's Story */}
       <TodaysHunt />
+
+      {/* Phase 4 — Recently Explored (only visible to returning visitors with ≥ 2 hunts) */}
+      <RecentlyExplored />
 
       {/* Chapter 3 — The Manifesto Moment */}
       <ManifestoSection />

@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Film } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
+import SurpriseMeModal from './SurpriseMeModal';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [surpriseOpen, setSurpriseOpen] = useState(false);
   const pathname = usePathname();
 
   if (pathname?.startsWith('/admin')) {
@@ -169,8 +171,31 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* ── Desktop CTA ── */}
-          <div className="navbar-desktop-cta" style={{ display: 'flex', alignItems: 'center' }}>
+          {/* ── Desktop Surprise Me + CTA ── */}
+          <div className="navbar-desktop-cta" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <button
+              onClick={() => setSurpriseOpen(true)}
+              aria-label="Surprise me with a random hunt"
+              style={{
+                fontFamily: "'Inter', system-ui, sans-serif",
+                fontSize: 13,
+                fontWeight: 400,
+                color: '#8a8a96',
+                background: 'none',
+                border: 'none',
+                padding: '8px 4px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 5,
+                transition: 'color 150ms ease',
+                letterSpacing: '0.01em',
+              }}
+              className="navbar-surprise-btn"
+            >
+              <Sparkles size={13} strokeWidth={1.5} />
+              Surprise Me
+            </button>
             <Link
               href="/#hunt-flow"
               onClick={(e) => handleNavClick(e, '/#hunt-flow')}
@@ -262,6 +287,31 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+          {/* Surprise Me mobile link */}
+          <button
+            onClick={() => { setMobileOpen(false); setSurpriseOpen(true); }}
+            style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: 'clamp(1.5rem, 6vw, 2.2rem)',
+              color: '#c9913a',
+              background: 'none',
+              border: 'none',
+              padding: '10px 0',
+              textAlign: 'left',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 10,
+              transition: 'opacity 150ms ease',
+              transitionDelay: mobileOpen ? `${NAV_LINKS.length * 40}ms` : '0ms',
+              opacity: mobileOpen ? 1 : 0,
+              transform: mobileOpen ? 'translateX(0)' : 'translateX(-12px)',
+            }}
+            aria-label="Surprise me with a random hunt"
+          >
+            <Sparkles size={20} strokeWidth={1.5} />
+            Surprise Me
+          </button>
         </nav>
 
         <div
@@ -294,6 +344,9 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Surprise Me modal — shared instance in Navbar */}
+      <SurpriseMeModal isOpen={surpriseOpen} onClose={() => setSurpriseOpen(false)} />
+
       <style>{`
         /* Desktop vs mobile visibility */
         @media (min-width: 768px) {
@@ -323,6 +376,11 @@ export default function Navbar() {
         /* Nav link hover */
         .nav-link:hover {
           color: #f0efe8 !important;
+        }
+
+        /* Surprise Me button hover */
+        .navbar-surprise-btn:hover {
+          color: #c9913a !important;
         }
 
         /* CTA button hover */
