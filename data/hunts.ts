@@ -2960,7 +2960,7 @@ export const HUNTS_DATA: HuntItem[] = [
     trailerYoutubeId: 'ViOutJ0kuJY?si',
     featured: true
   },
-  {
+    {
     id: 'day-77-aamis',
     day: 77,
     type: 'movie',
@@ -2969,7 +2969,7 @@ export const HUNTS_DATA: HuntItem[] = [
     tagline: 'MUST WATCH CINEMA.',
     hook: 'Aamis is a movie actually worth watching.',
     imdbRating: 7.5,
-    cast: ["Lima Das", "Arghadeep Baruah", "Neetali Das", "Sagar Saurabh"],
+    cast: ["Lima Das","Arghadeep Baruah","Neetali Das","Sagar Saurabh"],
     director: 'Bhaskar Hazarika',
     duration: '8 Episodes',
     language: 'Hindi',
@@ -2980,17 +2980,27 @@ export const HUNTS_DATA: HuntItem[] = [
     storySummary: 'An engaging story summary.',
     whyWatch: '**Aamis** is one of those rare Indian films that becomes more disturbing the longer you think about it. Bhaskar Hazarika uses food as a metaphor for intimacy, desire, and obsession, creating a romance that gradually transforms into psychological horror. Its restrained performances and beautiful Assamese setting make the contrast with the increasingly unsettling story even more effective. IMDb currently lists it at **7.7/10**. ([IMDb][1])',
     shouldYouWatch: 'YES. If you love deep cinematic storytelling.',
-    bestFor: ['🍿 Evening watch', '🎧 Headphones recommended', '🧠 Deep story'],
+    bestFor: ["🍿 Evening watch","🎧 Headphones recommended","🧠 Deep story"],
     afterCreditsEmotion: 'Speechless',
-    emotionalLines: ["“Love can become obsession.”", "“Desire has no limits.”", "“Beautifully unsettling.”", "“You won't forget this one.”", "“Nothing is what it seems.”"],
-    bestScenes: ['Key climax scene', 'Atmospheric intro'],
-    moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
-    genres: ['Drama', 'Thriller'],
+    emotionalLines: ["“Love can become obsession.”","“Desire has no limits.”","“Beautifully unsettling.”","“You won't forget this one.”","“Nothing is what it seems.”"],
+    bestScenes: ["Key climax scene","Atmospheric intro"],
+    moodTags: ["🤯 Mind-Blowing","😱 Thriller"],
+    genres: ["Drama","Thriller"],
     musicVibe: 'Cinematic ambient score',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop']
+    coverImage: 'https://image.tmdb.org/t/p/original/aBD6Jhze6kS36wBLVYkp7EGEBxr.jpg',
+    images: [
+    "https://image.tmdb.org/t/p/original/xB3AGu8oQigY0zdDogRCMDwGr4u.jpg",
+    "https://image.tmdb.org/t/p/original/jfbYM3YXSY5HAcFQUAskSlpstag.jpg",
+    "https://image.tmdb.org/t/p/original/4cMwEXt2DwVyOqk1ElEdJZtcgUm.jpg",
+    "https://image.tmdb.org/t/p/original/Ah6wIaH8ol87p77oCwiSMxIKpib.jpg",
+    "https://image.tmdb.org/t/p/original/yY87dfcuoOn6ecgnaZkc40PxXXd.jpg",
+    "https://image.tmdb.org/t/p/original/g6BdILGthM7rCT3JlOGqZovxelR.jpg"
+],
+    trailerYoutubeId: '-zv11DpavFI',
+    featured: true
   },
-  {
+  
+      {
     id: 'day-78-newton',
     day: 78,
     type: 'movie',
@@ -2999,7 +3009,7 @@ export const HUNTS_DATA: HuntItem[] = [
     tagline: 'MUST WATCH CINEMA.',
     hook: 'Newton is a movie actually worth watching.',
     imdbRating: 7.5,
-    cast: ["Rajkummar Rao", "Pankaj Tripathi", "Anjali Patil", "Raghuvir Yadav"],
+    cast: ["Rajkummar Rao","Pankaj Tripathi","Anjali Patil","Raghuvir Yadav"],
     director: 'Amit V. Masurkar',
     duration: '8 Episodes',
     language: 'Hindi',
@@ -3010,15 +3020,23 @@ export const HUNTS_DATA: HuntItem[] = [
     storySummary: 'One election officer. One remote polling station. And a democracy that isn\'t as simple as it looks. Newton Kumar is an idealistic government employee who takes his responsibility seriously. When he\'s sent to a conflict-affected forest region to conduct an election, he is determined to make sure every vote is counted. But the reality on the ground is very different. Security concerns. Local problems. Political pressure. And people who aren\'t convinced that the election will actually change anything. **Newton** is funny, tense, and surprisingly thought-provoking. It uses one small election booth to explore a much bigger question: **What does democracy mean when the system itself is struggling?**',
     whyWatch: '**Newton** is a smart example of how a simple premise can reveal much larger social realities. Rajkummar Rao\'s restrained performance works beautifully alongside Pankaj Tripathi\'s effortless humor, while the forest setting gives the film a unique atmosphere. The movie was also **India\'s official submission for the Best Foreign Language Film category at the 90th Academy Awards**. If you liked **Court**, **A Death in the Gunj**, **Masaan**, or **Thithi**, this is definitely worth watching.',
     shouldYouWatch: 'YES. If you love deep cinematic storytelling.',
-    bestFor: ['🍿 Evening watch', '🎧 Headphones recommended', '🧠 Deep story'],
+    bestFor: ["🍿 Evening watch","🎧 Headphones recommended","🧠 Deep story"],
     afterCreditsEmotion: 'Speechless',
-    emotionalLines: ["“Every vote matters.”", "“Idealism meets reality.”", "“Democracy isn't always simple.”", "“Funny, sharp, and thought-provoking.”", "“A hidden Indian masterpiece.”"],
-    bestScenes: ['Key climax scene', 'Atmospheric intro'],
-    moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
-    genres: ['Drama', 'Thriller'],
+    emotionalLines: ["“Every vote matters.”","“Idealism meets reality.”","“Democracy isn't always simple.”","“Funny, sharp, and thought-provoking.”","“A hidden Indian masterpiece.”"],
+    bestScenes: ["Key climax scene","Atmospheric intro"],
+    moodTags: ["🤯 Mind-Blowing","😱 Thriller"],
+    genres: ["Drama","Thriller"],
     musicVibe: 'Cinematic ambient score',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
-    images: ['https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop']
+    coverImage: 'https://image.tmdb.org/t/p/original/ubzHA1aXUsWvQJHjvqBCHxzTBi5.jpg',
+    images: [
+    "https://image.tmdb.org/t/p/original/5aNFEcMFjDsdiRao2CnipUTFUwr.jpg",
+    "https://image.tmdb.org/t/p/original/xmDgqfHH4pi8NHqVAcG1NiX5qvq.jpg",
+    "https://image.tmdb.org/t/p/original/9ZNq3XQyoo6aK3Ta3YDTlsAgkx9.jpg",
+    "https://image.tmdb.org/t/p/original/vymwWr6D49Lc7PUH042cf6PRBzR.jpg"
+],
+    trailerYoutubeId: 'yU6zMPFd4UU',
+    featured: true
+  
   },
   {
     id: 'day-81-12th-fail',
