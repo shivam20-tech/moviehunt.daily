@@ -245,7 +245,7 @@ export default function RecentlyExplored() {
         .recently-explored-strip::-webkit-scrollbar { display: none; }
 
         .recently-explored-card:hover .recently-explored-img {
-          transform: scale(1.05);
+          transform: scale(1.03);
         }
         .recently-explored-card:hover .recently-explored-title {
           color: var(--accent) !important;

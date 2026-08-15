@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import { HUNTS_DATA } from '@/data/hunts';
 import Link from 'next/link';
 import { Film, Tv, Star, ArrowRight, Search } from 'lucide-react';
+import CinematicImage from '@/components/CinematicImage';
 
 // ── Dynamic stats (all derived from HUNTS_DATA — never hardcoded) ──────────
 const TOTAL = HUNTS_DATA.length;
@@ -265,12 +266,11 @@ function HuntCardGrid({ cards }: { cards: typeof HUNTS_DATA }) {
           href={`/hunt/${hunt.id}`}
           className="group p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/50 transition-all flex flex-col justify-between"
         >
-          <div className="relative aspect-[2/3] rounded-lg sm:rounded-xl overflow-hidden mb-3">
-            <img
+          <div className="relative aspect-[2/3] rounded-lg sm:rounded-xl overflow-hidden mb-3 bg-[#121218]">
+            <CinematicImage
               src={hunt.coverImage}
               alt={hunt.title}
-              loading="lazy"
-              className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+              className="group-hover:scale-[1.03] transition-transform duration-500"
             />
             {/* Day badge */}
             <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[9px] sm:text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">

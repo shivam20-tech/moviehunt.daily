@@ -91,44 +91,44 @@ export default function Navbar() {
           }}
         >
           {/* ── Logo ── */}
-          <Link href="/" aria-label="MovieHunt — Go home" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', flexShrink: 0 }}>
-            <div
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: '50%',
-                overflow: 'hidden',
-                border: '1.5px solid rgba(229, 169, 60, 0.6)',
-                boxShadow: '0 0 12px rgba(229, 169, 60, 0.25)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                backgroundColor: '#0a0a0f',
-              }}
-            >
+          <Link
+            href="/"
+            aria-label="MovieHunt — Go home"
+            className="navbar-brand-link"
+            style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', flexShrink: 0 }}
+          >
+            {/* 1. Projector Reel Icon with Reel Spin & Golden Halo */}
+            <div className="logo-reel-frame">
               <img
                 src="/logo.jpg"
                 alt="MovieHunt Official Logo"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                className="logo-reel-img"
               />
             </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+              {/* 2 & 3. 3D Jump Vault + Golden Studio Shimmer */}
               <span
+                className="logo-title-group"
                 style={{
                   fontFamily: "'DM Serif Display', Georgia, serif",
                   fontSize: 17,
                   color: '#f0efe8',
                   letterSpacing: '-0.01em',
+                  display: 'inline-flex',
+                  alignItems: 'baseline',
                 }}
               >
-                MOVIE<span style={{ color: '#c9913a' }}>HUNT</span>
+                <span className="logo-word-movie">MOVIE</span>
+                <span className="logo-word-hunt">HUNT</span>
               </span>
+
+              {/* 4. Neon Sign Warm Glow */}
               <span
+                className="logo-subtitle-marquee"
                 style={{
                   fontFamily: "'Inter', system-ui, sans-serif",
                   fontSize: 8.5,
-                  color: '#55555f',
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
                   marginTop: 3,
@@ -391,6 +391,77 @@ export default function Navbar() {
         .navbar-cta-btn:active {
           transform: scale(0.98);
           transition-duration: 80ms !important;
+        }
+
+        /* ── Logo Interactive Styling & Motion (Hover-only, Calm Resting State) ── */
+        .logo-reel-frame {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 1.5px solid rgba(229, 169, 60, 0.6);
+          box-shadow: 0 0 12px rgba(229, 169, 60, 0.22);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          background-color: #0a0a0f;
+          transition: transform 380ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 300ms ease;
+        }
+
+        .logo-reel-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .logo-title-group {
+          position: relative;
+          display: inline-flex;
+          align-items: baseline;
+        }
+
+        .logo-word-movie {
+          position: relative;
+          display: inline-block;
+          color: #f0efe8;
+          transition: color 200ms ease;
+        }
+
+        .logo-word-hunt {
+          position: relative;
+          display: inline-block;
+          color: #c9913a;
+          transition: color 200ms ease, text-shadow 250ms ease, transform 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .logo-subtitle-marquee {
+          color: #55555f;
+          transition: color 200ms ease;
+        }
+
+        /* ── Interactive Hover: Refined & Luxurious ── */
+        .navbar-brand-link:hover .logo-reel-frame {
+          transform: rotate(180deg);
+          box-shadow: 0 0 18px rgba(229, 169, 60, 0.65), 0 0 4px rgba(255, 228, 158, 0.8);
+        }
+        .navbar-brand-link:hover .logo-word-hunt {
+          color: #ffe49e;
+          text-shadow: 0 0 12px rgba(201, 145, 58, 0.65);
+          transform: translateY(-0.5px);
+        }
+        .navbar-brand-link:hover .logo-subtitle-marquee {
+          color: #c9913a;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .logo-reel-frame,
+          .logo-word-hunt,
+          .navbar-brand-link:hover .logo-reel-frame,
+          .navbar-brand-link:hover .logo-word-hunt {
+            transform: none !important;
+            transition: none !important;
+          }
         }
       `}</style>
     </>

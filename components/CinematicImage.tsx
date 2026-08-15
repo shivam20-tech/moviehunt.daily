@@ -8,14 +8,15 @@ interface CinematicImageProps {
   className?: string;
   style?: React.CSSProperties;
   objectPosition?: string;
-  priority?: boolean; // skip blur-up for above-the-fold images
+  priority?: boolean;
 }
 
 /**
- * CinematicImage — Blur-Up Loading
- * Images load blurred and sharpen when fully loaded.
- * Much more premium than a sudden pop-in.
- * Uses native loading="lazy" for performance.
+ * CinematicImage — Obsidian Placeholder & Calm 300ms Fade-In
+ * - Prevents white flash
+ * - Guarantees zero layout shift
+ * - Smooth 300ms fade-in on natural load
+ * - Respects prefers-reduced-motion
  */
 export default function CinematicImage({
   src,
@@ -29,11 +30,13 @@ export default function CinematicImage({
   const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    // If the image is already cached/complete, mark loaded immediately
-    if (imgRef.current?.complete) {
+    // If cached or already complete in memory, reveal immediately
+    if (imgRef.current?.complete && imgRef.current.naturalWidth > 0) {
       setLoaded(true);
+    } else {
+      setLoaded(false);
     }
-  }, []);
+  }, [src]);
 
   return (
     <img
@@ -50,8 +53,10 @@ export default function CinematicImage({
         objectFit: 'cover',
         objectPosition,
         display: 'block',
+        backgroundColor: '#121218',
         ...style,
       }}
     />
   );
 }
+

@@ -9,6 +9,7 @@ import MovieTrailerPlayer from '@/components/MovieTrailerPlayer';
 import SmartBackButton from '@/components/SmartBackButton';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
 import HuntViewTracker from '@/components/HuntViewTracker';
+import CinematicImage from '@/components/CinematicImage';
 import { getCollectionForHunt, getCollectionHunts } from '@/lib/collectionMapping';
 
 export async function generateStaticParams() {
@@ -92,11 +93,12 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
 
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             {/* Poster Card */}
-            <div className="md:col-span-4 relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/15 group">
-              <img
+            <div className="md:col-span-4 relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-white/15 group bg-[#121218]">
+              <CinematicImage
                 src={hunt.coverImage}
                 alt={hunt.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                priority
+                className="group-hover:scale-[1.03] transition-transform duration-500"
               />
               <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#0a0a0f]/90 backdrop-blur-md text-[#e5a93c] text-xs font-bold border border-[#e5a93c]/30 uppercase tracking-wider">
                 {hunt.type === 'movie' ? '🎬 Feature Film' : '📺 Web Series'}
@@ -343,12 +345,11 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
                 className="group relative rounded-xl sm:rounded-2xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/60 transition-all overflow-hidden flex flex-col"
               >
                 {/* Poster */}
-                <div className="relative aspect-[2/3] overflow-hidden">
-                  <img
+                <div className="relative aspect-[2/3] overflow-hidden bg-[#121218]">
+                  <CinematicImage
                     src={item.coverImage}
                     alt={item.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                    className="group-hover:scale-[1.03] transition-transform duration-500"
                   />
                   {/* Day badge */}
                   <div className="absolute top-2 left-2 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[9px] sm:text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
@@ -418,12 +419,11 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
                   href={`/hunt/${item.id}`}
                   className="group relative rounded-xl bg-zinc-900/40 border border-white/10 hover:border-[#e5a93c]/50 transition-all overflow-hidden flex flex-col"
                 >
-                  <div className="relative aspect-[2/3] overflow-hidden">
-                    <img
+                  <div className="relative aspect-[2/3] overflow-hidden bg-[#121218]">
+                    <CinematicImage
                       src={item.coverImage}
                       alt={item.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                      className="group-hover:scale-[1.03] transition-transform duration-500"
                     />
                     <div className="absolute top-2 left-2 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-[#0a0a0f]/88 backdrop-blur-md text-[#e5a93c] text-[9px] sm:text-[10px] font-bold border border-[#e5a93c]/35 uppercase tracking-wider">
                       Day {item.day}
