@@ -2946,8 +2946,8 @@ export const HUNTS_DATA: HuntItem[] = [
     duration: '8 Episodes',
     language: 'Hindi',
     availableOn: {
-      name: 'Streaming Platform',
-      url: 'https://example.com'
+      name: 'Sony Liv',
+      url: 'https://www.sonyliv.com/movies/aamis-1000137795?utm_source=Google&utm_medium=WatchNow&utm_campaign=1000137795'
     },
     storySummary: 'An engaging story summary.',
     whyWatch: '**Aamis** is one of those rare Indian films that becomes more disturbing the longer you think about it. Bhaskar Hazarika uses food as a metaphor for intimacy, desire, and obsession, creating a romance that gradually transforms into psychological horror. Its restrained performances and beautiful Assamese setting make the contrast with the increasingly unsettling story even more effective. IMDb currently lists it at **7.7/10**. ([IMDb][1])',
