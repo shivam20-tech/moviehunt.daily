@@ -2963,7 +2963,7 @@ export const HUNTS_DATA: HuntItem[] = [
   {
     id: 'day-77-aamis',
     day: 77,
-    type: 'series',
+    type: 'movie',
     title: 'Aamis',
     year: 2019,
     tagline: 'MUST WATCH CINEMA.',
@@ -2993,7 +2993,7 @@ export const HUNTS_DATA: HuntItem[] = [
   {
     id: 'day-78-newton',
     day: 78,
-    type: 'series',
+    type: 'movie',
     title: 'Newton',
     year: 2017,
     tagline: 'MUST WATCH CINEMA.',
