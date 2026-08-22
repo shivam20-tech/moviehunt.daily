@@ -278,29 +278,33 @@ export default async function HuntDetailPage({ params }: { params: Promise<{ id:
           <div className="lg:col-span-4 space-y-6">
             <div className="p-6 rounded-2xl bg-zinc-900/80 border border-white/10 space-y-4 text-xs">
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#e5a93c]">
-                Film Specifications
+                {hunt.type === 'series' ? 'Series Specifications' : 'Film Specifications'}
               </h4>
 
               <div className="space-y-3 divide-y divide-white/5">
-                <div className="pt-2 flex justify-between">
-                  <span className="text-zinc-500">Director</span>
-                  <span className="text-white font-semibold">{hunt.director}</span>
+                <div className="pt-2 flex justify-between items-start gap-3">
+                  <span className="text-zinc-500 flex-shrink-0">
+                    {hunt.type === 'series' ? 'Creator / Director' : 'Director'}
+                  </span>
+                  <span className="text-white font-semibold text-right">{hunt.director || 'Curated Selection'}</span>
                 </div>
 
-                <div className="pt-2 flex justify-between">
-                  <span className="text-zinc-500">Cast</span>
+                <div className="pt-2 flex justify-between items-start gap-3">
+                  <span className="text-zinc-500 flex-shrink-0">Cast</span>
                   <span className="text-zinc-300 text-right max-w-[180px]">{hunt.cast.join(', ')}</span>
                 </div>
 
-                <div className="pt-2 flex justify-between">
+                <div className="pt-2 flex justify-between items-center">
                   <span className="text-zinc-500">Language</span>
                   <span className="text-white font-medium">{hunt.language}</span>
                 </div>
 
-                {hunt.episodes && (
-                  <div className="pt-2 flex justify-between">
-                    <span className="text-zinc-500">Episodes</span>
-                    <span className="text-[#e5a93c] font-bold">{hunt.episodes} Episodes</span>
+                {hunt.duration && (
+                  <div className="pt-2 flex justify-between items-center">
+                    <span className="text-zinc-500">
+                      {hunt.type === 'series' ? 'Series Length' : 'Runtime'}
+                    </span>
+                    <span className="text-[#e5a93c] font-bold">{hunt.duration}</span>
                   </div>
                 )}
 

@@ -173,59 +173,99 @@ function PublishHuntContent() {
       // Type (Series vs Movie)
       let type: 'movie' | 'series' = 'movie';
       if (
-        /##\s*(?:Web\s*)?Series[:\s]/i.test(rawText) ||
-        /\b(?:Web\s*)?Series\s*:\s*\*\*/i.test(rawText) ||
+        /##?\s*(?:Web\s*)?Series[:\s]/i.test(rawText) ||
+        /\b(?:Web\s*)?Series\s*:\s*/i.test(rawText) ||
         /\bType\s*:\s*(?:Web\s*)?Series/i.test(rawText) ||
         /\b\d+\s*Episodes\b/i.test(rawText) ||
-        /\bSeason\s*\d+\b/i.test(rawText)
+        /\bSeasons?\s*:\s*\d+/i.test(rawText)
       ) {
         type = 'series';
       } else if (
-        /##\s*Movie[:\s]/i.test(rawText) ||
-        /\bMovie\s*:\s*\*\*/i.test(rawText) ||
+        /##?\s*Movie[:\s]/i.test(rawText) ||
+        /\bMovie\s*:\s*/i.test(rawText) ||
         /\bType\s*:\s*Movie/i.test(rawText)
       ) {
         type = 'movie';
       }
 
-      // Duration
-      const durationMatch =
-        rawText.match(/(?:Duration|Runtime|Episodes?)[:\s]*\*?(\d+\s*(?:min|mins|Episodes|episodes|Hours?|h|hrs))/i) ||
-        rawText.match(/\b(\d+\s*(?:min|mins|Episodes|episodes))\b/i);
-      const duration = durationMatch
-        ? durationMatch[1].trim()
-        : type === 'series'
-        ? '8 Episodes'
-        : '110 min';
+      // Seasons & Episodes Extraction
+      const seasonsMatch = rawText.match(/\bSeasons?\s*:\s*\*?(\d+)/i);
+      const episodesMatch = rawText.match(/\bEpisodes?\s*:\s*\*?(\d+)/i);
+      const numSeasons = seasonsMatch ? parseInt(seasonsMatch[1]) : null;
+      const numEpisodes = episodesMatch ? parseInt(episodesMatch[1]) : null;
 
-      // Title & Year
-      const titleMatch =
-        rawText.match(/\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/) ||
-        rawText.match(/(?:Movie|Series)?[:\s]*\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/i) ||
-        rawText.match(/##\s*([^(]+)\s*\((20\d\d|19\d\d)\)/);
-      const title = titleMatch ? titleMatch[1].replace(/[*#]/g, '').trim() : 'Untitled Movie';
-      const year = titleMatch ? parseInt(titleMatch[2]) : new Date().getFullYear();
+      let duration = '';
+      if (numSeasons && numEpisodes) {
+        duration = `${numSeasons} Season${numSeasons > 1 ? 's' : ''} · ${numEpisodes} Episodes`;
+      } else if (numEpisodes) {
+        duration = `${numEpisodes} Episodes`;
+      } else if (numSeasons) {
+        duration = `${numSeasons} Season${numSeasons > 1 ? 's' : ''}`;
+      } else {
+        const durationMatch =
+          rawText.match(/(?:Duration|Runtime|Episodes?)[:\s]*\*?(\d+\s*(?:min|mins|Episodes|episodes|Hours?|h|hrs))/i) ||
+          rawText.match(/\b(\d+\s*(?:min|mins|Episodes|episodes))\b/i);
+        duration = durationMatch
+          ? durationMatch[1].trim()
+          : type === 'series'
+          ? '8 Episodes'
+          : '110 min';
+      }
 
-      // IMDb Rating
-      const imdbMatch =
-        rawText.match(/IMDb\s*Rating:\*\*?\s*\*?(\d+\.?\d*)\/10/i) ||
-        rawText.match(/(\d+\.\d+|\d+)\/10/);
-      const imdbRating = imdbMatch ? parseFloat(imdbMatch[1]) : 7.5;
+      // Title & Year — Smart Line-by-Line Parser
+      let title = '';
+      let year = new Date().getFullYear();
+
+      const lines = rawText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+      for (const line of lines) {
+        // Skip header lines like "Day 85 of finding movies & series..." or "Series Details"
+        if (/^Day\s*\d+/i.test(line) && line.toLowerCase().includes('finding')) continue;
+        if (/^(?:Series|Movie|Film)\s*Details/i.test(line)) continue;
+
+        // Pattern 1: "Series: Kota Factory (2019–2024)" or "Movie: 12th Fail (2023)"
+        const prefixMatch = line.match(/^(?:Series|Movie|Title|Film)\s*:\s*\*?([^(]+?)\s*\((19\d\d|20\d\d)(?:[–—\-]\d{2,4})?\)\*?/i);
+        if (prefixMatch) {
+          title = prefixMatch[1].replace(/[*#]/g, '').trim();
+          year = parseInt(prefixMatch[2]);
+          break;
+        }
+
+        // Pattern 2: Standalone "**Kota Factory (2019–2024)**" or "Kota Factory (2019-2024)"
+        const parenMatch = line.match(/^(?:##\s*|\*\*)?([^(]+?)\s*\((19\d\d|20\d\d)(?:[–—\-]\d{2,4})?\)\*?/i);
+        if (parenMatch && !parenMatch[1].toLowerCase().includes('day') && !parenMatch[1].toLowerCase().includes('finding')) {
+          title = parenMatch[1].replace(/[*#]/g, '').trim();
+          year = parseInt(parenMatch[2]);
+          break;
+        }
+      }
+
+      if (!title || title === 'Untitled') {
+        title = 'Untitled Recommendation';
+      }
+
+      // Director / Creators
+      const creatorMatch =
+        rawText.match(/(?:\*\*|##)?\s*(?:Creators?|Directors?|Directed By|Created By)[:\s]*\*?([^\n\r]+)/i);
+      const director = creatorMatch
+        ? creatorMatch[1].replace(/[*[\]]/g, '').replace(/\([^)]*\)/g, '').trim()
+        : '';
 
       // Cast
-      const castMatch = rawText.match(/\*\*Cast:\*\*\s*([^\n\r]+)/i);
+      const castMatch = rawText.match(/(?:\*\*|##)?\s*Cast[:\s]*\*?([^\n\r]+)/i);
       const cast = castMatch
         ? castMatch[1].split(/[,|•]/).map((s) => s.replace(/[*[\]]/g, '').trim()).filter(Boolean)
         : [];
 
-      // Director
-      const directorMatch = rawText.match(/\*\*Director:\*\*\s*([^\n\r]+)/i);
-      const director = directorMatch ? directorMatch[1].replace(/[*[\]]/g, '').trim() : '';
+      // IMDb Rating
+      const imdbMatch =
+        rawText.match(/IMDb\s*Rating[:\s]*\*?(\d+\.?\d*)\/10/i) ||
+        rawText.match(/(\d+\.\d+|\d+)\/10/);
+      const imdbRating = imdbMatch ? parseFloat(imdbMatch[1]) : 7.5;
 
       // Available On
       const platformMatch =
-        rawText.match(/\*\*Available On:\*\*\s*\[([^\]]+)\]\(([^)]+)\)/i) ||
-        rawText.match(/\*\*Available On:\*\*\s*([^\n\r]+)/i);
+        rawText.match(/(?:\*\*|##)?\s*Available On[:\s]*\[([^\]]+)\]\(([^)]+)\)/i) ||
+        rawText.match(/(?:\*\*|##)?\s*Available On[:\s]*\*?([^\n\r]+)/i);
       let platformName = 'Streaming';
       let platformUrl = '#';
       if (platformMatch) {
@@ -237,10 +277,19 @@ function PublishHuntContent() {
         }
       }
 
+      // Story Summary (Spoiler-Free)
+      let storySummary = '';
+      const storySection = rawText.match(
+        /(?:#|##|\*\*|\b)?\s*Story Summary[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+\d+\.\s*Viral|\n+\d+\.\s*Hook|\n+\d+\.\s*Why|$))/i,
+      );
+      if (storySection && storySection[1]) {
+        storySummary = storySection[1].replace(/[*#]/g, '').replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
+      }
+
       // Hook
       let hook = '';
       const hookSection = rawText.match(
-        /(?:##|#|\*\*)\s*(?:\d+\.\s*)?Hook(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i,
+        /(?:\d+\.\s*)?Hook(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\d+\.|$))/i,
       );
       if (hookSection && hookSection[1]) {
         hook = hookSection[1].replace(/[*"“”\r\n#]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -249,10 +298,10 @@ function PublishHuntContent() {
         hook = `${title} is a story actually worth your evening.`;
       }
 
-      // Tagline
+      // Tagline / Thumbnail
       let tagline = '';
       const tagSection = rawText.match(
-        /(?:##|#|\*\*)\s*(?:\d+\.\s*)?Thumbnail(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i,
+        /(?:\d+\.\s*)?Thumbnail(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\d+\.|$))/i,
       );
       if (tagSection && tagSection[1]) {
         tagline = tagSection[1].replace(/[*"“”\r\n#]/g, ' ').replace(/\s+/g, ' ').trim();
@@ -263,19 +312,10 @@ function PublishHuntContent() {
       }
       if (!tagline) tagline = 'MUST WATCH CINEMA.';
 
-      // Story Summary
-      let storySummary = '';
-      const storySection = rawText.match(
-        /(?:#|##|\*\*)\s*Story Summary[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*Why|$))/i,
-      );
-      if (storySection && storySection[1]) {
-        storySummary = storySection[1].replace(/[*#]/g, '').replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
-      }
-
-      // Why Watch
+      // Why You Should Watch It
       let whyWatch = '';
       const whySection = rawText.match(
-        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Why You Should Watch[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*CTA|\n+##\s*Short|$))/i,
+        /(?:\d+\.\s*)?Why You Should Watch[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+\d+\.\s*CTA|$))/i,
       );
       if (whySection && whySection[1]) {
         whyWatch = whySection[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
@@ -284,41 +324,33 @@ function PublishHuntContent() {
       // Emotional Lines
       let emotionalLines: string[] = [];
       const linesMatch = rawText.match(
-        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Short Emotional Lines[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i,
+        /(?:Short Emotional Lines|Emotional Lines)[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+\d+\.|$))/i,
       );
       if (linesMatch && linesMatch[1]) {
-        const items = linesMatch[1].match(/[*•-]\s*“?([^”\n\r*]+)”?/g);
-        if (items) {
-          emotionalLines = items.map((l) => l.replace(/^[*•-]\s*“?|”?$/g, '').trim()).filter(Boolean);
-        }
+        const items = linesMatch[1].split(/\n/).map((l) => l.replace(/^[•\-\d.\s*"“”]+|[*"“”\r\n]+$/g, '').trim()).filter(Boolean);
+        emotionalLines = items.slice(0, 6);
       }
 
       // Best Scenes
       let bestScenes: string[] = [];
       const scenesMatch = rawText.match(
-        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Best Scenes[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i,
+        /(?:Best Scenes\/Clips to Use|Best Scenes)[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+\d+\.|$))/i,
       );
       if (scenesMatch && scenesMatch[1]) {
-        const items = scenesMatch[1].match(/[*•-]\s*([^\n\r*]+)/g);
-        if (items) {
-          bestScenes = items.map((l) => l.replace(/^[*•-]\s*/, '').trim()).filter(Boolean).slice(0, 5);
-        }
+        const items = scenesMatch[1].split(/\n/).map((l) => l.replace(/^[•\-\d.\s*]+|[*#\r\n]+$/g, '').trim()).filter(Boolean);
+        bestScenes = items.slice(0, 6);
       }
 
       // Music Vibe
       let musicVibe = '';
       const musicMatch = rawText.match(
-        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Music Vibe[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i,
+        /(?:Music Vibe)[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+\d+\.|$))/i,
       );
       if (musicMatch && musicMatch[1]) {
-        const items = musicMatch[1].match(/[*•-]\s*([^\n\r*]+)/g);
-        if (items) {
-          musicVibe = items.map((l) => l.replace(/^[*•-]\s*/, '').trim()).filter(Boolean).join(', ');
-        } else {
-          musicVibe = musicMatch[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
-        }
+        const items = musicMatch[1].split(/\n/).map((l) => l.replace(/^[•\-\d.\s*]+|[*#\r\n]+$/g, '').trim()).filter(Boolean);
+        musicVibe = items.join(', ');
       }
-      if (!musicVibe) musicVibe = 'Cinematic ambient score, slow building emotion';
+      if (!musicVibe) musicVibe = 'Emotional piano, soft acoustic guitar, slow motivational build';
 
       // Auto-generated slug ID
       const cleanSlug = slugify(title);
@@ -761,16 +793,16 @@ function PublishHuntContent() {
                 />
               </div>
 
-              {/* Duration / Episodes */}
+              {/* Duration / Format */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
-                  Duration / Episodes
+                  {hunt.type === 'series' ? 'Series Duration / Format' : 'Movie Duration / Runtime'}
                 </label>
                 <input
                   type="text"
                   value={hunt.duration || ''}
                   onChange={(e) => setHunt({ ...hunt, duration: e.target.value })}
-                  placeholder="e.g. 147 min or 8 Episodes"
+                  placeholder={hunt.type === 'series' ? 'e.g. 3 Seasons · 15 Episodes' : 'e.g. 147 min'}
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-semibold text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
@@ -789,6 +821,82 @@ function PublishHuntContent() {
                 />
               </div>
             </div>
+
+            {/* Series-Specific Season & Episode Quick Helper */}
+            {hunt.type === 'series' && (
+              <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-purple-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <Tv className="w-3.5 h-3.5 text-purple-400" />
+                    Series Season & Episode Details
+                  </span>
+                  <span className="text-[10px] text-zinc-400">
+                    Live format: <strong className="text-white">{hunt.duration || 'Not specified'}</strong>
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <div>
+                    <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">
+                      Total Seasons
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      placeholder="e.g. 3"
+                      value={hunt.duration?.match(/(\d+)\s*Seasons?/i)?.[1] || ''}
+                      onChange={(e) => {
+                        const seasons = e.target.value;
+                        const epMatch = hunt.duration?.match(/(\d+)\s*Episodes?/i);
+                        const eps = epMatch ? epMatch[1] : '';
+                        if (seasons && eps) {
+                          setHunt({ ...hunt, duration: `${seasons} Season${parseInt(seasons) > 1 ? 's' : ''} · ${eps} Episodes` });
+                        } else if (seasons) {
+                          setHunt({ ...hunt, duration: `${seasons} Season${parseInt(seasons) > 1 ? 's' : ''}` });
+                        }
+                      }}
+                      className="w-full px-3 py-1.5 rounded-lg bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-purple-400 outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-zinc-400 uppercase mb-1">
+                      Total Episodes
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      placeholder="e.g. 15"
+                      value={hunt.duration?.match(/(\d+)\s*Episodes?/i)?.[1] || ''}
+                      onChange={(e) => {
+                        const eps = e.target.value;
+                        const seasonMatch = hunt.duration?.match(/(\d+)\s*Seasons?/i);
+                        const seasons = seasonMatch ? seasonMatch[1] : '';
+                        if (seasons && eps) {
+                          setHunt({ ...hunt, duration: `${seasons} Season${parseInt(seasons) > 1 ? 's' : ''} · ${eps} Episodes` });
+                        } else if (eps) {
+                          setHunt({ ...hunt, duration: `${eps} Episodes` });
+                        }
+                      }}
+                      className="w-full px-3 py-1.5 rounded-lg bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-purple-400 outline-none"
+                    />
+                  </div>
+                  <div className="col-span-2 sm:col-span-1 flex items-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const seasonMatch = hunt.duration?.match(/(\d+)\s*Seasons?/i);
+                        const epMatch = hunt.duration?.match(/(\d+)\s*Episodes?/i);
+                        const s = seasonMatch ? seasonMatch[1] : '1';
+                        const e = epMatch ? epMatch[1] : '8';
+                        setHunt({ ...hunt, duration: `${s} Season${parseInt(s) > 1 ? 's' : ''} · ${e} Episodes` });
+                      }}
+                      className="w-full py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-[11px] font-semibold text-zinc-300 hover:text-white transition-colors"
+                    >
+                      Sync Format
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Section B: Credits & Where to Watch */}
@@ -800,13 +908,13 @@ function PublishHuntContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
-                  Director Name
+                  Director / Creator(s)
                 </label>
                 <input
                   type="text"
                   value={hunt.director}
                   onChange={(e) => setHunt({ ...hunt, director: e.target.value })}
-                  placeholder="e.g. Vidhu Vinod Chopra"
+                  placeholder="e.g. Saurabh Khanna, Vidhu Vinod Chopra"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
