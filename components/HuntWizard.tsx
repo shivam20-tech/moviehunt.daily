@@ -8,7 +8,8 @@ import { ArrowRight, ArrowLeft, CheckCircle2, RotateCcw, Star, ExternalLink, Fil
 import Link from 'next/link';
 import CinematicImage from './CinematicImage';
 
-export default function HuntWizard() {
+export default function HuntWizard({ hunts = HUNTS_DATA }: { hunts?: typeof HUNTS_DATA }) {
+  const activeHunts = hunts.length > 0 ? hunts : HUNTS_DATA;
   const [step, setStep] = useState<number>(1);
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [selectedDuration, setSelectedDuration] = useState<string>('');
@@ -38,11 +39,11 @@ export default function HuntWizard() {
     if (!finding) return;
 
     const timer = setTimeout(() => {
-      let filtered = [...HUNTS_DATA];
+      let filtered = [...activeHunts];
 
       if (isSurprise || selectedMood === 'dont-know') {
-        const topHunts = HUNTS_DATA.filter((h) => (h.imdbRating ?? 0) >= 8.3);
-        const randomMatch = topHunts[Math.floor(Math.random() * topHunts.length)] || HUNTS_DATA[0];
+        const topHunts = activeHunts.filter((h) => (h.imdbRating ?? 0) >= 8.3);
+        const randomMatch = topHunts[Math.floor(Math.random() * topHunts.length)] || activeHunts[0];
         setRecommendation(randomMatch);
         setFinding(false);
         setStep(5);
@@ -67,14 +68,14 @@ export default function HuntWizard() {
         });
       }
 
-      const match = filtered.length > 0 ? filtered[0] : HUNTS_DATA[0];
+      const match = filtered.length > 0 ? filtered[0] : activeHunts[0];
       setRecommendation(match);
       setFinding(false);
       setStep(5);
     }, 2200); // Bridge lasts 2.2s — enough to feel cinematic, not sluggish
 
     return () => clearTimeout(timer);
-  }, [finding, selectedLanguage, selectedDuration, selectedMood, isSurprise]);
+  }, [finding, selectedLanguage, selectedDuration, selectedMood, isSurprise, activeHunts]);
 
   const handleReset = () => {
     setStep(1);

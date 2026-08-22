@@ -1,4 +1,4 @@
-﻿/**
+/**
  * app/journey/page.tsx — Server Component Wrapper
  *
  * Fetches published hunts from Vercel Blob on the server side,
@@ -10,6 +10,8 @@
 
 import { getHunts } from '@/lib/cms/getHunts';
 import JourneyClient from './JourneyClient';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'The Hunt Archive — Movie Hunt',

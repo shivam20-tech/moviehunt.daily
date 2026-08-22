@@ -20,7 +20,8 @@ import CinematicImage from './CinematicImage';
  * in from the right — 200ms, ease-out. The row itself barely shifts.
  * The image emerging creates the surprise of discovery.
  */
-export default function FeaturedCollections() {
+export default function FeaturedCollections({ collections = COLLECTIONS }: { collections?: typeof COLLECTIONS }) {
+  const activeCollections = collections.length > 0 ? collections : COLLECTIONS;
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
@@ -109,7 +110,7 @@ export default function FeaturedCollections() {
             flexDirection: 'column',
           }}
         >
-          {COLLECTIONS.map((col, idx) => {
+          {activeCollections.map((col, idx) => {
             const isHovered = hoveredId === col.id;
             const delayClass = `cms-sr-delay-${Math.min(idx + 1, 6)}`;
 

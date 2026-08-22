@@ -7,12 +7,13 @@ import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
 import CinematicImage from './CinematicImage';
 
-export default function HuntArchiveTimeline() {
+export default function HuntArchiveTimeline({ hunts = HUNTS_DATA }: { hunts?: typeof HUNTS_DATA }) {
+  const activeHunts = hunts.length > 0 ? hunts : HUNTS_DATA;
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [displayLimit, setDisplayLimit] = useState<number>(10);
   const [filterType, setFilterType] = useState<'all' | 'movie' | 'series'>('all');
 
-  const filteredHunts = HUNTS_DATA.filter((h) => {
+  const filteredHunts = activeHunts.filter((h) => {
     if (filterType === 'movie') return h.type === 'movie';
     if (filterType === 'series') return h.type === 'series';
     return true;
@@ -21,8 +22,8 @@ export default function HuntArchiveTimeline() {
   const displayedHunts = filteredHunts.slice(0, displayLimit);
   const hasMore = displayLimit < filteredHunts.length;
 
-  const movieCount = HUNTS_DATA.filter((h) => h.type === 'movie').length;
-  const seriesCount = HUNTS_DATA.filter((h) => h.type === 'series').length;
+  const movieCount = activeHunts.filter((h) => h.type === 'movie').length;
+  const seriesCount = activeHunts.filter((h) => h.type === 'series').length;
 
   return (
     <section

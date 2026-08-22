@@ -28,10 +28,11 @@ function getTodayIndex(): number {
  * Cinematic moment 2: The large still image responds to hover with a
  * subtle 4% scale over 600ms — barely perceptible, but felt.
  */
-export default function TodaysHunt() {
+export default function TodaysHunt({ hunts = HUNTS_DATA }: { hunts?: typeof HUNTS_DATA }) {
+  const activeHunts = hunts.length > 0 ? hunts : HUNTS_DATA;
   const [mounted, setMounted] = useState(false);
   const [todayIndex, setTodayIndex] = useState<number>(0);
-  const [selectedId, setSelectedId] = useState<string>(HUNTS_DATA[0].id);
+  const [selectedId, setSelectedId] = useState<string>(activeHunts[0]?.id || HUNTS_DATA[0].id);
   const [trailerOpen, setTrailerOpen] = useState(false);
   const [imageHovered, setImageHovered] = useState(false);
 
@@ -50,12 +51,18 @@ export default function TodaysHunt() {
 
   useEffect(() => {
     setMounted(true);
-    const idx = getTodayIndex();
-    setTodayIndex(idx);
-    setSelectedId(HUNTS_DATA[idx]?.id || HUNTS_DATA[0].id);
-  }, []);
+    const now = new Date();
+    const start = new Date(Date.UTC(now.getUTCFullYear(), 0, 0));
+    const diff = now.getTime() - start.getTime();
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    const idx = dayOfYear % activeHunts.length;
 
-  const hunt = HUNTS_DATA.find((h) => h.id === selectedId) || HUNTS_DATA[todayIndex] || HUNTS_DATA[0];
+    setTodayIndex(idx);
+    setSelectedId(activeHunts[idx]?.id || activeHunts[0]?.id || HUNTS_DATA[0].id);
+  }, [activeHunts]);
+
+  const hunt = activeHunts.find((h) => h.id === selectedId) || activeHunts[todayIndex] || activeHunts[0] || HUNTS_DATA[0];
 
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
@@ -82,7 +89,7 @@ export default function TodaysHunt() {
   const handleShuffle = () => {
     setIsShuffling(true);
     setTimeout(() => setIsShuffling(false), 500);
-    const remaining = HUNTS_DATA.filter((h) => h.id !== selectedId);
+    const remaining = activeHunts.filter((h) => h.id !== selectedId);
     const next = remaining[Math.floor(Math.random() * remaining.length)];
     if (next) setSelectedId(next.id);
   };

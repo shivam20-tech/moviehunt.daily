@@ -6,6 +6,8 @@ import { getCollections } from '@/lib/cms/getCollections';
 import Link from 'next/link';
 import { Star, ArrowRight, Film, Tv } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Maps each collection ID to precise filter logic against hunt moodTags, genres, bestFor, and tagline.
  * Returns all matching hunts for a collection.

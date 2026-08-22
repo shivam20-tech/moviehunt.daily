@@ -13,6 +13,7 @@ import HuntViewTracker from '@/components/HuntViewTracker';
 import CinematicImage from '@/components/CinematicImage';
 import { getCollectionForHunt, getCollectionHunts } from '@/lib/collectionMapping';
 
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
