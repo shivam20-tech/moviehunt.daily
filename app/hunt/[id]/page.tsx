@@ -1,5 +1,6 @@
 import React from 'react';
-import { HUNTS_DATA } from '@/data/hunts';
+import { HuntItem } from '@/data/hunts';
+import { getHunts, getHuntById } from '@/lib/cms/getHunts';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { Star, ExternalLink, CheckCircle2, Film, Play, Sparkles, Images, ArrowRight } from 'lucide-react';
@@ -12,14 +13,19 @@ import HuntViewTracker from '@/components/HuntViewTracker';
 import CinematicImage from '@/components/CinematicImage';
 import { getCollectionForHunt, getCollectionHunts } from '@/lib/collectionMapping';
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  return HUNTS_DATA.map((hunt) => ({
+  // Only pre-render published hunts — draft/archived are not publicly accessible
+  const published = await getHunts('published');
+  return published.map((hunt) => ({
     id: hunt.id,
   }));
 }
 
-function getSimilarPicks(currentHunt: (typeof HUNTS_DATA)[0], limit = 3) {
-  const others = HUNTS_DATA.filter((h) => h.id !== currentHunt.id);
+function getSimilarPicks(currentHunt: HuntItem, allPublishedHunts: HuntItem[], limit = 3) {
+  // Only suggest published hunts as related picks
+  const others = allPublishedHunts.filter((h) => h.id !== currentHunt.id);
 
   const currentTags = [
     ...(currentHunt.moodTags ?? []),
@@ -57,18 +63,46 @@ function getSimilarPicks(currentHunt: (typeof HUNTS_DATA)[0], limit = 3) {
 
 export default async function HuntDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const hunt = HUNTS_DATA.find((h) => h.id === id);
 
+  // Fetch all published hunts and find the requested one
+  const publishedHunts = await getHunts('published');
+  const hunt = publishedHunts.find((h) => h.id === id);
+
+  // If hunt exists but is draft/archived, show graceful unavailable page
   if (!hunt) {
+    // Check if it exists in any status (to show appropriate message)
+    const anyHunt = await getHuntById(id, false);
+    if (anyHunt && (anyHunt.status === 'draft' || anyHunt.status === 'archived')) {
+      // Graceful unavailable — not a 404 error page
+      return (
+        <main className="min-h-screen bg-[#0a0a0f] text-[#f4f4f0] flex flex-col items-center justify-center gap-6 px-4">
+          <div className="text-5xl">🎬</div>
+          <h1 className="text-2xl font-serif font-bold text-white text-center">
+            This Hunt is not available right now
+          </h1>
+          <p className="text-zinc-400 text-sm text-center max-w-sm">
+            It may have been archived or is still being prepared.
+            Explore our other curated recommendations below.
+          </p>
+          <Link
+            href="/journey"
+            className="px-6 py-3 rounded-xl bg-[#e5a93c] text-[#0a0a0f] font-bold text-sm hover:bg-[#d4982b] transition-colors"
+          >
+            Browse All Hunts →
+          </Link>
+          <Footer />
+        </main>
+      );
+    }
     notFound();
   }
 
-  const similarPicks = getSimilarPicks(hunt, 3); // Phase 2: show 3 related hunts
+  const similarPicks = getSimilarPicks(hunt, publishedHunts, 3);
 
   // Phase 6: Deterministic collection match (null if no confident match)
   const matchedCollection = getCollectionForHunt(hunt);
   const collectionHunts = matchedCollection
-    ? getCollectionHunts(matchedCollection, hunt.id, HUNTS_DATA, 3)
+    ? getCollectionHunts(matchedCollection, hunt.id, publishedHunts, 3)
     : [];
 
   return (

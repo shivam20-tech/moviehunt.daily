@@ -1,18 +1,21 @@
 import React from 'react';
 import Footer from '@/components/Footer';
-import { COLLECTIONS, HUNTS_DATA, HuntItem } from '@/data/hunts';
+import { HuntItem } from '@/data/hunts';
+import { getHunts } from '@/lib/cms/getHunts';
+import { getCollections } from '@/lib/cms/getCollections';
 import Link from 'next/link';
 import { Star, ArrowRight, Film, Tv } from 'lucide-react';
 
 /**
  * Maps each collection ID to precise filter logic against hunt moodTags, genres, bestFor, and tagline.
  * Returns all matching hunts for a collection.
+ * SAFEGUARD #7: Only receives published hunts — draft/archived never leak into collections.
  */
-function getAllHuntsForCollection(collectionId: string): HuntItem[] {
+function getAllHuntsForCollection(collectionId: string, allHunts: HuntItem[]): HuntItem[] {
   switch (collectionId) {
     case 'rainy-night-stories':
       // Atmospheric, cozy, emotional, rainy-vibes, nostalgic romance & quiet dramas
-      return HUNTS_DATA.filter((h) => {
+      return allHunts.filter((h) => {
         const text = [
           h.title,
           h.tagline,
@@ -39,7 +42,7 @@ function getAllHuntsForCollection(collectionId: string): HuntItem[] {
 
     case 'hidden-indian-gems':
       // Under-appreciated indie, art-house, & authentic village masterpieces
-      return HUNTS_DATA.filter((h) => {
+      return allHunts.filter((h) => {
         const text = [
           h.title,
           h.whyWatch,
@@ -63,7 +66,7 @@ function getAllHuntsForCollection(collectionId: string): HuntItem[] {
 
     case 'mind-bending-thrillers':
       // Intense, unpredictable psychological thrillers & crime mysteries
-      return HUNTS_DATA.filter((h) => {
+      return allHunts.filter((h) => {
         const genres = (h.genres ?? []).map((g) => g.toLowerCase());
         const tags = (h.moodTags ?? []).map((t) => t.toLowerCase());
         return (
@@ -74,7 +77,7 @@ function getAllHuntsForCollection(collectionId: string): HuntItem[] {
 
     case 'epic-sagas-rivalries':
       // High-stakes character clashes, gangster epics & generational sagas
-      return HUNTS_DATA.filter((h) => {
+      return allHunts.filter((h) => {
         const text = [h.title, h.tagline, h.storySummary, h.whyWatch, ...(h.genres ?? []), ...(h.bestFor ?? [])]
           .join(' ')
           .toLowerCase();
@@ -93,7 +96,7 @@ function getAllHuntsForCollection(collectionId: string): HuntItem[] {
 
     case 'inspiring-life-journeys':
       // Feel-good, coming-of-age, survival & emotional liberation
-      return HUNTS_DATA.filter((h) => {
+      return allHunts.filter((h) => {
         const text = [h.title, h.tagline, h.whyWatch, ...(h.genres ?? []), ...(h.moodTags ?? []), ...(h.bestFor ?? [])]
           .join(' ')
           .toLowerCase();
@@ -111,7 +114,7 @@ function getAllHuntsForCollection(collectionId: string): HuntItem[] {
 
     case 'philosophical-meditative':
       // Deep, thought-provoking, quiet, courtroom realism
-      return HUNTS_DATA.filter((h) => {
+      return allHunts.filter((h) => {
         const text = [h.title, h.tagline, h.whyWatch, ...(h.genres ?? []), ...(h.bestFor ?? [])]
           .join(' ')
           .toLowerCase();
@@ -127,10 +130,10 @@ function getAllHuntsForCollection(collectionId: string): HuntItem[] {
       });
 
     case 'series-better-than-movies':
-      return HUNTS_DATA.filter((h) => h.type === 'series');
+      return allHunts.filter((h) => h.type === 'series');
 
     default:
-      return HUNTS_DATA;
+      return allHunts;
   }
 }
 
@@ -144,8 +147,8 @@ const signaturePriorityMap: Record<string, string[]> = {
   'series-better-than-movies': ['day-71-gullak', 'day-75-aspirants', 'day-72-yeh-meri-family', 'day-73-paatal-lok', 'day-74-delhi-crime', 'day-70-kohrra', 'day-69-tabbar']
 };
 
-function getHuntsForCollection(collectionId: string, limit = 6): HuntItem[] {
-  const matches = getAllHuntsForCollection(collectionId);
+function getHuntsForCollection(collectionId: string, allHunts: HuntItem[], limit = 6): HuntItem[] {
+  const matches = getAllHuntsForCollection(collectionId, allHunts);
   const signatureList = signaturePriorityMap[collectionId] || [];
 
   const sorted = [...matches].sort((a, b) => {
@@ -160,7 +163,12 @@ function getHuntsForCollection(collectionId: string, limit = 6): HuntItem[] {
   return sorted.slice(0, limit);
 }
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  // Fetch published-only hunts and collections from Vercel Blob
+  const [publishedHunts, collections] = await Promise.all([
+    getHunts('published'),
+    getCollections(),
+  ]);
   return (
     <main
       style={{
@@ -216,9 +224,9 @@ export default function CollectionsPage() {
           className="section-inner"
           style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-24)' }}
         >
-          {COLLECTIONS.map((col) => {
-            const allMatches = getAllHuntsForCollection(col.id);
-            const hunts = getHuntsForCollection(col.id, 6);
+          {collections.map((col) => {
+            const allMatches = getAllHuntsForCollection(col.id, publishedHunts);
+            const hunts = getHuntsForCollection(col.id, publishedHunts, 6);
 
             return (
               <div key={col.id} id={col.id} style={{ scrollMarginTop: 80 }}>

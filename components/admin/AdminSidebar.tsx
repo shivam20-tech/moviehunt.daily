@@ -12,7 +12,8 @@ import {
   LogOut,
   Clapperboard,
   Menu,
-  X
+  X,
+  Download,
 } from 'lucide-react';
 
 interface NavItem {
@@ -32,6 +33,7 @@ const WORKSPACE_NAV: NavItem[] = [
 
 const INSIGHTS_NAV: NavItem[] = [
   { label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+  { label: 'Export & Backup', href: '/admin/export', icon: Download },
 ];
 
 export default function AdminSidebar() {

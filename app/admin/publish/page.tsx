@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   Sparkles,
@@ -9,8 +9,8 @@ import {
   Edit3,
   Image as ImageIcon,
   Eye,
-  Code,
-  Copy,
+  Send,
+  Save,
   Check,
   ArrowRight,
   ArrowLeft,
@@ -23,128 +23,211 @@ import {
   Tv,
   Info,
   CheckCircle2,
-  RefreshCw
+  AlertTriangle,
+  UploadCloud,
+  Loader2,
+  RefreshCw,
+  Clock,
+  Layers
 } from 'lucide-react';
-import { HUNTS_DATA, HuntItem } from '@/data/hunts';
+import { HuntItem } from '@/data/hunts';
 
-// Default empty Hunt structure
 const DEFAULT_HUNT: HuntItem = {
-  id: 'day-79-movie-title',
-  day: 79,
+  id: '',
+  day: 1,
   type: 'movie',
   title: '',
   year: new Date().getFullYear(),
-  tagline: 'MUST WATCH CINEMA.',
-  hook: 'A movie actually worth watching this evening.',
+  tagline: '',
+  hook: '',
   imdbRating: 7.5,
-  cast: ['Lead Actor 1', 'Lead Actor 2'],
+  cast: [],
   director: '',
   duration: '110 min',
   language: 'Hindi',
   availableOn: {
     name: 'Netflix',
-    url: 'https://netflix.com'
+    url: 'https://netflix.com',
   },
   storySummary: '',
   whyWatch: '',
   shouldYouWatch: 'YES. If you love deep cinematic storytelling.',
   bestFor: ['🍿 Evening watch', '🎧 Headphones recommended', '🧠 Deep story'],
   afterCreditsEmotion: 'Speechless',
-  emotionalLines: ['“An unforgettable experience.”', '“Grounded performances.”', '“A hidden gem.”'],
-  bestScenes: ['Key climax scene', 'Atmospheric intro'],
+  emotionalLines: [],
+  bestScenes: [],
   moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
   genres: ['Drama', 'Thriller'],
   musicVibe: 'Cinematic ambient score, slow building emotion',
-  coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
-  images: [
-    'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
-  ],
+  coverImage: '',
+  images: [],
   trailerYoutubeId: '',
-  featured: true
+  hindiTrailerYoutubeId: '',
+  featured: true,
+  status: 'published',
 };
 
 function extractYouTubeId(urlOrId: string): string {
   if (!urlOrId) return '';
   const trimmed = urlOrId.trim();
-  // If it's already an 11-char ID
   if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
-  // If it's a standard youtube url
-  const match = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/,
+  );
   return match ? match[1] : trimmed;
+}
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 function PublishHuntContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const editId = searchParams.get('id');
 
-  const [activeStep, setActiveStep] = useState<'import' | 'review' | 'media' | 'preview' | 'code'>('import');
+  const [activeStep, setActiveStep] = useState<'import' | 'review' | 'media' | 'preview' | 'publish'>('import');
   const [rawText, setRawText] = useState('');
   const [hunt, setHunt] = useState<HuntItem>(DEFAULT_HUNT);
-  const [copied, setCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [originalId, setOriginalId] = useState<string | null>(null);
+
+  const [allExistingHunts, setAllExistingHunts] = useState<HuntItem[]>([]);
+  const [nextSuggestedDay, setNextSuggestedDay] = useState(1);
+  const [isLoadingInitial, setIsLoadingInitial] = useState(true);
+
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [savedHunt, setSavedHunt] = useState<HuntItem | null>(null);
   const [extractionNotice, setExtractionNotice] = useState<string | null>(null);
 
-  // Load existing hunt if ?id= query param is provided
+  // Upload states
+  const [isUploadingCover, setIsUploadingCover] = useState(false);
+  const [coverUploadError, setCoverUploadError] = useState<string | null>(null);
+  const [uploadingGalleryIndex, setUploadingGalleryIndex] = useState<number | null>(null);
+  const [galleryUploadError, setGalleryUploadError] = useState<string | null>(null);
+
+  const coverFileInputRef = useRef<HTMLInputElement>(null);
+  const galleryFileInputRef = useRef<HTMLInputElement>(null);
+  const targetGalleryIndexRef = useRef<number>(0);
+
+  // ── 1. Load Initial Data (Existing hunts + next Day number or edit item) ──
   useEffect(() => {
-    if (editId) {
-      const existing = HUNTS_DATA.find((h) => h.id === editId);
-      if (existing) {
-        setHunt({ ...existing });
-        setActiveStep('review');
-        setExtractionNotice(`Loaded existing Hunt: Day ${existing.day} — ${existing.title}`);
+    async function loadCatalog() {
+      setIsLoadingInitial(true);
+      try {
+        const res = await fetch('/api/admin/hunts?status=all');
+        if (res.ok) {
+          const data = await res.json();
+          const list: HuntItem[] = data.hunts || [];
+          setAllExistingHunts(list);
+
+          const maxDay = list.length > 0 ? Math.max(...list.map((h) => h.day)) : 0;
+          const nextDay = maxDay + 1;
+          setNextSuggestedDay(nextDay);
+
+          if (editId) {
+            const match = list.find((h) => h.id === editId);
+            if (match) {
+              setHunt({ ...match });
+              setIsEditing(true);
+              setOriginalId(match.id);
+              setActiveStep('review');
+              setExtractionNotice(`Loaded existing Hunt: Day ${match.day} — ${match.title} (${match.status || 'published'})`);
+            }
+          } else {
+            setHunt((prev) => ({
+              ...prev,
+              day: nextDay,
+            }));
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load initial catalog:', err);
+      } finally {
+        setIsLoadingInitial(false);
       }
     }
+    loadCatalog();
   }, [editId]);
 
-  // Robust ChatGPT Text Parser
+  // ── 2. Duplicate Day Number Check ──
+  const dayConflictHunt = allExistingHunts.find(
+    (h) => h.day === hunt.day && (!isEditing || h.id !== originalId),
+  );
+
+  // ── 3. ChatGPT Markdown Parser ──
   const parseChatGPTOutput = () => {
     if (!rawText.trim()) return;
 
     try {
-      // 1. Day Number
+      // Day Number
       const dayMatch = rawText.match(/Day\s*(\d+)/i);
-      const day = dayMatch ? parseInt(dayMatch[1]) : (HUNTS_DATA.length > 0 ? Math.max(...HUNTS_DATA.map(h => h.day)) + 1 : 1);
+      const day = dayMatch ? parseInt(dayMatch[1]) : nextSuggestedDay;
 
-      // 2. Type (Series vs Movie)
-      // Check explicit movie or series label before the title or in details
+      // Type (Series vs Movie)
       let type: 'movie' | 'series' = 'movie';
-      if (/##\s*(?:Web\s*)?Series[:\s]/i.test(rawText) || /\b(?:Web\s*)?Series\s*:\s*\*\*/i.test(rawText) || /\bType\s*:\s*(?:Web\s*)?Series/i.test(rawText) || /\b\d+\s*Episodes\b/i.test(rawText) || /\bSeason\s*\d+\b/i.test(rawText)) {
+      if (
+        /##\s*(?:Web\s*)?Series[:\s]/i.test(rawText) ||
+        /\b(?:Web\s*)?Series\s*:\s*\*\*/i.test(rawText) ||
+        /\bType\s*:\s*(?:Web\s*)?Series/i.test(rawText) ||
+        /\b\d+\s*Episodes\b/i.test(rawText) ||
+        /\bSeason\s*\d+\b/i.test(rawText)
+      ) {
         type = 'series';
-      } else if (/##\s*Movie[:\s]/i.test(rawText) || /\bMovie\s*:\s*\*\*/i.test(rawText) || /\bType\s*:\s*Movie/i.test(rawText)) {
+      } else if (
+        /##\s*Movie[:\s]/i.test(rawText) ||
+        /\bMovie\s*:\s*\*\*/i.test(rawText) ||
+        /\bType\s*:\s*Movie/i.test(rawText)
+      ) {
         type = 'movie';
       }
 
-      // Extract duration / episodes if mentioned (e.g. "147 min", "8 Episodes")
-      const durationMatch = rawText.match(/(?:Duration|Runtime|Episodes?)[:\s]*\*?(\d+\s*(?:min|mins|Episodes|episodes|Hours?|h|hrs))/i) ||
-                            rawText.match(/\b(\d+\s*(?:min|mins|Episodes|episodes))\b/i);
-      const duration = durationMatch ? durationMatch[1].trim() : (type === 'series' ? '8 Episodes' : '110 min');
+      // Duration
+      const durationMatch =
+        rawText.match(/(?:Duration|Runtime|Episodes?)[:\s]*\*?(\d+\s*(?:min|mins|Episodes|episodes|Hours?|h|hrs))/i) ||
+        rawText.match(/\b(\d+\s*(?:min|mins|Episodes|episodes))\b/i);
+      const duration = durationMatch
+        ? durationMatch[1].trim()
+        : type === 'series'
+        ? '8 Episodes'
+        : '110 min';
 
-      // 3. Title & Year: e.g. **12th Fail (2023)** or ## Movie: **12th Fail (2023)**
-      const titleMatch = rawText.match(/\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/) ||
-                         rawText.match(/(?:Movie|Series)?[:\s]*\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/i) ||
-                         rawText.match(/##\s*([^(]+)\s*\((20\d\d|19\d\d)\)/);
+      // Title & Year
+      const titleMatch =
+        rawText.match(/\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/) ||
+        rawText.match(/(?:Movie|Series)?[:\s]*\*\*([^(]+)\s*\((20\d\d|19\d\d)\)\*\*/i) ||
+        rawText.match(/##\s*([^(]+)\s*\((20\d\d|19\d\d)\)/);
       const title = titleMatch ? titleMatch[1].replace(/[*#]/g, '').trim() : 'Untitled Movie';
-      const year = titleMatch ? parseInt(titleMatch[2]) : 2024;
+      const year = titleMatch ? parseInt(titleMatch[2]) : new Date().getFullYear();
 
-      // 4. IMDb Rating
-      const imdbMatch = rawText.match(/IMDb\s*Rating:\*\*?\s*\*?(\d+\.?\d*)\/10/i) ||
-                        rawText.match(/(\d+\.\d+|\d+)\/10/);
+      // IMDb Rating
+      const imdbMatch =
+        rawText.match(/IMDb\s*Rating:\*\*?\s*\*?(\d+\.?\d*)\/10/i) ||
+        rawText.match(/(\d+\.\d+|\d+)\/10/);
       const imdbRating = imdbMatch ? parseFloat(imdbMatch[1]) : 7.5;
 
-      // 5. Cast
+      // Cast
       const castMatch = rawText.match(/\*\*Cast:\*\*\s*([^\n\r]+)/i);
       const cast = castMatch
         ? castMatch[1].split(/[,|•]/).map((s) => s.replace(/[*[\]]/g, '').trim()).filter(Boolean)
-        : ['Lead Actor 1', 'Lead Actor 2'];
+        : [];
 
-      // 6. Director
+      // Director
       const directorMatch = rawText.match(/\*\*Director:\*\*\s*([^\n\r]+)/i);
-      const director = directorMatch ? directorMatch[1].replace(/[*[\]]/g, '').trim() : 'Director Name';
+      const director = directorMatch ? directorMatch[1].replace(/[*[\]]/g, '').trim() : '';
 
-      // 7. Available On
-      const platformMatch = rawText.match(/\*\*Available On:\*\*\s*\[([^\]]+)\]\(([^)]+)\)/i) ||
-                            rawText.match(/\*\*Available On:\*\*\s*([^\n\r]+)/i);
-      let platformName = 'Streaming Platform';
-      let platformUrl = 'https://example.com';
+      // Available On
+      const platformMatch =
+        rawText.match(/\*\*Available On:\*\*\s*\[([^\]]+)\]\(([^)]+)\)/i) ||
+        rawText.match(/\*\*Available On:\*\*\s*([^\n\r]+)/i);
+      let platformName = 'Streaming';
+      let platformUrl = '#';
       if (platformMatch) {
         if (platformMatch[2]) {
           platformName = platformMatch[1].replace(/[*[\]]/g, '').trim();
@@ -154,19 +237,23 @@ function PublishHuntContent() {
         }
       }
 
-      // 8. Hook Text (e.g. "## 2. Hook Text \n\n **"He failed 12th. Then he became an IPS officer."**")
+      // Hook
       let hook = '';
-      const hookSection = rawText.match(/(?:##|#|\*\*)\s*(?:\d+\.\s*)?Hook(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i);
+      const hookSection = rawText.match(
+        /(?:##|#|\*\*)\s*(?:\d+\.\s*)?Hook(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i,
+      );
       if (hookSection && hookSection[1]) {
         hook = hookSection[1].replace(/[*"“”\r\n#]/g, ' ').replace(/\s+/g, ' ').trim();
       }
       if (!hook) {
-        hook = `${title} is a story actually worth your time.`;
+        hook = `${title} is a story actually worth your evening.`;
       }
 
-      // 9. Tagline / Thumbnail Text (e.g. "## 8. Thumbnail Text \n\n **"FAILURE IS NOT THE END."**")
+      // Tagline
       let tagline = '';
-      const tagSection = rawText.match(/(?:##|#|\*\*)\s*(?:\d+\.\s*)?Thumbnail(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i);
+      const tagSection = rawText.match(
+        /(?:##|#|\*\*)\s*(?:\d+\.\s*)?Thumbnail(?: Text)?[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|\n+\*\*|$))/i,
+      );
       if (tagSection && tagSection[1]) {
         tagline = tagSection[1].replace(/[*"“”\r\n#]/g, ' ').replace(/\s+/g, ' ').trim();
       }
@@ -174,64 +261,55 @@ function PublishHuntContent() {
         const bottomMatch = rawText.match(/Bottom Big Text[^\n]*\n+[\s\S]*?\*{1,3}"?([^"\n\r*]+)"?\*{1,3}/i);
         if (bottomMatch) tagline = bottomMatch[1].trim();
       }
-      if (!tagline) {
-        tagline = 'MUST WATCH CINEMA.';
-      }
+      if (!tagline) tagline = 'MUST WATCH CINEMA.';
 
-      // 10. Story Summary
+      // Story Summary
       let storySummary = '';
-      const storySection = rawText.match(/(?:#|##|\*\*)\s*Story Summary[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*Why|$))/i);
+      const storySection = rawText.match(
+        /(?:#|##|\*\*)\s*Story Summary[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*Why|$))/i,
+      );
       if (storySection && storySection[1]) {
-        storySummary = storySection[1]
-          .replace(/[*#]/g, '')
-          .replace(/\r\n|\r|\n/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
-      } else {
-        storySummary = 'An engaging, human cinematic story.';
+        storySummary = storySection[1].replace(/[*#]/g, '').replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
       }
 
-      // 11. Why You Should Watch It
+      // Why Watch
       let whyWatch = '';
-      const whySection = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Why You Should Watch[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*CTA|\n+##\s*Short|$))/i);
+      const whySection = rawText.match(
+        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Why You Should Watch[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##\s*\d|\n+##\s*CTA|\n+##\s*Short|$))/i,
+      );
       if (whySection && whySection[1]) {
-        whyWatch = whySection[1]
-          .replace(/\r\n|\r|\n/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
-      } else {
-        whyWatch = 'A grounded masterpiece with unforgettable performances.';
+        whyWatch = whySection[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
       }
 
-      // 12. Emotional Lines
+      // Emotional Lines
       let emotionalLines: string[] = [];
-      const linesMatch = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Short Emotional Lines[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i);
+      const linesMatch = rawText.match(
+        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Short Emotional Lines[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i,
+      );
       if (linesMatch && linesMatch[1]) {
         const items = linesMatch[1].match(/[*•-]\s*“?([^”\n\r*]+)”?/g);
         if (items) {
           emotionalLines = items.map((l) => l.replace(/^[*•-]\s*“?|”?$/g, '').trim()).filter(Boolean);
         }
       }
-      if (emotionalLines.length === 0) {
-        emotionalLines = ["Failure isn't the end.", "Your beginning doesn't define your ending.", "Keep going."];
-      }
 
-      // 13. Best Scenes
+      // Best Scenes
       let bestScenes: string[] = [];
-      const scenesMatch = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Best Scenes[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i);
+      const scenesMatch = rawText.match(
+        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Best Scenes[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i,
+      );
       if (scenesMatch && scenesMatch[1]) {
         const items = scenesMatch[1].match(/[*•-]\s*([^\n\r*]+)/g);
         if (items) {
           bestScenes = items.map((l) => l.replace(/^[*•-]\s*/, '').trim()).filter(Boolean).slice(0, 5);
         }
       }
-      if (bestScenes.length === 0) {
-        bestScenes = ['Key climax scene', 'Atmospheric intro'];
-      }
 
-      // 14. Music Vibe
+      // Music Vibe
       let musicVibe = '';
-      const musicMatch = rawText.match(/(?:#|##|\*\*)\s*(?:\d+\.\s*)?Music Vibe[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i);
+      const musicMatch = rawText.match(
+        /(?:#|##|\*\*)\s*(?:\d+\.\s*)?Music Vibe[^\n]*\n+([\s\S]*?)(?=(?:\n+---\s*\n+|\n+##|\n+#|$))/i,
+      );
       if (musicMatch && musicMatch[1]) {
         const items = musicMatch[1].match(/[*•-]\s*([^\n\r*]+)/g);
         if (items) {
@@ -240,17 +318,15 @@ function PublishHuntContent() {
           musicVibe = musicMatch[1].replace(/\r\n|\r|\n/g, ' ').replace(/\s+/g, ' ').trim();
         }
       }
-      if (!musicVibe) {
-        musicVibe = 'Cinematic ambient score, slow building emotion';
-      }
+      if (!musicVibe) musicVibe = 'Cinematic ambient score, slow building emotion';
 
-      // Generate ID
-      const cleanSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      const id = `day-${day}-${cleanSlug || 'movie'}`;
+      // Auto-generated slug ID
+      const cleanSlug = slugify(title);
+      const generatedId = `day-${day}-${cleanSlug || 'movie'}`;
 
       const extracted: HuntItem = {
         ...hunt,
-        id,
+        id: generatedId,
         day,
         type,
         title,
@@ -264,7 +340,7 @@ function PublishHuntContent() {
         language: 'Hindi',
         availableOn: {
           name: platformName,
-          url: platformUrl
+          url: platformUrl,
         },
         storySummary,
         whyWatch,
@@ -275,114 +351,178 @@ function PublishHuntContent() {
         moodTags: ['🤯 Mind-Blowing', '😱 Thriller'],
         genres: ['Drama', 'Thriller'],
         musicVibe,
-        coverImage: hunt.coverImage || 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
-        images: hunt.images && hunt.images.length > 0 ? hunt.images : [
-          'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop'
-        ],
+        coverImage: hunt.coverImage || '',
+        images: hunt.images || [],
         trailerYoutubeId: hunt.trailerYoutubeId || '',
-        featured: true
+        featured: true,
+        status: 'published',
       };
 
       setHunt(extracted);
-      setExtractionNotice(`Successfully extracted: Day ${day} — ${title} (${year})! Review fields below.`);
+      setExtractionNotice(`✓ Extracted: Day ${day} — ${title} (${year})`);
       setActiveStep('review');
-    } catch {
-      alert('Error parsing ChatGPT text. Make sure it contains movie details.');
+    } catch (err) {
+      alert('Error parsing ChatGPT text. Check markdown structure and try again.');
     }
   };
 
-  // Generate formatted TypeScript snippet
-  const generateTypeScriptCode = (): string => {
-    const formattedCast = JSON.stringify(hunt.cast);
-    const formattedBestFor = JSON.stringify(hunt.bestFor);
-    const formattedEmotionalLines = JSON.stringify(hunt.emotionalLines);
-    const formattedBestScenes = JSON.stringify(hunt.bestScenes);
-    const formattedMoodTags = JSON.stringify(hunt.moodTags);
-    const formattedGenres = JSON.stringify(hunt.genres);
-    const formattedImages = JSON.stringify(hunt.images, null, 4);
+  // ── 4. Image Upload to Vercel Blob (Fallback Option) ──
+  const handleFileUpload = async (
+    file: File,
+    type: 'cover' | 'gallery',
+    galleryIndex?: number,
+  ) => {
+    const formData = new FormData();
+    formData.append('file', file);
 
-    return `  {
-    id: '${hunt.id}',
-    day: ${hunt.day},
-    type: '${hunt.type}',
-    title: '${hunt.title.replace(/'/g, "\\'")}',
-    year: ${hunt.year},
-    tagline: '${hunt.tagline.replace(/'/g, "\\'")}',
-    hook: '${hunt.hook.replace(/'/g, "\\'")}',
-    imdbRating: ${hunt.imdbRating},
-    cast: ${formattedCast},
-    director: '${hunt.director.replace(/'/g, "\\'")}',
-    duration: '${hunt.duration || (hunt.type === 'series' ? '8 Episodes' : '110 min')}',
-    language: '${hunt.language || 'Hindi'}',
-    availableOn: {
-      name: '${hunt.availableOn.name.replace(/'/g, "\\'")}',
-      url: '${hunt.availableOn.url.replace(/'/g, "\\'")}'
-    },
-    storySummary: '${hunt.storySummary.replace(/'/g, "\\'")}',
-    whyWatch: '${hunt.whyWatch.replace(/'/g, "\\'")}',
-    shouldYouWatch: '${hunt.shouldYouWatch.replace(/'/g, "\\'")}',
-    bestFor: ${formattedBestFor},
-    afterCreditsEmotion: '${hunt.afterCreditsEmotion || 'Speechless'}',
-    emotionalLines: ${formattedEmotionalLines},
-    bestScenes: ${formattedBestScenes},
-    moodTags: ${formattedMoodTags},
-    genres: ${formattedGenres},
-    musicVibe: '${hunt.musicVibe.replace(/'/g, "\\'")}',
-    coverImage: '${hunt.coverImage}',
-    images: ${formattedImages}${hunt.trailerYoutubeId ? `,\n    trailerYoutubeId: '${extractYouTubeId(hunt.trailerYoutubeId)}'` : ''}${hunt.hindiTrailerYoutubeId ? `,\n    hindiTrailerYoutubeId: '${extractYouTubeId(hunt.hindiTrailerYoutubeId)}'` : ''},
-    featured: true
-  }`;
+    if (type === 'cover') {
+      setIsUploadingCover(true);
+      setCoverUploadError(null);
+    } else {
+      setUploadingGalleryIndex(galleryIndex ?? 0);
+      setGalleryUploadError(null);
+    }
+
+    try {
+      const res = await fetch('/api/admin/media', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to upload image');
+      }
+
+      const uploadedUrl = data.url;
+
+      if (type === 'cover') {
+        setHunt((prev) => ({ ...prev, coverImage: uploadedUrl }));
+      } else if (galleryIndex !== undefined) {
+        setHunt((prev) => {
+          const updated = [...prev.images];
+          updated[galleryIndex] = uploadedUrl;
+          return { ...prev, images: updated };
+        });
+      }
+    } catch (err: any) {
+      if (type === 'cover') {
+        setCoverUploadError(err.message || 'Upload failed');
+      } else {
+        setGalleryUploadError(err.message || 'Upload failed');
+      }
+    } finally {
+      if (type === 'cover') {
+        setIsUploadingCover(false);
+      } else {
+        setUploadingGalleryIndex(null);
+      }
+    }
   };
 
-  const handleCopyCode = () => {
-    const code = generateTypeScriptCode();
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
-  };
+  // ── 5. Save as Draft or Publish ──
+  const handleSave = async (targetStatus: 'draft' | 'published') => {
+    setSaveError(null);
+    setIsSaving(true);
 
-  const addGalleryImage = () => {
-    setHunt({
+    const payload: Partial<HuntItem> = {
       ...hunt,
-      images: [...hunt.images, 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop']
-    });
+      status: targetStatus,
+      trailerYoutubeId: extractYouTubeId(hunt.trailerYoutubeId || ''),
+      hindiTrailerYoutubeId: extractYouTubeId(hunt.hindiTrailerYoutubeId || ''),
+    };
+
+    // Auto-generate ID if missing
+    if (!payload.id || !payload.id.trim()) {
+      payload.id = `day-${payload.day}-${slugify(payload.title || 'untitled')}`;
+    }
+
+    try {
+      let res: Response;
+      if (isEditing && originalId) {
+        res = await fetch(`/api/admin/hunts/${originalId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        res = await fetch('/api/admin/hunts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      }
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to save hunt.');
+      }
+
+      setSavedHunt(data.hunt);
+      setActiveStep('publish');
+    } catch (err: any) {
+      setSaveError(err.message || 'Failed to save hunt. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // ── Gallery Helpers ──
+  const addGalleryImage = () => {
+    setHunt((prev) => ({
+      ...prev,
+      images: [...prev.images, ''],
+    }));
   };
 
   const removeGalleryImage = (index: number) => {
-    setHunt({
-      ...hunt,
-      images: hunt.images.filter((_, i) => i !== index)
-    });
+    setHunt((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, i) => i !== index),
+    }));
   };
 
   const updateGalleryImage = (index: number, val: string) => {
-    const newImages = [...hunt.images];
-    newImages[index] = val;
-    setHunt({ ...hunt, images: newImages });
+    setHunt((prev) => {
+      const updated = [...prev.images];
+      updated[index] = val;
+      return { ...prev, images: updated };
+    });
   };
 
   const steps = [
-    { id: 'import', label: '1. Import Text', icon: FileText },
-    { id: 'review', label: '2. Review Fields', icon: Edit3 },
+    { id: 'import', label: '1. Import', icon: FileText },
+    { id: 'review', label: '2. Review', icon: Edit3 },
     { id: 'media', label: '3. Media & Trailer', icon: ImageIcon },
     { id: 'preview', label: '4. Live Preview', icon: Eye },
-    { id: 'code', label: '5. Export Code', icon: Code },
+    { id: 'publish', label: '5. Publish Controls', icon: Send },
   ];
 
+  if (isLoadingInitial) {
+    return (
+      <div className="p-12 text-center text-zinc-400 text-xs flex items-center justify-center gap-2">
+        <Loader2 className="w-4 h-4 animate-spin text-[#e5a93c]" />
+        Loading publishing workspace...
+      </div>
+    );
+  }
+
   return (
-    <div className="max-w-5xl mx-auto space-y-6 pb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-16">
       {/* ── Top Header Bar ── */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/5 pb-4">
         <div>
           <div className="flex items-center gap-2 text-[#e5a93c] text-xs font-semibold uppercase tracking-widest mb-1">
             <Sparkles className="w-3.5 h-3.5" />
-            Publishing Workspace
+            {isEditing ? `Editing Day ${hunt.day}` : 'Publishing Workspace'}
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif text-white font-normal tracking-tight">
-            Publish Recommendation
+            {isEditing ? `Edit: ${hunt.title}` : 'Publish Recommendation'}
           </h1>
           <p className="text-xs text-zinc-400 mt-0.5">
-            Turn ChatGPT recommendations into production-ready Movie Hunt entries.
+            {isEditing
+              ? 'Update details, swap media, or change publication status.'
+              : 'Turn ChatGPT recommendations into production-ready Movie Hunt entries with direct CMS publishing.'}
           </p>
         </div>
 
@@ -391,19 +531,19 @@ function PublishHuntContent() {
             href="/admin/library"
             className="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white text-xs font-semibold transition-colors"
           >
-            ← Back to Library
+            ← Library
           </Link>
           <button
-            onClick={() => setActiveStep('code')}
-            className="px-4 py-1.5 rounded-lg bg-[#e5a93c] text-[#0a0a0f] font-bold text-xs hover:bg-[#d4982b] transition-all flex items-center gap-1.5"
+            onClick={() => setActiveStep('publish')}
+            className="px-4 py-1.5 rounded-lg bg-[#e5a93c] text-[#0a0a0f] font-bold text-xs hover:bg-[#d4982b] transition-all flex items-center gap-1.5 shadow-md shadow-[#e5a93c]/10"
           >
-            <Code className="w-3.5 h-3.5" />
-            Generate Code
+            <Send className="w-3.5 h-3.5" />
+            Publish Controls →
           </button>
         </div>
       </div>
 
-      {/* ── Extraction Banner Notification ── */}
+      {/* ── Notice Banners ── */}
       {extractionNotice && (
         <div className="p-3.5 rounded-xl bg-[#e5a93c]/10 border border-[#e5a93c]/30 flex items-center justify-between text-xs text-white">
           <div className="flex items-center gap-2">
@@ -419,7 +559,33 @@ function PublishHuntContent() {
         </div>
       )}
 
-      {/* ── Progressive Step Navigation Bar ── */}
+      {/* Day Duplicate Warning Badge */}
+      {dayConflictHunt && (
+        <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center gap-2 text-xs text-amber-300">
+          <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+          <span>
+            <strong>Warning:</strong> Day {hunt.day} is already assigned to &quot;{dayConflictHunt.title}&quot;. Publishing will be blocked unless you change the Day number.
+          </span>
+        </div>
+      )}
+
+      {/* Save Error Banner */}
+      {saveError && (
+        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-between text-xs text-red-200">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0" />
+            <span>{saveError}</span>
+          </div>
+          <button
+            onClick={() => setSaveError(null)}
+            className="text-red-300 hover:text-white text-[11px] font-bold uppercase ml-3"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
+      {/* ── Step Navigation Bar ── */}
       <div className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#0d0d12] border border-white/5 overflow-x-auto">
         {steps.map(({ id, label, icon: Icon }) => {
           const isActive = activeStep === id;
@@ -440,7 +606,9 @@ function PublishHuntContent() {
         })}
       </div>
 
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {/* ── STEP 1: IMPORT TAB ── */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {activeStep === 'import' && (
         <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-4">
@@ -450,7 +618,7 @@ function PublishHuntContent() {
                 Paste Raw ChatGPT Recommendation Output
               </h2>
               <p className="text-xs text-zinc-400 mt-1">
-                Paste the full markdown output from your Movie Hunt prompt. The parser will extract all fields automatically.
+                Paste the markdown output from your prompt. The parser will automatically extract all fields.
               </p>
             </div>
             <button
@@ -463,7 +631,7 @@ function PublishHuntContent() {
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
-              Extract & Populate Fields →
+              Extract Fields →
             </button>
           </div>
 
@@ -471,45 +639,66 @@ function PublishHuntContent() {
             rows={18}
             value={rawText}
             onChange={(e) => setRawText(e.target.value)}
-            placeholder="Paste raw ChatGPT text here (e.g. Day 79 of finding movies you've probably never heard of...&#10;&#10;**Kothanodi (2015)**&#10;**IMDb Rating:** **7.7/10**&#10;**Cast:** Lima Das, Adil Hussain&#10;**Director:** Bhaskar Hazarika&#10;**Available On:** [Netflix](https://netflix.com)...)"
+            placeholder="Paste raw ChatGPT text here (e.g. Day 82 of finding movies you've probably never heard of...&#10;&#10;**12th Fail (2023)**&#10;**IMDb Rating:** **9.0/10**&#10;**Cast:** Vikrant Massey...)"
             className="w-full p-4 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-mono text-zinc-200 focus:outline-none focus:border-[#e5a93c] resize-none"
           />
 
           <div className="flex items-center justify-between pt-2">
             <div className="text-[11px] text-zinc-500">
-              💡 Tip: Already have structured data? Switch directly to <strong>2. Review Fields</strong> tab.
+              💡 Suggested next Day number: <strong className="text-[#e5a93c]">Day {nextSuggestedDay}</strong>
             </div>
             <button
               onClick={() => setActiveStep('review')}
               className="text-xs text-[#e5a93c] hover:underline font-semibold flex items-center gap-1"
             >
-              Skip to Manual Form <ArrowRight className="w-3 h-3" />
+              Skip to Review Fields <ArrowRight className="w-3 h-3" />
             </button>
           </div>
         </div>
       )}
 
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {/* ── STEP 2: REVIEW & EDIT FIELDS ── */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {activeStep === 'review' && (
         <div className="space-y-6">
           {/* Section A: Core Metadata */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
-            <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
-              <Film className="w-3.5 h-3.5" />
-              1. Core Recommendation Information
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
+                <Film className="w-3.5 h-3.5" />
+                1. Core Recommendation Information
+              </h2>
+              <div className="text-[11px] text-zinc-400">
+                Suggested Next: <span className="text-[#e5a93c] font-bold">Day {nextSuggestedDay}</span>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               {/* Day # */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Day Number
                 </label>
-                <input
-                  type="number"
-                  value={hunt.day}
-                  onChange={(e) => setHunt({ ...hunt, day: parseInt(e.target.value) || 1 })}
-                  className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-semibold text-white focus:border-[#e5a93c] outline-none"
-                />
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={hunt.day}
+                    onChange={(e) => {
+                      const newDay = parseInt(e.target.value) || 1;
+                      const slug = slugify(hunt.title);
+                      setHunt({ ...hunt, day: newDay, id: `day-${newDay}-${slug || 'movie'}` });
+                    }}
+                    className={`w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border text-xs font-semibold text-white outline-none ${
+                      dayConflictHunt ? 'border-amber-500 focus:border-amber-400' : 'border-white/10 focus:border-[#e5a93c]'
+                    }`}
+                  />
+                </div>
+                {dayConflictHunt && (
+                  <span className="text-[10px] text-amber-400 mt-1 block">
+                    Day already taken!
+                  </span>
+                )}
               </div>
 
               {/* Title */}
@@ -522,10 +711,10 @@ function PublishHuntContent() {
                   value={hunt.title}
                   onChange={(e) => {
                     const title = e.target.value;
-                    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                    setHunt({ ...hunt, title, id: `day-${hunt.day}-${slug || 'title'}` });
+                    const slug = slugify(title);
+                    setHunt({ ...hunt, title, id: `day-${hunt.day}-${slug || 'movie'}` });
                   }}
-                  placeholder="e.g. Kothanodi"
+                  placeholder="e.g. 12th Fail"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-semibold text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
@@ -561,7 +750,7 @@ function PublishHuntContent() {
               {/* IMDb Rating */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
-                  IMDb Score (e.g. 7.8)
+                  IMDb Score (e.g. 8.5)
                 </label>
                 <input
                   type="number"
@@ -581,7 +770,7 @@ function PublishHuntContent() {
                   type="text"
                   value={hunt.duration || ''}
                   onChange={(e) => setHunt({ ...hunt, duration: e.target.value })}
-                  placeholder="e.g. 110 min or 8 Episodes"
+                  placeholder="e.g. 147 min or 8 Episodes"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-semibold text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
@@ -595,21 +784,20 @@ function PublishHuntContent() {
                   type="text"
                   value={hunt.language || 'Hindi'}
                   onChange={(e) => setHunt({ ...hunt, language: e.target.value })}
-                  placeholder="e.g. Hindi, Malayalam, Assamese"
+                  placeholder="e.g. Hindi, Malayalam, Tamil"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-semibold text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
             </div>
           </div>
 
-          {/* Section B: Credits & Streaming */}
+          {/* Section B: Credits & Where to Watch */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
             <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
               <Tv className="w-3.5 h-3.5" />
               2. Credits & Where to Watch
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Director */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Director Name
@@ -618,12 +806,11 @@ function PublishHuntContent() {
                   type="text"
                   value={hunt.director}
                   onChange={(e) => setHunt({ ...hunt, director: e.target.value })}
-                  placeholder="e.g. Bhaskar Hazarika"
+                  placeholder="e.g. Vidhu Vinod Chopra"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
 
-              {/* Cast */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Lead Cast (comma separated)
@@ -631,13 +818,17 @@ function PublishHuntContent() {
                 <input
                   type="text"
                   value={hunt.cast.join(', ')}
-                  onChange={(e) => setHunt({ ...hunt, cast: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })}
-                  placeholder="e.g. Lima Das, Arghadeep Baruah"
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      cast: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                    })
+                  }
+                  placeholder="e.g. Vikrant Massey, Medha Shankr"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
 
-              {/* Platform Name */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Streaming Platform Name
@@ -645,13 +836,17 @@ function PublishHuntContent() {
                 <input
                   type="text"
                   value={hunt.availableOn.name}
-                  onChange={(e) => setHunt({ ...hunt, availableOn: { ...hunt.availableOn, name: e.target.value } })}
-                  placeholder="e.g. Netflix, Prime Video, JioCinema, SonyLIV"
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      availableOn: { ...hunt.availableOn, name: e.target.value },
+                    })
+                  }
+                  placeholder="e.g. Disney+ Hotstar, Netflix, Prime Video"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
 
-              {/* Platform URL */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Streaming Watch Link URL
@@ -659,7 +854,12 @@ function PublishHuntContent() {
                 <input
                   type="url"
                   value={hunt.availableOn.url}
-                  onChange={(e) => setHunt({ ...hunt, availableOn: { ...hunt.availableOn, url: e.target.value } })}
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      availableOn: { ...hunt.availableOn, url: e.target.value },
+                    })
+                  }
                   placeholder="https://..."
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
@@ -667,7 +867,7 @@ function PublishHuntContent() {
             </div>
           </div>
 
-          {/* Section C: Editorial Hook & Synopsis */}
+          {/* Section C: Editorial Hooks & Story Synopsis */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
             <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
               <Edit3 className="w-3.5 h-3.5" />
@@ -675,7 +875,6 @@ function PublishHuntContent() {
             </h2>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Hook */}
                 <div>
                   <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                     Editorial Hook Line
@@ -684,12 +883,11 @@ function PublishHuntContent() {
                     type="text"
                     value={hunt.hook}
                     onChange={(e) => setHunt({ ...hunt, hook: e.target.value })}
-                    placeholder="e.g. India made THIS psychological masterpiece?"
+                    placeholder="e.g. He failed 12th. Then he became an IPS officer."
                     className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                   />
                 </div>
 
-                {/* Tagline */}
                 <div>
                   <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                     Thumbnail Tagline / Badge
@@ -698,13 +896,12 @@ function PublishHuntContent() {
                     type="text"
                     value={hunt.tagline}
                     onChange={(e) => setHunt({ ...hunt, tagline: e.target.value })}
-                    placeholder="e.g. MUST WATCH PSYCHOLOGICAL CINEMA."
+                    placeholder="e.g. FAILURE IS NOT THE END."
                     className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                   />
                 </div>
               </div>
 
-              {/* Story Summary */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Spoiler-Free Story Summary
@@ -713,12 +910,11 @@ function PublishHuntContent() {
                   rows={4}
                   value={hunt.storySummary}
                   onChange={(e) => setHunt({ ...hunt, storySummary: e.target.value })}
-                  placeholder="Write a gripping 2-3 sentence spoiler-free overview..."
+                  placeholder="Write a gripping 2-3 sentence overview..."
                   className="w-full p-3 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-zinc-200 focus:border-[#e5a93c] outline-none resize-none"
                 />
               </div>
 
-              {/* Why Watch */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Why You Should Watch It (Curation Commentary)
@@ -732,7 +928,6 @@ function PublishHuntContent() {
                 />
               </div>
 
-              {/* Emotional Lines */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Short Emotional Quotes (one per line)
@@ -740,22 +935,26 @@ function PublishHuntContent() {
                 <textarea
                   rows={3}
                   value={hunt.emotionalLines.join('\n')}
-                  onChange={(e) => setHunt({ ...hunt, emotionalLines: e.target.value.split('\n').filter(Boolean) })}
-                  placeholder="“Love can become obsession.”&#10;“Desire has no limits.”"
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      emotionalLines: e.target.value.split('\n').filter(Boolean),
+                    })
+                  }
+                  placeholder="Failure isn't the end.&#10;Your beginning doesn't define your ending."
                   className="w-full p-3 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-zinc-200 focus:border-[#e5a93c] outline-none resize-none font-mono"
                 />
               </div>
             </div>
           </div>
 
-          {/* Section D: Moods & Tags */}
+          {/* Section D: Vibes & Tags */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
             <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
               4. Vibes, Tags & Atmosphere
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {/* Mood Tags */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Mood Tags (comma separated)
@@ -763,13 +962,17 @@ function PublishHuntContent() {
                 <input
                   type="text"
                   value={hunt.moodTags.join(', ')}
-                  onChange={(e) => setHunt({ ...hunt, moodTags: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })}
-                  placeholder="🤯 Mind-Blowing, 😱 Thriller"
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      moodTags: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                    })
+                  }
+                  placeholder="✨ Inspiring, ❤️ Meaningful, 😊 Feel Good"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
 
-              {/* Genres */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Genres (comma separated)
@@ -777,13 +980,17 @@ function PublishHuntContent() {
                 <input
                   type="text"
                   value={hunt.genres.join(', ')}
-                  onChange={(e) => setHunt({ ...hunt, genres: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })}
-                  placeholder="Psychological Horror, Drama"
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      genres: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                    })
+                  }
+                  placeholder="Biography, Drama, Inspirational"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
 
-              {/* Best For */}
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Best For Tags
@@ -791,13 +998,17 @@ function PublishHuntContent() {
                 <input
                   type="text"
                   value={hunt.bestFor.join(', ')}
-                  onChange={(e) => setHunt({ ...hunt, bestFor: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })}
-                  placeholder="🍿 Evening watch, 🧠 Deep story"
+                  onChange={(e) =>
+                    setHunt({
+                      ...hunt,
+                      bestFor: e.target.value.split(',').map((s) => s.trim()).filter(Boolean),
+                    })
+                  }
+                  placeholder="🍿 Evening watch, ✨ Highly Inspiring"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
 
-              {/* Music Vibe */}
               <div className="sm:col-span-3">
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
                   Music / Soundscape Vibe
@@ -806,14 +1017,14 @@ function PublishHuntContent() {
                   type="text"
                   value={hunt.musicVibe}
                   onChange={(e) => setHunt({ ...hunt, musicVibe: e.target.value })}
-                  placeholder="e.g. Haunting ambient strings, slow synth score"
+                  placeholder="Emotional piano, slow motivational instrumental"
                   className="w-full px-3 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
             </div>
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Navigation */}
           <div className="flex items-center justify-between pt-2">
             <button
               onClick={() => setActiveStep('import')}
@@ -831,30 +1042,95 @@ function PublishHuntContent() {
         </div>
       )}
 
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {/* ── STEP 3: MEDIA & TRAILER TAB ── */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {activeStep === 'media' && (
         <div className="space-y-6">
-          {/* Cover / Poster Image */}
+          {/* Hidden File Inputs */}
+          <input
+            type="file"
+            ref={coverFileInputRef}
+            accept="image/jpeg,image/png,image/webp,image/avif"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileUpload(file, 'cover');
+            }}
+          />
+          <input
+            type="file"
+            ref={galleryFileInputRef}
+            accept="image/jpeg,image/png,image/webp,image/avif"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFileUpload(file, 'gallery', targetGalleryIndexRef.current);
+            }}
+          />
+
+          {/* Cover / Poster Image Section */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
-            <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
-              <ImageIcon className="w-3.5 h-3.5" />
-              1. Cover Poster Image URL
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
+                <ImageIcon className="w-3.5 h-3.5" />
+                1. Cover Poster (External URL or Upload)
+              </h2>
+              <span className="text-[11px] text-zinc-500">Method A (Paste URL) recommended to save storage</span>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
               <div className="md:col-span-2 space-y-3">
-                <label className="block text-[11px] font-bold text-zinc-400 uppercase">
-                  Main Poster URL (TMDB / IMDb / High-Res)
-                </label>
-                <input
-                  type="url"
-                  value={hunt.coverImage}
-                  onChange={(e) => setHunt({ ...hunt, coverImage: e.target.value })}
-                  placeholder="https://image.tmdb.org/t/p/original/..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
-                />
-                <p className="text-[11px] text-zinc-500">
-                  Tip: Use TMDB or Unsplash original image links for crisp display across mobile & desktop.
-                </p>
+                {/* Method A: Paste External Source URL */}
+                <div>
+                  <label className="block text-[11px] font-bold text-zinc-300 uppercase mb-1">
+                    Option A: Paste High-Res Image URL (TMDB / IMDb / Unsplash)
+                  </label>
+                  <input
+                    type="url"
+                    value={hunt.coverImage}
+                    onChange={(e) => setHunt({ ...hunt, coverImage: e.target.value })}
+                    placeholder="https://image.tmdb.org/t/p/original/..."
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
+                  />
+                </div>
+
+                {/* Method B: Optional Fallback Upload Button */}
+                <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                  <div>
+                    <span className="text-[11px] font-bold text-zinc-400 uppercase block">
+                      Option B: Upload File to Vercel Blob (Fallback)
+                    </span>
+                    <span className="text-[10px] text-zinc-500">
+                      Supports JPG, PNG, WebP, AVIF up to 8MB
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => coverFileInputRef.current?.click()}
+                    disabled={isUploadingCover}
+                    className="px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-xs font-semibold text-zinc-200 hover:text-white flex items-center gap-2 transition-colors disabled:opacity-50"
+                  >
+                    {isUploadingCover ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin text-[#e5a93c]" />
+                        Uploading...
+                      </>
+                    ) : (
+                      <>
+                        <UploadCloud className="w-3.5 h-3.5 text-[#e5a93c]" />
+                        Upload Poster
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {coverUploadError && (
+                  <div className="text-xs text-red-400 flex items-center gap-1.5 pt-1">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    {coverUploadError}
+                  </div>
+                )}
               </div>
 
               {/* Cover Live Preview */}
@@ -870,8 +1146,8 @@ function PublishHuntContent() {
                       }}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-zinc-600 text-xs">
-                      No Poster
+                    <div className="w-full h-full flex items-center justify-center text-zinc-600 text-xs text-center p-2">
+                      No Poster Added
                     </div>
                   )}
                 </div>
@@ -880,7 +1156,7 @@ function PublishHuntContent() {
             </div>
           </div>
 
-          {/* Gallery Images */}
+          {/* Gallery Stills Section */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
@@ -888,27 +1164,66 @@ function PublishHuntContent() {
                 2. Cinematic Gallery Stills ({hunt.images.length} Images)
               </h2>
               <button
+                type="button"
                 onClick={addGalleryImage}
                 className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-[#e5a93c] text-xs font-semibold flex items-center gap-1"
               >
-                <Plus className="w-3.5 h-3.5" /> Add Image
+                <Plus className="w-3.5 h-3.5" /> Add Still
               </button>
             </div>
 
+            {galleryUploadError && (
+              <div className="text-xs text-red-400 flex items-center gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5" />
+                {galleryUploadError}
+              </div>
+            )}
+
             <div className="space-y-3">
               {hunt.images.map((imgUrl, idx) => (
-                <div key={idx} className="flex items-center gap-3 p-2.5 rounded-xl bg-[#0a0a0f] border border-white/5">
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 p-2.5 rounded-xl bg-[#0a0a0f] border border-white/5"
+                >
                   <div className="w-14 h-10 rounded-lg bg-zinc-900 overflow-hidden flex-shrink-0 border border-white/10">
-                    <img src={imgUrl} alt={`Still ${idx + 1}`} className="w-full h-full object-cover" />
+                    {imgUrl ? (
+                      <img src={imgUrl} alt={`Still ${idx + 1}`} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-[10px] text-zinc-600">
+                        Empty
+                      </div>
+                    )}
                   </div>
+
                   <input
                     type="url"
                     value={imgUrl}
                     onChange={(e) => updateGalleryImage(idx, e.target.value)}
-                    placeholder="https://image.tmdb.org/t/p/original/..."
+                    placeholder="Paste image URL (Option A)..."
                     className="flex-1 px-3 py-1.5 rounded-lg bg-transparent border border-white/10 text-xs text-zinc-200 focus:border-[#e5a93c] outline-none"
                   />
+
+                  {/* Upload fallback button for this still */}
                   <button
+                    type="button"
+                    onClick={() => {
+                      targetGalleryIndexRef.current = idx;
+                      galleryFileInputRef.current?.click();
+                    }}
+                    disabled={uploadingGalleryIndex === idx}
+                    className="px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-xs text-zinc-300 hover:text-white flex items-center gap-1 flex-shrink-0"
+                    title="Upload file to Blob instead of URL"
+                  >
+                    {uploadingGalleryIndex === idx ? (
+                      <Loader2 className="w-3 h-3 animate-spin text-[#e5a93c]" />
+                    ) : (
+                      <UploadCloud className="w-3 h-3 text-[#e5a93c]" />
+                    )}
+                    <span className="hidden sm:inline">Upload</span>
+                  </button>
+
+                  <button
+                    type="button"
                     onClick={() => removeGalleryImage(idx)}
                     disabled={hunt.images.length <= 1}
                     className={`p-2 rounded-lg text-zinc-500 hover:text-red-400 transition-colors ${
@@ -922,7 +1237,7 @@ function PublishHuntContent() {
             </div>
           </div>
 
-          {/* YouTube Trailer */}
+          {/* YouTube Trailer Section */}
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-4">
             <h2 className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-2">
               <Play className="w-3.5 h-3.5" />
@@ -931,13 +1246,13 @@ function PublishHuntContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[11px] font-bold text-zinc-400 uppercase mb-1">
-                  Trailer ID or Full YouTube Link
+                  Main Trailer ID or Full YouTube Link
                 </label>
                 <input
                   type="text"
                   value={hunt.trailerYoutubeId || ''}
                   onChange={(e) => setHunt({ ...hunt, trailerYoutubeId: e.target.value })}
-                  placeholder="e.g. xq1cEmhVa68 or https://youtu.be/..."
+                  placeholder="e.g. KjbtuqENvVE or https://youtu.be/..."
                   className="w-full px-3.5 py-2 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs text-white focus:border-[#e5a93c] outline-none"
                 />
               </div>
@@ -975,7 +1290,7 @@ function PublishHuntContent() {
             )}
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Navigation */}
           <div className="flex items-center justify-between pt-2">
             <button
               onClick={() => setActiveStep('review')}
@@ -993,7 +1308,9 @@ function PublishHuntContent() {
         </div>
       )}
 
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {/* ── STEP 4: LIVE PREVIEW TAB ── */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
       {activeStep === 'preview' && (
         <div className="space-y-6">
           <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-6">
@@ -1004,37 +1321,43 @@ function PublishHuntContent() {
                   Live Preview: Card & Detail Breakdown
                 </h2>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  See how this recommendation will look to visitors on Movie Hunt.
+                  See how this recommendation will appear to visitors on Movie Hunt.
                 </p>
               </div>
 
               <button
-                onClick={() => setActiveStep('code')}
+                onClick={() => setActiveStep('publish')}
                 className="px-5 py-2 rounded-xl bg-[#e5a93c] text-[#0a0a0f] text-xs font-bold hover:bg-[#d4982b] flex items-center gap-1.5"
               >
-                Proceed to Export Code →
+                Proceed to Publish Controls →
               </button>
             </div>
 
-            {/* Preview 1: Recommendation Hero Banner */}
+            {/* Recommendation Hero Banner Preview */}
             <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0f] relative p-6 sm:p-8">
-              <div className="absolute inset-0 z-0 opacity-20">
-                <img src={hunt.coverImage} alt={hunt.title} className="w-full h-full object-cover filter blur-md" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent" />
-              </div>
+              {hunt.coverImage && (
+                <div className="absolute inset-0 z-0 opacity-20">
+                  <img src={hunt.coverImage} alt={hunt.title} className="w-full h-full object-cover filter blur-md" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/80 to-transparent" />
+                </div>
+              )}
 
               <div className="relative z-10 grid grid-cols-1 sm:grid-cols-12 gap-6 items-start">
-                {/* Poster Column */}
                 <div className="sm:col-span-4 md:col-span-3">
                   <div className="aspect-[2/3] rounded-xl overflow-hidden border border-white/15 shadow-2xl bg-zinc-900">
-                    <img src={hunt.coverImage} alt={hunt.title} className="w-full h-full object-cover" />
+                    {hunt.coverImage ? (
+                      <img src={hunt.coverImage} alt={hunt.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-zinc-600 text-xs">
+                        No Poster
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                {/* Details Column */}
                 <div className="sm:col-span-8 md:col-span-9 space-y-3">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#e5a93c]/10 text-[#e5a93c] border border-[#e5a93c]/30 text-xs font-bold">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#e5a93c]/10 text-[#e5a93c] border border-[#e5a93c]/30 text-xs font-bold font-mono">
                       Day {hunt.day}
                     </span>
                     <span className="px-2 py-0.5 rounded-md bg-zinc-800 text-zinc-300 text-[10px] uppercase font-semibold">
@@ -1048,21 +1371,22 @@ function PublishHuntContent() {
                   </div>
 
                   <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
-                    {hunt.title}
+                    {hunt.title || 'Untitled Hunt'}
                   </h3>
 
-                  <p className="text-xs text-[#e5a93c] font-semibold italic">
-                    &quot;{hunt.hook}&quot;
-                  </p>
+                  {hunt.hook && (
+                    <p className="text-xs text-[#e5a93c] font-semibold italic">
+                      &quot;{hunt.hook}&quot;
+                    </p>
+                  )}
 
                   <p className="text-xs text-zinc-300 leading-relaxed max-w-2xl">
-                    {hunt.storySummary}
+                    {hunt.storySummary || 'No story summary entered yet.'}
                   </p>
 
-                  <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400">
-                    <span><strong>Director:</strong> {hunt.director}</span>
-                    <span>•</span>
-                    <span><strong>Cast:</strong> {hunt.cast.join(', ')}</span>
+                  <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 flex-wrap">
+                    {hunt.director && <span><strong>Director:</strong> {hunt.director}</span>}
+                    {hunt.cast.length > 0 && <span>• <strong>Cast:</strong> {hunt.cast.join(', ')}</span>}
                   </div>
 
                   <div className="pt-3 flex items-center gap-3">
@@ -1079,18 +1403,20 @@ function PublishHuntContent() {
               </div>
             </div>
 
-            {/* Preview 2: Editorial Why Watch Quote */}
-            <div className="p-5 rounded-xl bg-zinc-950 border border-white/5 space-y-2">
-              <div className="text-[11px] uppercase tracking-wider text-[#e5a93c] font-bold">
-                Why You Should Watch It
+            {/* Editorial Why Watch Quote */}
+            {hunt.whyWatch && (
+              <div className="p-5 rounded-xl bg-zinc-950 border border-white/5 space-y-2">
+                <div className="text-[11px] uppercase tracking-wider text-[#e5a93c] font-bold">
+                  Why You Should Watch It
+                </div>
+                <p className="text-xs text-zinc-300 leading-relaxed italic">
+                  {hunt.whyWatch}
+                </p>
               </div>
-              <p className="text-xs text-zinc-300 leading-relaxed italic">
-                {hunt.whyWatch}
-              </p>
-            </div>
+            )}
           </div>
 
-          {/* Navigation Buttons */}
+          {/* Navigation */}
           <div className="flex items-center justify-between pt-2">
             <button
               onClick={() => setActiveStep('media')}
@@ -1099,84 +1425,173 @@ function PublishHuntContent() {
               <ArrowLeft className="w-3.5 h-3.5" /> Back to Media
             </button>
             <button
-              onClick={() => setActiveStep('code')}
+              onClick={() => setActiveStep('publish')}
               className="px-5 py-2 rounded-xl bg-[#e5a93c] text-[#0a0a0f] text-xs font-bold hover:bg-[#d4982b] flex items-center gap-1.5 shadow-lg shadow-[#e5a93c]/10"
             >
-              Generate Final TypeScript Code <ArrowRight className="w-3.5 h-3.5" />
+              Proceed to Publish Controls <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
       )}
 
-      {/* ── STEP 5: EXPORT TYPESCRIPT CODE STATION ── */}
-      {activeStep === 'code' && (
+      {/* ════════════════════════════════════════════════════════════════════ */}
+      {/* ── STEP 5: PUBLISH CONTROLS TAB ── */}
+      {/* ════════════════════════════════════════════════════════════════════ */}
+      {activeStep === 'publish' && (
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
-              <div>
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <Code className="w-4 h-4 text-[#e5a93c]" />
-                  Generated TypeScript Entry for Day {hunt.day}
+          {savedHunt ? (
+            /* Polished Success State */
+            <div className="p-8 rounded-2xl bg-[#0d0d12] border border-emerald-500/30 text-center space-y-5 shadow-2xl">
+              <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 mx-auto flex items-center justify-center text-emerald-400">
+                <Check className="w-7 h-7" />
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold">
+                  {savedHunt.status === 'published' ? '✓ Published Successfully' : '✓ Draft Saved Successfully'}
+                </span>
+                <h2 className="text-2xl font-serif font-bold text-white">
+                  Day {savedHunt.day} — {savedHunt.title}
                 </h2>
-                <p className="text-xs text-zinc-400 mt-0.5">
-                  Ready to be added to <code className="text-[#e5a93c]">data/hunts.ts</code> in your local project.
+                <p className="text-xs text-zinc-400 max-w-md mx-auto">
+                  {savedHunt.status === 'published'
+                    ? 'This Hunt is now live on the public Movie Hunt website with on-demand cache revalidation.'
+                    : 'Saved as draft in your Admin Library. It will NOT appear publicly until published.'}
                 </p>
               </div>
 
-              {/* Big Copy Button */}
-              <button
-                onClick={handleCopyCode}
-                className={`px-6 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-all shadow-lg ${
-                  copied
-                    ? 'bg-green-500 text-black shadow-green-500/20'
-                    : 'bg-[#e5a93c] text-[#0a0a0f] hover:bg-[#d4982b] shadow-[#e5a93c]/20'
-                }`}
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                <span>{copied ? '✓ Copied to Clipboard!' : 'Copy TypeScript Code'}</span>
-              </button>
-            </div>
-
-            {/* Instructions box */}
-            <div className="p-4 rounded-xl bg-zinc-950 border border-[#e5a93c]/20 space-y-2">
-              <div className="text-xs font-bold text-[#e5a93c] uppercase tracking-wider flex items-center gap-1.5">
-                <Info className="w-3.5 h-3.5" />
-                Next Steps to Publish:
+              <div className="flex items-center justify-center gap-3 pt-3 flex-wrap">
+                {savedHunt.status === 'published' && (
+                  <Link
+                    href={`/hunt/${savedHunt.id}`}
+                    target="_blank"
+                    className="px-5 py-2.5 rounded-xl bg-[#e5a93c] text-[#0a0a0f] font-bold text-xs hover:bg-[#d4982b] flex items-center gap-1.5 shadow-lg shadow-[#e5a93c]/20"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    View Live Hunt
+                  </Link>
+                )}
+                <Link
+                  href="/admin/library"
+                  className="px-5 py-2.5 rounded-xl bg-zinc-900 border border-white/10 text-zinc-300 hover:text-white font-semibold text-xs transition-colors"
+                >
+                  Go to Library
+                </Link>
+                <button
+                  onClick={() => {
+                    setSavedHunt(null);
+                    setHunt({ ...DEFAULT_HUNT, day: nextSuggestedDay + 1 });
+                    setIsEditing(false);
+                    setOriginalId(null);
+                    setRawText('');
+                    setActiveStep('import');
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-zinc-900 border border-white/10 text-zinc-300 hover:text-white font-semibold text-xs transition-colors flex items-center gap-1.5"
+                >
+                  <Plus className="w-3.5 h-3.5 text-[#e5a93c]" />
+                  Publish Another
+                </button>
               </div>
-              <ol className="text-xs text-zinc-300 space-y-1 pl-4 list-decimal">
-                <li>Click <strong>Copy TypeScript Code</strong> above.</li>
-                <li>Open <code className="text-[#e5a93c]">data/hunts.ts</code> in your code editor on your PC.</li>
-                <li>Paste this object at the bottom of the <code className="text-[#e5a93c]">HUNTS_DATA</code> array (right above <code className="text-zinc-400">];</code>).</li>
-                <li>Run your normal Git command: <code className="text-white bg-zinc-900 px-2 py-0.5 rounded">git add . && git commit -m &quot;Add Day {hunt.day} {hunt.title}&quot; && git push</code></li>
-                <li>Vercel will automatically build and deploy the new recommendation live!</li>
-              </ol>
             </div>
+          ) : (
+            /* Publish / Draft Action Panel */
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#0d0d12] border border-white/5 space-y-6">
+              <div className="border-b border-white/5 pb-4">
+                <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <Send className="w-4 h-4 text-[#e5a93c]" />
+                  Final Publication Review
+                </h2>
+                <p className="text-xs text-zinc-400 mt-1">
+                  Choose whether to make this recommendation live immediately or save it as a draft in your library.
+                </p>
+              </div>
 
-            {/* Code Output Textarea */}
-            <div className="relative">
-              <textarea
-                rows={22}
-                readOnly
-                value={generateTypeScriptCode()}
-                className="w-full p-4 rounded-xl bg-[#0a0a0f] border border-white/10 text-xs font-mono text-[#e5a93c] focus:outline-none resize-none leading-relaxed"
-              />
+              {/* Summary Card */}
+              <div className="p-4 rounded-xl bg-[#0a0a0f] border border-white/10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                <div>
+                  <span className="text-zinc-500 block">Day Number</span>
+                  <strong className="text-white text-sm">Day {hunt.day}</strong>
+                </div>
+                <div>
+                  <span className="text-zinc-500 block">Title</span>
+                  <strong className="text-white truncate block">{hunt.title || 'Untitled'}</strong>
+                </div>
+                <div>
+                  <span className="text-zinc-500 block">Platform</span>
+                  <strong className="text-white">{hunt.availableOn.name}</strong>
+                </div>
+                <div>
+                  <span className="text-zinc-500 block">Cover Status</span>
+                  <strong className={hunt.coverImage ? 'text-emerald-400' : 'text-amber-400'}>
+                    {hunt.coverImage ? '✓ Ready' : '⚠️ Missing Poster'}
+                  </strong>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {/* Save Draft Button */}
+                <button
+                  type="button"
+                  onClick={() => handleSave('draft')}
+                  disabled={isSaving || !hunt.title.trim()}
+                  className="p-5 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-left transition-all group disabled:opacity-50"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                      <Save className="w-3 h-3 text-zinc-400" />
+                      Save as Draft
+                    </span>
+                    {isSaving && <Loader2 className="w-4 h-4 animate-spin text-zinc-400" />}
+                  </div>
+                  <h4 className="text-sm font-bold text-white group-hover:text-[#e5a93c] transition-colors">
+                    Store in Library
+                  </h4>
+                  <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                    Saves to the database without publishing. Will remain invisible to public visitors.
+                  </p>
+                </button>
+
+                {/* Publish Button */}
+                <button
+                  type="button"
+                  onClick={() => handleSave('published')}
+                  disabled={isSaving || !hunt.title.trim() || !!dayConflictHunt}
+                  className="p-5 rounded-2xl bg-[#e5a93c] hover:bg-[#d4982b] text-[#0a0a0f] text-left transition-all shadow-lg shadow-[#e5a93c]/10 group disabled:opacity-50"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="px-2.5 py-1 rounded-md bg-black/20 text-[#0a0a0f] text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                      <Send className="w-3 h-3" />
+                      {isEditing ? 'Update & Publish' : 'Publish Live'}
+                    </span>
+                    {isSaving && <Loader2 className="w-4 h-4 animate-spin text-[#0a0a0f]" />}
+                  </div>
+                  <h4 className="text-sm font-bold text-[#0a0a0f]">
+                    Make Live on Website
+                  </h4>
+                  <p className="text-xs text-[#0a0a0f]/80 mt-1 leading-relaxed">
+                    Instantly renders to the public Movie Hunt catalog with on-demand cache revalidation.
+                  </p>
+                </button>
+              </div>
+
+              {/* Navigation Back */}
+              <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <button
+                  onClick={() => setActiveStep('preview')}
+                  className="px-4 py-2 rounded-xl bg-zinc-900 border border-white/10 text-xs font-semibold text-zinc-300 hover:text-white flex items-center gap-1.5"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" /> Back to Preview
+                </button>
+                <Link
+                  href="/admin/library"
+                  className="text-xs text-zinc-400 hover:text-white"
+                >
+                  Cancel and Return to Library
+                </Link>
+              </div>
             </div>
-          </div>
-
-          <div className="flex items-center justify-between pt-2">
-            <button
-              onClick={() => setActiveStep('preview')}
-              className="px-4 py-2 rounded-xl bg-zinc-900 border border-white/10 text-xs font-semibold text-zinc-300 hover:text-white flex items-center gap-1.5"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" /> Back to Preview
-            </button>
-            <Link
-              href="/admin/library"
-              className="text-xs text-[#e5a93c] hover:underline font-semibold"
-            >
-              Go to Content Library →
-            </Link>
-          </div>
+          )}
         </div>
       )}
     </div>
@@ -1185,7 +1600,14 @@ function PublishHuntContent() {
 
 export default function PublishHuntPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-zinc-400 text-xs">Loading publishing workspace...</div>}>
+    <Suspense
+      fallback={
+        <div className="p-12 text-center text-zinc-400 text-xs flex items-center justify-center gap-2">
+          <Loader2 className="w-4 h-4 animate-spin text-[#e5a93c]" />
+          Loading publishing workspace...
+        </div>
+      }
+    >
       <PublishHuntContent />
     </Suspense>
   );

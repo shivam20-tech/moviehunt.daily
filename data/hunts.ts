@@ -31,7 +31,10 @@ export interface HuntItem {
   trailerYoutubeId?: string;
   hindiTrailerYoutubeId?: string;
   featured?: boolean;
+  /** CMS status — only 'published' hunts appear on the public site */
+  status?: 'draft' | 'published' | 'archived';
 }
+
 
 export const HUNTS_DATA: HuntItem[] = [
   {
